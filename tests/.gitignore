@@ -1,0 +1,9 @@
+.deps/
+cov/
+check_factorial
+*.o
+*.gcno
+*.gcda
+*.log
+*.trs
+lcov.info

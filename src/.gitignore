@@ -1,0 +1,5 @@
+.deps/
+centaurus
+*.o
+*.gcno
+*.gcda
