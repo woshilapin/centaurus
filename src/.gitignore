@@ -3,3 +3,4 @@ centaurus
 *.o
 *.gcno
 *.gcda
+callgrind.out.*
