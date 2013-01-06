@@ -35,22 +35,25 @@ unsigned int Buffer::get_depth()
 	return this->depth;
 }
 
-void Buffer::set_width(unsigned int w)
+void Buffer::set_width(const unsigned int w)
 {
 	this->width = w;
 }
 
-void Buffer::set_height(unsigned int h)
+void Buffer::set_height(const unsigned int h)
 {
 	this->height = h;
 }
 
-void Buffer::set_depth(unsigned int d)
+void Buffer::set_depth(const unsigned int d)
 {
 	this->depth = d;
 }
 
-void Buffer::set_size(unsigned int w, unsigned int h, unsigned int d)
+void Buffer::set_size(
+		const unsigned int w,
+		const unsigned int h,
+		const unsigned int d)
 {
 	this->width = w;
 	this->height = h;

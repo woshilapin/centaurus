@@ -20,10 +20,12 @@ namespace centaurus
 			unsigned int get_height();
 			unsigned int get_depth();
 
-			void set_width(unsigned int);
-			void set_height(unsigned int);
-			void set_depth(unsigned int);
-			void set_size(unsigned int, unsigned int, unsigned int = 24);
+			void set_width(const unsigned int);
+			void set_height(const unsigned int);
+			void set_depth(const unsigned int);
+			void set_size(const unsigned int,
+					const unsigned int,
+					const unsigned int = 24);
 	};
 }
 
