@@ -15,6 +15,8 @@ centaurus_SOURCES = \
 	buffer.hpp \
 	camera.cpp \
 	camera.hpp \
+	light.cpp \
+	light.hpp \
 	gettext.h
 centaurus_LDADD = \
 	@LTLIBINTL@
