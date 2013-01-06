@@ -19,6 +19,8 @@ centaurus_SOURCES = \
 	light.hpp \
 	object.cpp \
 	object.hpp \
+	scene.cpp \
+	scene.hpp \
 	gettext.h
 centaurus_LDADD = \
 	@LTLIBINTL@
