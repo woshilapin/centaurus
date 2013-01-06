@@ -9,6 +9,10 @@ centaurus_SOURCES = \
 	localization.h \
 	factorial.c \
 	factorial.h \
+	render.cpp \
+	render.hpp \
+	buffer.cpp \
+	buffer.hpp \
 	gettext.h
 centaurus_LDADD = \
 	@LTLIBINTL@
