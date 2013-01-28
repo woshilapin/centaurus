@@ -3,7 +3,7 @@ AC_INIT([centaurus], [0.1], [woshilapin@gmail.com])
 AC_COPYRIGHT([Copyright 2012 woshilapin])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
-AC_CONFIG_SRCDIR([src/centaurus.c])
+AC_CONFIG_SRCDIR([src/centaurus.cpp])
 AC_CONFIG_HEADERS([config.h])
 
 AM_INIT_AUTOMAKE([gnu 1.9 --warnings=all --warnings=error dist-bzip2 parallel-tests color-tests])

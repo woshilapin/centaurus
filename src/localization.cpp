@@ -1,4 +1,4 @@
-# include "localization.h"
+# include "localization.hpp"
 
 void init_localization (char * package, char * locale_dir)
 {

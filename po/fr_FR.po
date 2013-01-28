@@ -18,12 +18,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: src/centaurus.c:11
+#: src/centaurus.cpp:11
 #, c-format
 msgid "Hello world!\n"
 msgstr "Bonjour tout le monde !\n"
 
-#: src/centaurus.c:12
+#: src/centaurus.cpp:12
 #, c-format
 msgid "This is %s.\n"
 msgstr "Ceci est %s.\n"

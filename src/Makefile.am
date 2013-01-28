@@ -4,11 +4,9 @@ AM_CPPFLAGS = \
 
 bin_PROGRAMS = centaurus
 centaurus_SOURCES = \
-	centaurus.c \
-	localization.c \
-	localization.h \
-	factorial.c \
-	factorial.h \
+	centaurus.cpp \
+	localization.cpp \
+	localization.hpp \
 	render.cpp \
 	render.hpp \
 	buffer.cpp \

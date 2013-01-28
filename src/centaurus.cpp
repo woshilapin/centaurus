@@ -18,21 +18,18 @@
  *
  * @section This is a small description of the centaurus relativist ray-tracer.
  *
- * The time class represents a moment of time.
  */
 
-# include <config.h>
-# include <stdlib.h>
-# include <stdio.h>
+#include <config.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-# include "localization.h"
-# include "factorial.h"
+#include "localization.hpp"
 
 int main (int argc, char** argv)
 {
-    init_localization (PACKAGE, LOCALEDIR);
-    printf (_ ("Hello world!\n"));
-    printf (_ ("The factorial of 5 is: 5! = %ld\n"), factorial (5));
-    printf (_ ("This is %s.\n"), PACKAGE_STRING);
-    return EXIT_SUCCESS;
+	init_localization (PACKAGE, LOCALEDIR);
+	printf (_ ("Hello world!\n"));
+	printf (_ ("This is %s.\n"), PACKAGE_STRING);
+	return EXIT_SUCCESS;
 }
