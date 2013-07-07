@@ -4,24 +4,26 @@ AM_CPPFLAGS = \
 
 bin_PROGRAMS = centaurus
 centaurus_SOURCES = \
-	centaurus.cpp \
-	factorial.c \
-	factorial.h \
-	localization.cpp \
-	localization.hpp \
-	render.cpp \
-	render.hpp \
 	buffer.cpp \
 	buffer.hpp \
 	camera.cpp \
 	camera.hpp \
+	centaurus.cpp \
+	factorial.c \
+	factorial.h \
+	gettext.h \
 	light.cpp \
 	light.hpp \
+	localization.cpp \
+	localization.hpp \
 	object.cpp \
 	object.hpp \
+	ray.cpp \
+	ray.hpp \
+	render.cpp \
+	render.hpp \
 	scene.cpp \
-	scene.hpp \
-	gettext.h
+	scene.hpp
 centaurus_LDADD = \
 	@LTLIBINTL@
 
