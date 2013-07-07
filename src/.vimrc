@@ -1,1 +1,1 @@
-let NERDTreeIgnore=['\.gc\(no\|da\)', '\.o']
+let NERDTreeIgnore=['\.gc\(no\|da\)$','\.o$']
