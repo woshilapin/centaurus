@@ -21,3 +21,4 @@ config.status
 configure
 gmon.out
 stamp-h1
+*.swp
