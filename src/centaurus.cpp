@@ -24,8 +24,10 @@
 #include <iostream>
 
 #include "localization.hpp"
+#include "render.hpp"
 
 using namespace std;
+using namespace centaurus;
 
 int main (const int argc, const char* const argv[])
 {
@@ -34,5 +36,7 @@ int main (const int argc, const char* const argv[])
 	cout << " with " << argc-1 << " argument(s)" << endl;
 	cout << "This is " << PACKAGE_STRING << endl;
 
+	Render render;
+	render.run();
 	return EXIT_SUCCESS;
 }

@@ -1,8 +1,6 @@
 #ifndef __RENDER_HPP__
 #define __RENDER_HPP__
 
-#include <boost/container/map.hpp>
-
 #include "buffer.hpp"
 
 namespace centaurus
@@ -10,11 +8,13 @@ namespace centaurus
 	class Render
 	{
 		private:
-			boost::container::map<unsigned short, Buffer> buffers;
+			Buffer buffer;
 		public:
-			Render();
+			Render(void);
 			Render(const Render &);
-			~Render();
+			~Render(void);
+
+			void run(void);
 	};
 }
 

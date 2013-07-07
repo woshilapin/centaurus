@@ -11,6 +11,8 @@ namespace centaurus
 			unsigned int width;
 			unsigned int height;
 			unsigned int depth;
+
+			double ** buffer;
 		public:
 			Buffer();
 			Buffer(const Buffer &);
@@ -26,6 +28,15 @@ namespace centaurus
 			void set_size(const unsigned int,
 					const unsigned int,
 					const unsigned int = 24);
+
+			double & operator()(
+					const unsigned int,
+					const unsigned int);
+
+			void display(void);
+
+		private:
+			unsigned int get_color_from_value(const double);
 	};
 }
 
