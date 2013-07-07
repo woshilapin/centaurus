@@ -18,6 +18,8 @@ centaurus_SOURCES = \
 	localization.hpp \
 	object.cpp \
 	object.hpp \
+	point.cpp \
+	point.hpp \
 	ray.cpp \
 	ray.hpp \
 	render.cpp \
