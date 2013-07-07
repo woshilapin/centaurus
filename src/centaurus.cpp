@@ -21,15 +21,18 @@
  */
 
 #include <config.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include <iostream>
 
 #include "localization.hpp"
 
-int main (int argc, char** argv)
+using namespace std;
+
+int main (const int argc, const char* const argv[])
 {
 	init_localization (PACKAGE, LOCALEDIR);
-	printf (_ ("Hello world!\n"));
-	printf (_ ("This is %s.\n"), PACKAGE_STRING);
+	cout << "Executing " << argv[0];
+	cout << " with " << argc-1 << " argument(s)" << endl;
+	cout << "This is " << PACKAGE_STRING << endl;
+
 	return EXIT_SUCCESS;
 }
