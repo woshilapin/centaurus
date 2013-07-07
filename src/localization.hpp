@@ -7,6 +7,6 @@
 
 # define _(string) gettext(string)
 
-void init_localization (char *, char *);
+void init_localization (const char * const, const char * const);
 
 # endif // __LOCALIZATION_H__
