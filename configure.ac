@@ -8,6 +8,11 @@ AC_CONFIG_HEADERS([config.h])
 
 AM_INIT_AUTOMAKE([gnu 1.9 --warnings=all --warnings=error dist-bzip2 parallel-tests color-tests])
 
+# To include MacPorts directories
+CFLAGS="-I/opt/local/include $CFLAGS"
+CXXFLAGS="-I/opt/local/include $CXXFLAGS"
+LDFLAGS="-I/opt/local/lib $LDFLAGS"
+
 # Checks for programs.
 AC_PROG_AWK
 AC_PROG_SED
