@@ -4,3 +4,4 @@ centaurus
 *.gcno
 *.gcda
 callgrind.out.*
+cscope.out
