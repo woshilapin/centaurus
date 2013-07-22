@@ -5,6 +5,7 @@ using namespace boost::container;
 
 Scene::Scene()
 {
+	this->cameras = map<unsigned int, Camera &>();
 }
 
 Scene::Scene(const Scene & src)
@@ -18,32 +19,32 @@ Scene::~Scene()
 {
 }
 
-map<unsigned int, Camera> & Scene::get_cameras()
+map<unsigned int, Camera &> & Scene::get_cameras()
 {
 	return this->cameras;
 }
 
-Camera & Scene::get_camera(const unsigned int key)
-{
-	return this->cameras[key];
-}
+// Camera & Scene::get_camera(const unsigned int key)
+// {
+// 	return this->cameras[key];
+// }
 
-map<unsigned int, Light> & Scene::get_lights()
+map<unsigned int, Light &> & Scene::get_lights()
 {
 	return this->lights;
 }
 
-Light & Scene::get_light(const unsigned int key)
-{
-	return this->lights[key];
-}
+// Light & Scene::get_light(const unsigned int key)
+// {
+// 	return this->lights[key];
+// }
 
-map<unsigned int, Object> & Scene::get_objects()
+map<unsigned int, Object &> & Scene::get_objects()
 {
 	return this->objects;
 }
 
-Object & Scene::get_object(const unsigned int key)
-{
-	return this->objects[key];
-}
+// Object & Scene::get_object(const unsigned int key)
+// {
+// 	return this->objects[key];
+// }

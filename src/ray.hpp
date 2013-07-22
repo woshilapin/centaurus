@@ -1,24 +1,22 @@
 #ifndef __RAY_HPP__
 #define __RAY_HPP__
 
-#include <boost/numeric/ublas/vector.hpp>
-
-using namespace boost::numeric::ublas;
+#include "vector.hpp"
 
 namespace centaurus
 {
-	class Ray
+	class ray
 	{
 		private:
-			vector<double> dir;
+			vector dir_;
 		public:
-			Ray();
-			Ray(const Ray &);
-			~Ray();
+			ray();
+			ray(const vector &);
+			ray(const ray &);
+			~ray();
 
-			void set_dir(const vector<double>);
-
-			vector<double> get_dir(void);
+			vector get_dir(void) const;
+			vector &get_dir(void);
 	};
 }
 

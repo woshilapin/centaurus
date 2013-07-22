@@ -1,31 +1,34 @@
 #include "ray.hpp"
 
-#include <boost/numeric/ublas/vector.hpp>
-
-using namespace boost::numeric::ublas;
+#include "vector.hpp"
 
 using namespace centaurus;
 
-Ray::Ray()
+ray::ray()
 {
-	this->dir = vector<double>(3);
+	this->dir_ = vector();
 }
 
-Ray::Ray(const Ray & src)
+ray::ray(const vector &v)
 {
-	this->dir = src.dir;
+	this->dir_ = v / v.norm();
 }
 
-Ray::~Ray()
+ray::ray(const ray &src)
+{
+	this->dir_ = src.dir_;
+}
+
+ray::~ray()
 {
 }
 
-void Ray::set_dir(const vector<double> dir)
+vector ray::get_dir(void) const
 {
-	this->dir = dir;
+	return this->dir_;
 }
 
-vector<double> Ray::get_dir(void)
+vector &ray::get_dir(void)
 {
-	return this->dir;
+	return this->dir_;
 }

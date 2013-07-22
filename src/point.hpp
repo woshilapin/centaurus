@@ -2,23 +2,49 @@
 #define __POINT_HPP__
 
 #include <boost/numeric/ublas/vector.hpp>
-
-using namespace boost::numeric::ublas;
+#include <boost/numeric/ublas/io.hpp>
+#include "vector.hpp"
 
 namespace centaurus
 {
-	class Point
+	using namespace boost::numeric;
+	class point :
+		public ublas::c_vector<float, 3>
 	{
-		private:
-			vector<double> pos;
+		static const unsigned int point_dim = 3;
+		typedef float point_type;
+		typedef point self_type;
+		typedef ublas::c_vector<point_type, point_dim> base_type;
+
 		public:
-			Point();
-			Point(const Point &);
-			~Point();
-
-			void set_pos(const vector<double>);
-
-			vector<double> get_pos(void);
+		BOOST_UBLAS_INLINE
+			point ():
+				base_type(point_dim)
+		{}
+		BOOST_UBLAS_INLINE
+			point (
+					const point_type x,
+					const point_type y,
+					const point_type z):
+				base_type(point_dim)
+		{
+			(*this)[0] = x;
+			(*this)[1] = y;
+			(*this)[2] = z;
+		}
+		BOOST_UBLAS_INLINE
+			point (
+					const self_type &v)
+		{
+			ublas::vector_assign<ublas::scalar_assign> ((*this), v);
+		}
+		template<class AE>
+		BOOST_UBLAS_INLINE
+			point (
+					const ublas::vector_expression<AE> &ae)
+		{
+			ublas::vector_assign<ublas::scalar_assign> ((*this), ae);
+		}
 	};
 }
 

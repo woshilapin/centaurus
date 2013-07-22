@@ -5,14 +5,14 @@
 
 namespace centaurus
 {
-	class Render
+	class render
 	{
 		private:
-			Buffer buffer;
+			buffer buffer_;
 		public:
-			Render(void);
-			Render(const Render &);
-			~Render(void);
+			render(void);
+			render(const render &);
+			~render(void);
 
 			void run(void);
 	};

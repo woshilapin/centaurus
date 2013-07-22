@@ -7,82 +7,82 @@
 using namespace std;
 using namespace centaurus;
 
-Buffer::Buffer()
+buffer::buffer()
 {
-	this->width = 80;
-	this->height = 36;
-	this->depth = 24;
-	this->buffer = new double *[this->height];
-	for (unsigned int h=0; h<this->height; h++)
+	this->width_ = 80;
+	this->height_ = 36;
+	this->depth_ = 24;
+	this->buffer_ = new double *[this->height_];
+	for (unsigned int h=0; h<this->height_; h++)
 	{
-		this->buffer[h] = new double[this->width];
+		this->buffer_[h] = new double[this->width_];
 	}
 }
 
-Buffer::Buffer(const Buffer & src)
+buffer::buffer(const buffer & src)
 {
-	this->width = src.width;
-	this->height = src.height;
-	this->depth = src.depth;
+	this->width_ = src.width_;
+	this->height_ = src.height_;
+	this->depth_ = src.depth_;
 }
 
-Buffer::~Buffer()
+buffer::~buffer()
 {
-	for (unsigned int i=0; i<this->height; i++)
+	for (unsigned int i=0; i<this->height_; i++)
 	{
-		delete this->buffer[i];
+		delete this->buffer_[i];
 	}
-	delete this->buffer;
+	delete this->buffer_;
 }
 
-unsigned int Buffer::get_width()
+unsigned int buffer::get_width()
 {
-	return this->width;
+	return this->width_;
 }
 
-unsigned int Buffer::get_height()
+unsigned int buffer::get_height()
 {
-	return this->height;
+	return this->height_;
 }
 
-unsigned int Buffer::get_depth()
+unsigned int buffer::get_depth()
 {
-	return this->depth;
+	return this->depth_;
 }
 
-void Buffer::set_width(const unsigned int w)
+void buffer::set_width(const unsigned int w)
 {
-	this->width = w;
+	this->width_ = w;
 }
 
-void Buffer::set_height(const unsigned int h)
+void buffer::set_height(const unsigned int h)
 {
-	this->height = h;
+	this->height_ = h;
 }
 
-void Buffer::set_depth(const unsigned int d)
+void buffer::set_depth(const unsigned int d)
 {
-	this->depth = d;
+	this->depth_ = d;
 }
 
-void Buffer::set_size(
+void buffer::set_size(
 		const unsigned int w,
 		const unsigned int h,
 		const unsigned int d)
 {
-	this->width = w;
-	this->height = h;
-	this->depth = d;
+	this->width_ = w;
+	this->height_ = h;
+	this->depth_ = d;
 }
 
-double & Buffer::operator()(
+double & buffer::operator()(
 					const unsigned int h,
 					const unsigned int w)
 {
-	return this->buffer[h][w];
+	return this->buffer_[h][w];
 }
 
-void Buffer::display(void)
+void buffer::display(void)
 {
 	const char * colormap[4];
 	colormap[0] = " ";
@@ -93,15 +93,15 @@ void Buffer::display(void)
 
 	// Upper border
 	cout << "+";
-	for (unsigned int w=0; w<this->get_width(); w++)
+	for (unsigned int w=0; w<this->width_; w++)
 	{
 		cout << "-";
 	}
 	cout << "+" << endl;
-	for (unsigned int h=0; h<this->get_height(); h++)
+	for (unsigned int h=0; h<this->height_; h++)
 	{
 		cout << "|";
-		for (unsigned int w=0; w<this->get_width(); w++)
+		for (unsigned int w=0; w<this->width_; w++)
 		{
 			color_idx = get_color_from_value((*this)(h,w));
 			cout << colormap[color_idx];
@@ -110,14 +110,14 @@ void Buffer::display(void)
 	}
 	// Lower border
 	cout << "+";
-	for (unsigned int w=0; w<this->get_width(); w++)
+	for (unsigned int w=0; w<this->width_; w++)
 	{
 		cout << "-";
 	}
 	cout << "+" << endl;
 }
 
-unsigned int Buffer::get_color_from_value(const double value)
+unsigned int buffer::get_color_from_value(const double value)
 {
 	const unsigned int colormap_size = 4;
 	// If 'value=1', then the result will be 4 which is not a valid index [0..3]

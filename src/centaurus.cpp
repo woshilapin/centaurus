@@ -36,7 +36,7 @@ int main (const int argc, const char* const argv[])
 	cout << " with " << argc-1 << " argument(s)" << endl;
 	cout << "This is " << PACKAGE_STRING << endl;
 
-	Render render;
-	render.run();
+	render r;
+	r.run();
 	return EXIT_SUCCESS;
 }

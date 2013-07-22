@@ -1,15 +1,16 @@
 #ifndef __OBJECT_HPP__
 #define __OBJECT_HPP__
 
+#include "ray.hpp"
+#include "point.hpp"
+
 namespace centaurus
 {
-	class Object
+	class object
 	{
 		private:
 		public:
-			Object();
-			Object(const Object &);
-			~Object();
+			point intersect(const ray &, const point &);
 	};
 }
 

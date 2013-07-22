@@ -6,26 +6,28 @@ bin_PROGRAMS = centaurus
 centaurus_SOURCES = \
 	buffer.cpp \
 	buffer.hpp \
-	camera.cpp \
-	camera.hpp \
 	centaurus.cpp \
 	factorial.c \
 	factorial.h \
 	gettext.h \
-	light.cpp \
-	light.hpp \
 	localization.cpp \
 	localization.hpp \
-	object.cpp \
 	object.hpp \
-	point.cpp \
 	point.hpp \
 	ray.cpp \
 	ray.hpp \
 	render.cpp \
 	render.hpp \
-	scene.cpp \
-	scene.hpp
+	triangle.cpp \
+	triangle.hpp \
+	vector.hpp
+# camera.cpp
+# camera.hpp
+# light.cpp
+# light.hpp
+# scene.cpp
+# scene.hpp
+
 centaurus_LDADD = \
 	@LTLIBINTL@
 

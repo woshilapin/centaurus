@@ -5,18 +5,18 @@
 
 namespace centaurus
 {
-	class Buffer
+	class buffer
 	{
 		private:
-			unsigned int width;
-			unsigned int height;
-			unsigned int depth;
+			unsigned int width_;
+			unsigned int height_;
+			unsigned int depth_;
 
-			double ** buffer;
+			double ** buffer_;
 		public:
-			Buffer();
-			Buffer(const Buffer &);
-			~Buffer();
+			buffer();
+			buffer(const buffer &);
+			~buffer();
 
 			unsigned int get_width();
 			unsigned int get_height();
