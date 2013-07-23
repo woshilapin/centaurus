@@ -32,14 +32,16 @@ namespace centaurus
 		}
 		BOOST_UBLAS_INLINE
 			vector (
-					const self_type &v)
+					const self_type &v):
+				base_type(vector_dim)
 		{
 			ublas::vector_assign<ublas::scalar_assign> ((*this), v);
 		}
 		template<class AE>
 		BOOST_UBLAS_INLINE
 			vector (
-					const ublas::vector_expression<AE> &ae)
+					const ublas::vector_expression<AE> &ae):
+				base_type(vector_dim)
 		{
 			ublas::vector_assign<ublas::scalar_assign> ((*this), ae);
 		}
