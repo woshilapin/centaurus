@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "vector.hpp"
+#include "matrix.hpp"
 #include "object.hpp"
 #include "ray.hpp"
 #include "point.hpp"
@@ -15,6 +16,7 @@ namespace centaurus
 			std::vector<point> vertices_;
 			vector normal_;
 			double plan_offset_;
+			matrix basis_;
 		public:
 			triangle();
 			triangle(

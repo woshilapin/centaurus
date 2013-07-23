@@ -39,7 +39,7 @@ void render::run(void)
 			ray ray(cam-pixel);
 			point I = o.intersect(ray, cam);
 			this->buffer_(h,w) = 0.0;
-			if (h>10 && h<30 && w>10 && w<20)
+			if (I[0] != cam[0] && I[1] != cam[1] && I[2] != cam[2])
 			{
 				this->buffer_(h,w) = 1.0;
 			}

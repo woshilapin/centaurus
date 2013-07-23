@@ -12,6 +12,7 @@ centaurus_SOURCES = \
 	gettext.h \
 	localization.cpp \
 	localization.hpp \
+	matrix.hpp \
 	object.hpp \
 	point.hpp \
 	ray.cpp \
