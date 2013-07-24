@@ -30,7 +30,7 @@ namespace centaurus
 					const vector &);
 			~triangle();
 
-			point intersect(const ray &, const point &);
+			bool intersect(const point &, const ray &, point &);
 	};
 }
 

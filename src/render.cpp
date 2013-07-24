@@ -37,9 +37,10 @@ void render::run(void)
 					double(2 * (height-h+1) - 1) / height - 1.0,
 					0.0);
 			ray ray(cam-pixel);
-			point I = o.intersect(ray, cam);
+			point I;
+			unsigned int is_intersect = o.intersect(cam, ray, I);
 			this->buffer_(h,w) = 0.0;
-			if (I[0] != cam[0] && I[1] != cam[1] && I[2] != cam[2])
+			if (is_intersect == true)
 			{
 				this->buffer_(h,w) = 1.0;
 			}

@@ -9,8 +9,11 @@ namespace centaurus
 	class object
 	{
 		private:
+		protected:
+			static const bool OBJECT_INTERSECTION = true;
+			static const bool OBJECT_NO_INTERSECTION = false;
 		public:
-			point intersect(const ray &, const point &);
+			bool intersect(const point &, const ray &, point &);
 	};
 }
 

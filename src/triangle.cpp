@@ -47,22 +47,29 @@ triangle::~triangle()
 {
 }
 
-point triangle::intersect(const ray &ray, const point &P)
+bool triangle::intersect(const point &P, const ray &ray, point &I)
 {
-	point O(0.0, 0.0, 0.0);
-	double t = (this->plan_offset_ + vector(P-O)*this->normal_) / 
-		(ray.get_dir()*this->normal_);
-	point I(P - ray.get_dir()*t);
-	matrix inv(this->basis_.inverse());
-	point I_proj(vector(I-this->vertices_[0]));
-	float alpha = I_proj[0];
-	float beta = I_proj[1];
+	point I_proj;
+	matrix inv;
+	float t = 0.0f;
+	float alpha = 0.0f, beta = 0.0f;
+	t = ray.get_dir()*this->normal_;
+	if (t == 0.0f)
+	{
+		return this->OBJECT_NO_INTERSECTION;
+	}
+	t = (this->plan_offset_ + vector(P)*this->normal_) / t;
+	I = P - ray.get_dir()*t;
+	inv = this->basis_.inverse();
+	I_proj = vector(I-this->vertices_[0]);
+	alpha = I_proj[0];
+	beta = I_proj[1];
 	if ( (0.0f <= alpha && alpha <= 1.0f)
 			&& (0.0f <= beta && beta <= 1.0f)
 			&& (alpha+beta <= 1.0f) )
 	{
-		return I;
+		return this->OBJECT_INTERSECTION;
 	} else {
-		return P;
+		return this->OBJECT_NO_INTERSECTION;
 	}
 }
