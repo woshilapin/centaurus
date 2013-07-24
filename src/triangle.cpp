@@ -47,6 +47,11 @@ triangle::~triangle()
 {
 }
 
+#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/vector.hpp>
+#include <boost/numeric/ublas/vector_expression.hpp>
+#include <boost/numeric/ublas/matrix_expression.hpp>
+using namespace boost::numeric;
 bool triangle::intersect(const point &P, const ray &ray, point &I)
 {
 	point I_proj;
@@ -62,6 +67,7 @@ bool triangle::intersect(const point &P, const ray &ray, point &I)
 	I = P - ray.get_dir()*t;
 	inv = this->basis_.inverse();
 	I_proj = vector(I-this->vertices_[0]);
+	I_proj = prod(I_proj, inv);
 	alpha = I_proj[0];
 	beta = I_proj[1];
 	if ( (0.0f <= alpha && alpha <= 1.0f)

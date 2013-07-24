@@ -28,17 +28,18 @@ void render::run(void)
 	triangle o(p1, p2, p3);
 	unsigned int width = this->buffer_.get_width();
 	unsigned int height = this->buffer_.get_height();
+	point pixel, I;
+	ray r;
 	for(unsigned int h=0; h<height; h++)
 	{
 		for(unsigned int w=0; w<width; w++)
 		{
-			point pixel(
-					double(2 * w - 1) / width - 1.0,
-					double(2 * (height-h+1) - 1) / height - 1.0,
+			pixel = point(
+					float(2 * w - 1) / width - 1.0,
+					float(2 * (height-h+1) - 1) / height - 1.0,
 					0.0);
-			ray ray(cam-pixel);
-			point I;
-			unsigned int is_intersect = o.intersect(cam, ray, I);
+			r = ray(cam-pixel);
+			unsigned int is_intersect = o.intersect(cam, r, I);
 			this->buffer_(h,w) = 0.0;
 			if (is_intersect == true)
 			{

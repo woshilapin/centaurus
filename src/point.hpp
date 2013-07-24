@@ -2,12 +2,12 @@
 #define __POINT_HPP__
 
 #include <boost/numeric/ublas/vector.hpp>
-#include <boost/numeric/ublas/io.hpp>
-#include "vector.hpp"
+#include <boost/numeric/ublas/matrix_expression.hpp>
 
 namespace centaurus
 {
 	using namespace boost::numeric;
+	class matrix;
 	class point :
 		public ublas::c_vector<float, 3>
 	{
@@ -43,6 +43,14 @@ namespace centaurus
 		BOOST_UBLAS_INLINE
 			point (
 					const ublas::vector_expression<AE> &ae):
+				base_type(point_dim)
+		{
+			ublas::vector_assign<ublas::scalar_assign> ((*this), ae);
+		}
+		template<class AE>
+		BOOST_UBLAS_INLINE
+			point (
+					const ublas::matrix_expression<AE> &ae):
 				base_type(point_dim)
 		{
 			ublas::vector_assign<ublas::scalar_assign> ((*this), ae);

@@ -2,11 +2,12 @@
 #define __MATRIX_HPP__
 
 #include <boost/numeric/ublas/matrix.hpp>
-#include "vector.hpp"
 
 namespace centaurus
 {
 	using namespace boost::numeric;
+	class point;
+	class vector;
 	class matrix :
 		public ublas::matrix<float>
 	{
@@ -48,9 +49,8 @@ namespace centaurus
 			matrix (const ublas::matrix_expression<AE> &ae):
 			base_type (matrix_dim, matrix_dim)
 		{
-			ublas::matrix_assign<ublas::scalar_assign> (*this, ae);
+			ublas::matrix_assign<ublas::scalar_assign> ((*this), ae);
         }
-
 
 		BOOST_UBLAS_INLINE
 			matrix_type determinant()
