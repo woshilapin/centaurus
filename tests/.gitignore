@@ -1,6 +1,7 @@
 .deps/
 cov/
-check_factorial
+check_*
+!check_*.cpp
 *.o
 *.gcno
 *.gcda

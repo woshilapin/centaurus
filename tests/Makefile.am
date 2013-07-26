@@ -1,8 +1,22 @@
-TESTS = check_factorial
-check_PROGRAMS = check_factorial
+TESTS = \
+		check_factorial \
+		check_triangle
+check_PROGRAMS = \
+				 check_factorial \
+				 check_triangle
+
 check_factorial_SOURCES = check_factorial.c factorial.h
 check_factorial_CPPFLAGS = \
 	-I$(top_srcdir)/src/
 check_factorial_LDADD = \
 	@CHECK_LIBS@ \
 	$(top_srcdir)/src/factorial.o
+
+AM_CPPFLAGS = -I$(top_srcdir)/src/
+LDADD = /opt/local/lib/libboost_unit_test_framework-mt.a
+
+check_triangle_SOURCES = check_triangle.cpp
+check_triangle_LDADD = \
+					   $(LDADD) \
+					   $(top_srcdir)/src/ray.o \
+					   $(top_srcdir)/src/triangle.o
