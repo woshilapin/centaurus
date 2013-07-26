@@ -3,10 +3,10 @@
 
 #include <vector>
 #include "vector.hpp"
-#include "matrix.hpp"
-#include "object.hpp"
 #include "ray.hpp"
 #include "point.hpp"
+#include "object.hpp"
+#include "matrix.hpp"
 
 namespace centaurus
 {
@@ -15,7 +15,7 @@ namespace centaurus
 		private:
 			std::vector<point> vertices_;
 			vector normal_;
-			double plan_offset_;
+			float plan_offset_;
 			matrix basis_;
 		public:
 			triangle();
@@ -29,6 +29,19 @@ namespace centaurus
 					const point &,
 					const vector &);
 			~triangle();
+
+			std::vector<point> get_vertices(void) const;
+			std::vector<point> get_vertices(void);
+			point get_vertice(const unsigned int) const;
+			point get_vertice(const unsigned int);
+			vector get_normal(void) const;
+			vector get_normal(void);
+			float get_plan_offset(void) const;
+			float get_plan_offset(void);
+			matrix get_basis(void) const;
+			matrix get_basis(void);
+
+			void set_basis(const point &, const point &, const point &);
 
 			bool intersect(const point &, const ray &, point &);
 	};

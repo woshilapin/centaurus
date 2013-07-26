@@ -1,57 +1,105 @@
 #include "triangle.hpp"
 
-#include <vector>
-#include "vector.hpp"
 
 using namespace centaurus;
-using namespace std;
 
 triangle::triangle()
 {
+	point p;
+	vector v;
+	matrix m;
+	this->vertices_.push_back(p);
+	this->vertices_.push_back(p);
+	this->vertices_.push_back(p);
+	this->normal_ = v;
+	this->plan_offset_ = 0.0f;
+	this->basis_ = m;
 }
 
 triangle::triangle(
-		const point &P1,
-		const point &P2,
-		const point &P3)
+		const point &p1,
+		const point &p2,
+		const point &p3)
 {
-	point O(0.0, 0.0, 0.0);
 	this->vertices_ = std::vector<point>(3);
-	this->vertices_[0] = P1;
-	this->vertices_[1] = P2;
-	this->vertices_[2] = P3;
-	this->normal_ = vector(P2-P1)^vector(P3-P1);
-	this->plan_offset_ = -(vector(P1-O)*this->normal_);
-	this->basis_ = matrix(
-			vector(P2-P1),
-			vector(P3-P1),
-			vector(0.0f,0.0f,1.0f));
+	this->vertices_[0] = p1;
+	this->vertices_[1] = p2;
+	this->vertices_[2] = p3;
+	this->normal_ = vector(p2-p1)^vector(p3-p1);
+	this->normal_ = this->normal_.normalize();
+	this->plan_offset_ = -(vector(p1)*this->normal_);
+	this->set_basis(p1, p2, p3);
 }
 
 triangle::triangle(
-		const point &P1,
-		const point &P2,
-		const point &P3,
+		const point &p1,
+		const point &p2,
+		const point &p3,
 		const vector &normal)
 {
-	point O(0.0, 0.0, 0.0);
 	this->vertices_ = std::vector<point>(3);
-	this->vertices_[0] = P1;
-	this->vertices_[1] = P2;
-	this->vertices_[2] = P3;
-	this->normal_ = normal;
-	this->plan_offset_ = -(vector(P1-O)*this->normal_);
+	this->vertices_[0] = p1;
+	this->vertices_[1] = p2;
+	this->vertices_[2] = p3;
+	this->normal_ = normal.normalize();
+	this->plan_offset_ = -(vector(p1)*this->normal_);
+	this->set_basis(p1, p2, p3);
 }
 
 triangle::~triangle()
 {
 }
 
-#include <boost/numeric/ublas/matrix.hpp>
-#include <boost/numeric/ublas/vector.hpp>
-#include <boost/numeric/ublas/vector_expression.hpp>
-#include <boost/numeric/ublas/matrix_expression.hpp>
-using namespace boost::numeric;
+std::vector<point> triangle::get_vertices(void) const
+{
+	return this->vertices_;
+}
+std::vector<point> triangle::get_vertices(void)
+{
+	return this->vertices_;
+}
+point triangle::get_vertice(const unsigned int index) const
+{
+	return this->vertices_[index];
+}
+point triangle::get_vertice(const unsigned int index)
+{
+	return this->vertices_[index];
+}
+vector triangle::get_normal(void) const
+{
+	return this->normal_;
+}
+vector triangle::get_normal(void)
+{
+	return this->normal_;
+}
+float triangle::get_plan_offset(void) const
+{
+	return this->plan_offset_;
+}
+float triangle::get_plan_offset(void)
+{
+	return this->plan_offset_;
+}
+matrix triangle::get_basis(void) const
+{
+	return this->basis_;
+}
+matrix triangle::get_basis(void)
+{
+	return this->basis_;
+}
+
+void triangle::set_basis(const point &p1, const point &p2, const point &p3)
+{
+	this->basis_ = matrix(
+			vector(p2-p1),
+			vector(p3-p1),
+			vector(0.0f,0.0f,1.0f));
+	return;
+}
+
 bool triangle::intersect(const point &P, const ray &ray, point &I)
 {
 	point I_proj;
