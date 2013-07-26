@@ -18,7 +18,11 @@ namespace centaurus
 		BOOST_UBLAS_INLINE
 			vector ():
 				base_type(vector_dim)
-		{}
+		{
+			(*this)[0] = 0.0f;
+			(*this)[1] = 0.0f;
+			(*this)[2] = 0.0f;
+		}
 		BOOST_UBLAS_INLINE
 			vector (
 					const vector_type x,
@@ -31,36 +35,31 @@ namespace centaurus
 			(*this)[2] = z;
 		}
 		BOOST_UBLAS_INLINE
-			vector (
-					const self_type &v):
+			vector (const self_type &v):
 				base_type(vector_dim)
 		{
 			ublas::vector_assign<ublas::scalar_assign> ((*this), v);
 		}
 		template<class AE>
 		BOOST_UBLAS_INLINE
-			vector (
-					const ublas::vector_expression<AE> &ae):
+			vector (const ublas::vector_expression<AE> &ae):
 				base_type(vector_dim)
 		{
 			ublas::vector_assign<ublas::scalar_assign> ((*this), ae);
 		}
 
 		BOOST_UBLAS_INLINE
-			vector_type operator* (
-					const self_type &v) const
+			vector_type operator* (const self_type &v) const
 			{
 				return ublas::inner_prod((*this), v);
 			}
 		BOOST_UBLAS_INLINE
-			vector_type operator* (
-					const self_type &v)
+			vector_type operator* (const self_type &v)
 			{
 				return ublas::inner_prod((*this), v);
 			}
 		BOOST_UBLAS_INLINE
-			self_type operator^ (
-					const self_type &v) const
+			self_type operator^ (const self_type &v) const
 			{
 				self_type n;
 				n[0] = (*this)[1]*v[2] - (*this)[2]*v[1];
@@ -69,14 +68,23 @@ namespace centaurus
 				return n;
 			}
 		BOOST_UBLAS_INLINE
-			self_type operator^ (
-					const self_type &v)
+			self_type operator^ (const self_type &v)
 			{
 				self_type n;
 				n[0] = (*this)[1]*v[2] - (*this)[2]*v[1];
 				n[1] = (*this)[2]*v[0] - (*this)[0]*v[2];
 				n[2] = (*this)[0]*v[1] - (*this)[1]*v[0];
 				return n;
+			}
+		BOOST_UBLAS_INLINE
+			bool operator== (const self_type &v)
+			{
+				if (v.size() != vector_dim) return false;
+				for (unsigned int idx=0; idx<vector_dim; idx++)
+				{
+					if ((*this)[idx] != v[idx]) return false;
+				}
+				return true;
 			}
 		BOOST_UBLAS_INLINE
 			vector_type norm () const
