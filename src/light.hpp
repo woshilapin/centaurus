@@ -1,15 +1,16 @@
 #ifndef __LIGHT_HPP__
 #define __LIGHT_HPP__
 
+#include "point.hpp"
+#include "ray.hpp"
+
 namespace centaurus
 {
-	class Light
+	class light
 	{
 		private:
 		public:
-			Light();
-			Light(const Light &);
-			~Light();
+			virtual ray get_ray(const point &) = 0;
 	};
 }
 

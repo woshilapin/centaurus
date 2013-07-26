@@ -100,24 +100,24 @@ void triangle::set_basis(const point &p1, const point &p2, const point &p3)
 	return;
 }
 
-bool triangle::intersect(const point &P, const ray &ray, point &I)
+bool triangle::intersect(const point &p, const ray &r, point &i)
 {
-	point I_proj;
+	point i_proj;
 	matrix inv;
 	float t = 0.0f;
 	float alpha = 0.0f, beta = 0.0f;
-	t = ray.get_dir()*this->normal_;
+	t = r.get_dir()*this->normal_;
 	if (t == 0.0f)
 	{
 		return this->OBJECT_NO_INTERSECTION;
 	}
-	t = (this->plan_offset_ + vector(P)*this->normal_) / t;
-	I = P - ray.get_dir()*t;
+	t = (this->plan_offset_ + vector(p)*this->normal_) / t;
+	i = p - r.get_dir()*t;
 	inv = this->basis_.inverse();
-	I_proj = vector(I-this->vertices_[0]);
-	I_proj = prod(I_proj, inv);
-	alpha = I_proj[0];
-	beta = I_proj[1];
+	i_proj = vector(i-this->vertices_[0]);
+	i_proj = prod(i_proj, inv);
+	alpha = i_proj[0];
+	beta = i_proj[1];
 	if ( (0.0f <= alpha && alpha <= 1.0f)
 			&& (0.0f <= beta && beta <= 1.0f)
 			&& (alpha+beta <= 1.0f) )
@@ -126,4 +126,10 @@ bool triangle::intersect(const point &P, const ray &ray, point &I)
 	} else {
 		return this->OBJECT_NO_INTERSECTION;
 	}
+}
+
+ray triangle::reflect(const ray &r)
+{
+	ray reflect_ray(r.get_dir() + 2*(r.get_dir()*this->normal_)*this->normal_);
+	return reflect_ray;
 }

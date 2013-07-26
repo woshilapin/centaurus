@@ -44,6 +44,7 @@ namespace centaurus
 			void set_basis(const point &, const point &, const point &);
 
 			bool intersect(const point &, const ray &, point &);
+			ray reflect(const ray &);
 	};
 }
 

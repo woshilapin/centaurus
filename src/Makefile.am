@@ -10,6 +10,11 @@ centaurus_SOURCES = \
 	factorial.c \
 	factorial.h \
 	gettext.h \
+	light.hpp \
+	light_sun.cpp \
+	light_sun.hpp \
+	light_point.cpp \
+	light_point.hpp \
 	localization.cpp \
 	localization.hpp \
 	matrix.hpp \

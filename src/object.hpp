@@ -14,6 +14,7 @@ namespace centaurus
 			static const bool OBJECT_NO_INTERSECTION = false;
 		public:
 			virtual bool intersect(const point &, const ray &, point &) = 0;
+			virtual ray reflect(const ray &) = 0;
 	};
 }
 
