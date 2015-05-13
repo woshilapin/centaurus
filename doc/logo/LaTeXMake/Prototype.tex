@@ -1,0 +1,33 @@
+\documentclass[a4paper]{article}
+	\usepackage[utf8]{inputenc}
+	\usepackage[T1]{fontenc}
+	\usepackage{amsmath}
+	\usepackage{amsfonts}
+	\usepackage{calc}
+	\usepackage{graphicx}
+	\usepackage{pstricks}
+	\usepackage{pstricks-add}
+	\usepackage{pst-plot}
+	\usepackage{pst-eps}
+	\newcommand{\E}{2.718281828459045}
+	\newcommand{\PI}{3.141592653589793}
+	\newcommand{\PHI}{1.618033988749895}
+	\newhsbcolor{RougeFonce}{0.0 0.618033988749895 0.3819660112501051}
+	\newhsbcolor{RougeClair}{0.0 0.618033988749895 0.618033988749895}
+	\newhsbcolor{VertFonce}{0.3333333333333333 0.618033988749895 0.3819660112501051}
+	\newhsbcolor{VertClair}{0.3333333333333333 0.618033988749895 0.618033988749895}
+	\newhsbcolor{BleuFonce}{0.6666666666666666 0.618033988749895 0.3819660112501051}
+	\newhsbcolor{BleuClair}{0.6666666666666666 0.618033988749895 0.618033988749895}
+	\newgray{GrisFonce}{0.3819660112501051}
+	\newgray{GrisClair}{0.618033988749895}
+	\newcommand{\Largeur}{<+LARGEUR+>}
+	\newcommand{\Hauteur}{<+HAUTEUR+>}
+	<+NOUVELLES_COMMANDES+>
+\begin{document}
+	\TeXtoEPS
+	\psset{algebraic=true,comma=true,fillcolor=white,linecolor=white,xunit=1pt,yunit=1pt,linewidth=0pt}
+	\begin{pspicture}(0.0,0.0)(\Largeur,\Hauteur)
+		<+GRAPHISME+>
+	\end{pspicture}
+	\endTeXtoEPS
+\end{document}
