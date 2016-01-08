@@ -1,6 +1,6 @@
 /**
  * @file
- * @author  woshilapin <woshilapin@gmail.com>
+ * @author  woshilapin <woshilapin@tuziwo.info>
  * @version 0.1
  *
  * @section LICENSE

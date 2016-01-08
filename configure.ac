@@ -1,5 +1,5 @@
 AC_PREREQ([2.69])
-AC_INIT([centaurus], [0.1], [woshilapin@gmail.com])
+AC_INIT([centaurus], [0.1], [woshilapin@tuziwo.info])
 AC_COPYRIGHT([Copyright 2012 woshilapin])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])

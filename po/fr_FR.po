@@ -2,15 +2,15 @@
 # Traductions françaises du paquet centaurus.
 # Copyright (C) 2012 woshilapin
 # This file is distributed under the same license as the centaurus package.
-# woshilapin <woshilapin@gmail.com>, 2012.
+# woshilapin <woshilapin@tuziwo.info>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: centaurus 0.1\n"
-"Report-Msgid-Bugs-To: woshilapin@gmail.com\n"
+"Report-Msgid-Bugs-To: woshilapin@tuziwo.info\n"
 "POT-Creation-Date: 2012-10-09 10:00+0200\n"
 "PO-Revision-Date: 2012-10-21 23:16+0200\n"
-"Last-Translator: woshilapin <woshilapin@gmail.com>\n"
+"Last-Translator: woshilapin <woshilapin@tuziwo.info>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
