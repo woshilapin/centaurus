@@ -21,6 +21,7 @@
  */
 
 #include <config.h>
+#include <cstdlib>
 #include <iostream>
 
 #include "localization.hpp"
