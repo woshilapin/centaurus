@@ -1,0 +1,3 @@
+# List of source files which contain translatable strings.
+src/centaurus.cpp
+src/localization.cpp

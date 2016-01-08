@@ -1,0 +1,10 @@
+.deps/
+cov/
+check_*
+!check_*.cpp
+*.o
+*.gcno
+*.gcda
+*.log
+*.trs
+lcov.info

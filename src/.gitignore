@@ -1,0 +1,7 @@
+.deps/
+centaurus
+*.o
+*.gcno
+*.gcda
+callgrind.out.*
+cscope.out
