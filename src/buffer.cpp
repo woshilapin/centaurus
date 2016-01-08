@@ -121,7 +121,7 @@ unsigned int buffer::get_color_from_value(const double value)
 {
 	const unsigned int colormap_size = 4;
 	// If 'value=1', then the result will be 4 which is not a valid index [0..3]
-	if (value == 1.0)
+	if (value >= 1.0)
 	{
 		return 3;
 	} else {
