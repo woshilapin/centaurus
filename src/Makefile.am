@@ -7,8 +7,6 @@ centaurus_SOURCES = \
 	buffer.cpp \
 	buffer.hpp \
 	centaurus.cpp \
-	factorial.c \
-	factorial.h \
 	gettext.h \
 	light.hpp \
 	light_sun.cpp \

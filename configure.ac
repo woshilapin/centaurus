@@ -26,7 +26,7 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
 # Checks for libraries.
-PKG_CHECK_MODULES([CHECK], [check >= 0.9.4])
+AX_BOOST_UNIT_TEST_FRAMEWORK
 
 # Checks for header files.
 AC_STDC_HEADERS
@@ -45,7 +45,7 @@ AM_GNU_GETTEXT_VERSION([0.18.1])
 AM_GNU_GETTEXT([external])
 
 # activate all debug informations
-AC_MSG_CHECKING([whether debug options should be activated])	
+AC_MSG_CHECKING([whether debug options should be activated])
 AC_ARG_ENABLE(debug,
 	[AS_HELP_STRING([--enable-debug],
 		[enable debug flags (coverage, profiling...)])

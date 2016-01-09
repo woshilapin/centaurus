@@ -1,7 +1,6 @@
 .deps/
 cov/
-check_*
-!check_*.cpp
+*_test
 *.o
 *.gcno
 *.gcda

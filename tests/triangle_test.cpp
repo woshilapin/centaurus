@@ -1,7 +1,8 @@
 #include "point.hpp"
 #include "ray.hpp"
 #include "triangle.hpp"
-#define BOOST_TEST_MODULE vector_test
+#define BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MODULE `triangle' test suite
 #include <boost/test/unit_test.hpp>
 
 using namespace centaurus;
