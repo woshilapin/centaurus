@@ -1,0 +1,14 @@
+language: cpp
+
+addons:
+    apt:
+        packages:
+            - autopoint
+            - libboost-dev
+            - libboost-test-dev
+
+compiler:
+    - clang
+    - gcc
+
+script: ./autogen.sh && ./configure && make && make check

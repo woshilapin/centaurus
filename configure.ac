@@ -1,4 +1,4 @@
-AC_PREREQ([2.69])
+AC_PREREQ([2.68])
 AC_INIT([centaurus], [0.1], [woshilapin@tuziwo.info])
 AC_COPYRIGHT([Copyright 2012 woshilapin])
 AC_CONFIG_AUX_DIR([build-aux])

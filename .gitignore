@@ -11,6 +11,7 @@ m4/
 !m4/nls.m4
 !m4/po.m4
 !m4/progtest.m4
+configure
 Makefile
 Makefile.in
 aclocal.m4
@@ -18,7 +19,6 @@ config.h
 config.h.in
 config.log
 config.status
-configure
 gmon.out
 stamp-h1
 *.swp
