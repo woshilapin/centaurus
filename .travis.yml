@@ -1,14 +1,22 @@
 language: cpp
-
+env:
+    global:
+        - secure: VnJvobx3mMryuZiXDSKlFrrH0atZ1twhAD8zFcpDtmxLE56Y/HPjjpq4bC8pKYX+bLDvQEBg7I8oMbQ/r+UKCXP850pXIKk/K6IkHd7urCdI8ERQjgJPRYDCARBUdoXaCBwLr0b1NLG22p8wHppyuioSxZ823KjFlxgPTy0+cwg=
 addons:
     apt:
         packages:
             - autopoint
             - libboost-dev
             - libboost-test-dev
-
+    coverity_scan:
+        project:
+            name: woshilapin/centaurus
+            version: 1.0
+            description: Relativist ray-tracer
+        build_command_prepend: "./autogen.sh && ./configure"
+        build_command: make
+        branch_pattern: coverity_scan
 compiler:
     - clang
     - gcc
-
-script: ./autogen.sh && ./configure && make && make check
+script: "./autogen.sh && ./configure && make && make check"
