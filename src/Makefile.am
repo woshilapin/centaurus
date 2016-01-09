@@ -42,7 +42,7 @@ count:
 	sloccount --datadir $(top_builddir)/.slocdata --wide $(srcdir)
 
 splint:
-	splint $(centaurus_SOURCES)
+	splint -fileextensions cpp $(centaurus_SOURCES)
 
 cppcheck:
 	cppcheck --enable=all --report-progress --template 'gcc' $(centaurus_SOURCES)
