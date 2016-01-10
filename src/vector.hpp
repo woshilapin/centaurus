@@ -77,14 +77,31 @@ namespace centaurus
 				return n;
 			}
 		BOOST_UBLAS_INLINE
-			bool operator== (const self_type &v)
+			bool operator== (const self_type &v) const
 			{
 				if (v.size() != vector_dim) return false;
 				for (unsigned int idx=0; idx<vector_dim; idx++)
 				{
+					// TODO: Do a real comparison of float numbers
 					if ((*this)[idx] != v[idx]) return false;
 				}
 				return true;
+			}
+		BOOST_UBLAS_INLINE
+			bool operator== (const self_type &v)
+			{
+				const vector copy = vector(*this);
+				return copy == v;
+			}
+		BOOST_UBLAS_INLINE
+			bool operator!= (const self_type &v) const
+			{
+				return !((*this) == v);
+			}
+		BOOST_UBLAS_INLINE
+			bool operator!= (const self_type &v)
+			{
+				return !((*this) == v);
 			}
 		BOOST_UBLAS_INLINE
 			vector_type norm () const
