@@ -58,7 +58,7 @@ namespace centaurus
 		}
 
 		BOOST_UBLAS_INLINE
-			bool operator==(const self_type &p)
+			bool operator==(const self_type &p) const
 			{
 				if (p.size() != point_dim) return false;
 				for (unsigned int idx=0; idx<point_dim; idx++)
@@ -66,6 +66,24 @@ namespace centaurus
 					if ((*this)[idx] != p[idx]) return false;
 				}
 				return true;
+			}
+		BOOST_UBLAS_INLINE
+			bool operator==(const self_type &p)
+			{
+				const point copy = point(*this);
+				return copy == p;
+			}
+		
+		BOOST_UBLAS_INLINE
+			bool operator!=(const self_type &p) const
+			{
+				return !((*this) == p);
+			}
+		
+		BOOST_UBLAS_INLINE
+			bool operator!=(const self_type &p)
+			{
+				return !((*this) == p);
 			}
 	};
 }
