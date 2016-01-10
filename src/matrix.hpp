@@ -2,12 +2,12 @@
 #define __MATRIX_HPP__
 
 #include <boost/numeric/ublas/matrix.hpp>
+#include "point.hpp"
+#include "vector.hpp"
 
 namespace centaurus
 {
 	using namespace boost::numeric;
-	class point;
-	class vector;
 	class matrix :
 		public ublas::matrix<float>
 	{
@@ -21,6 +21,8 @@ namespace centaurus
 			matrix ():
 				base_type(matrix_dim, matrix_dim)
 		{}
+
+		// TODO: Implement a generic version (independent of dimension)
 		BOOST_UBLAS_INLINE
 			matrix (
 					const vector &v1,
@@ -52,6 +54,7 @@ namespace centaurus
 			ublas::matrix_assign<ublas::scalar_assign> ((*this), ae);
         }
 
+		// TODO: Implement a generic version (independent of dimension)
 		BOOST_UBLAS_INLINE
 			matrix_type determinant()
 			{
@@ -64,10 +67,12 @@ namespace centaurus
 					- (*this)(0,2)*(*this)(1,1)*(*this)(2,0);
 				return det;
 			}
+
+		// TODO: Implement a generic version (independent of dimension)
 		BOOST_UBLAS_INLINE
 			self_type inverse()
 			{
-				self_type inv((*this));
+				self_type inv(*this);
 				inv(0,0) = (*this)(1,1)*(*this)(2,2) - 
 					(*this)(1,2)*(*this)(2,1);
 				inv(0,1) = (*this)(0,2)*(*this)(2,1) - 
