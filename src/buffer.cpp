@@ -92,29 +92,29 @@ void buffer::display(void)
 	unsigned int color_idx = 0;
 
 	// Upper border
-	cout << "+";
+	cout << "\u250C";
 	for (unsigned int w=0; w<this->width_; w++)
 	{
-		cout << "-";
+		cout << "\u2500";
 	}
-	cout << "+" << endl;
+	cout << "\u2510" << endl;
 	for (unsigned int h=0; h<this->height_; h++)
 	{
-		cout << "|";
+		cout << "\u2502";
 		for (unsigned int w=0; w<this->width_; w++)
 		{
 			color_idx = get_color_from_value((*this)(h,w));
 			cout << colormap[color_idx];
 		}
-		cout << "|" << endl;
+		cout << "\u2502" << endl;
 	}
 	// Lower border
-	cout << "+";
+	cout << "\u2514";
 	for (unsigned int w=0; w<this->width_; w++)
 	{
-		cout << "-";
+		cout << "\u2500";
 	}
-	cout << "+" << endl;
+	cout << "\u2518" << endl;
 }
 
 unsigned int buffer::get_color_from_value(const double value)
