@@ -27,7 +27,7 @@ void render::run(void)
 	point p2( 1.0,  0.0,  0.0);
 	point p3( 0.0,  1.0, -1.0);
 	triangle o(p1, p2, p3);
-	point pl(1.0f, 1.0f, 1.0f);
+	point pl(0.25f, 0.25f, 0.25f);
 	light_point l(pl);
 	unsigned int width = this->buffer_.get_width();
 	unsigned int height = this->buffer_.get_height();
