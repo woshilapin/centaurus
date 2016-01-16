@@ -1,6 +1,6 @@
 AC_PREREQ([2.68])
 AC_INIT([centaurus], [0.1], [woshilapin@tuziwo.info])
-AC_COPYRIGHT([Copyright 2012 woshilapin])
+AC_COPYRIGHT([Copyright 2012-2016 woshilapin])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([src/centaurus.cpp])
