@@ -17,8 +17,6 @@
  */
 #include "buffer.hpp"
 
-#include <iostream>
-#include <cmath>
 #include <limits>
 
 using namespace std;
@@ -52,14 +50,29 @@ buffer::~buffer()
 	delete this->buffer_;
 }
 
+unsigned int buffer::get_width() const
+{
+	return this->width_;
+}
+
 unsigned int buffer::get_width()
 {
 	return this->width_;
 }
 
+unsigned int buffer::get_height() const
+{
+	return this->height_;
+}
+
 unsigned int buffer::get_height()
 {
 	return this->height_;
+}
+
+unsigned int buffer::get_depth() const
+{
+	return this->depth_;
 }
 
 unsigned int buffer::get_depth()
@@ -92,57 +105,16 @@ void buffer::set_size(
 	this->depth_ = d;
 }
 
+double buffer::operator()(
+					const unsigned int h,
+					const unsigned int w) const
+{
+	return this->buffer_[h][w];
+}
+
 double & buffer::operator()(
 					const unsigned int h,
 					const unsigned int w)
 {
 	return this->buffer_[h][w];
-}
-
-void buffer::display(void)
-{
-	const char * colormap[5];
-	colormap[0] = " ";
-	colormap[1] = "\u2591";
-	colormap[2] = "\u2592";
-	colormap[3] = "\u2593";
-	colormap[4] = "\u2588";
-	unsigned int color_idx = 0;
-
-	// Upper border
-	cout << "\u250C";
-	for (unsigned int w=0; w<this->width_; w++)
-	{
-		cout << "\u2500";
-	}
-	cout << "\u2510" << endl;
-	for (unsigned int h=0; h<this->height_; h++)
-	{
-		cout << "\u2502";
-		for (unsigned int w=0; w<this->width_; w++)
-		{
-			color_idx = get_color_from_value((*this)(h,w));
-			cout << colormap[color_idx];
-		}
-		cout << "\u2502" << endl;
-	}
-	// Lower border
-	cout << "\u2514";
-	for (unsigned int w=0; w<this->width_; w++)
-	{
-		cout << "\u2500";
-	}
-	cout << "\u2518" << endl;
-}
-
-unsigned int buffer::get_color_from_value(const double value)
-{
-	const unsigned int colormap_size = 5;
-	// If 'value=1', then the result will be 4 which is not a valid index [0..3]
-	if (value >= 1.0)
-	{
-		return 4;
-	} else {
-		return (unsigned int)(floor(value*double(colormap_size)));
-	}
 }

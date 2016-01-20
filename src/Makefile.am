@@ -1,12 +1,20 @@
 localedir = $(datadir)/locale
 AM_CPPFLAGS = \
-	-DLOCALEDIR=\"$(localedir)\"
+	-DLOCALEDIR=\"$(localedir)\" \
+	@MAGICK_CFLAGS@
 
 bin_PROGRAMS = centaurus
 centaurus_SOURCES = \
 	buffer.cpp \
 	buffer.hpp \
 	centaurus.cpp \
+	displayer.hpp \
+	displayer_png.cpp \
+	displayer_png.hpp \
+	displayer_txt.cpp \
+	displayer_txt.hpp \
+	factory_displayer.cpp \
+	factory_displayer.hpp \
 	gettext.h \
 	light.hpp \
 	light_sun.cpp \
@@ -33,7 +41,8 @@ centaurus_SOURCES = \
 # scene.hpp
 
 centaurus_LDADD = \
-	@LTLIBINTL@
+	@LTLIBINTL@ \
+	@MAGICK_LIBS@
 
 astyle:
 	ARTISTIC_STYLE_OPTIONS=$(top_builddir)/.astylerc ; astyle $(centaurus_SOURCES)

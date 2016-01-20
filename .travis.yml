@@ -6,6 +6,7 @@ addons:
             - autopoint
             - libboost-dev
             - libboost-test-dev
+            - libmagick++-dev
 
 compiler:
     - clang

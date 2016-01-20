@@ -12,5 +12,6 @@ You should install a bunch of dependencies to compile `centaurus`:
 * automake (> 1.9)
 * autopoint (> 0.18.1)
 * libboost-dev
+* libmagick++-dev
 * [optional] doxygen
 * [optional] libboost-test-dev

@@ -17,10 +17,14 @@
  */
 #include "render.hpp"
 
+#include <iostream>
+#include <fstream>
+
 #include "vector.hpp"
 #include "point.hpp"
 #include "triangle.hpp"
 #include "light_point.hpp"
+#include "factory_displayer.hpp"
 
 using namespace centaurus;
 
@@ -72,6 +76,12 @@ void render::run(void)
 			}
 		}
 	}
-	this->buffer_.display();
+	displayer * txt = factory_displayer::create(factory_displayer::TXT);
+	std::ofstream txt_file("image.txt", std::ofstream::out);
+	txt->display(this->buffer_, txt_file);
+	txt->display(this->buffer_, std::cout);
+	displayer * png = factory_displayer::create(factory_displayer::PNG);
+	std::ofstream png_file("image.png", std::ofstream::out | std::ofstream::binary);
+	png->display(this->buffer_, png_file);
 	return;
 }

@@ -35,8 +35,11 @@ namespace centaurus
 			buffer(const buffer &);
 			~buffer();
 
+			unsigned int get_width() const;
 			unsigned int get_width();
+			unsigned int get_height() const;
 			unsigned int get_height();
+			unsigned int get_depth() const;
 			unsigned int get_depth();
 
 			void set_width(const unsigned int);
@@ -46,14 +49,12 @@ namespace centaurus
 					const unsigned int,
 					const unsigned int = 24);
 
+			double operator()(
+					const unsigned int,
+					const unsigned int) const;
 			double & operator()(
 					const unsigned int,
 					const unsigned int);
-
-			void display(void);
-
-		private:
-			unsigned int get_color_from_value(const double);
 	};
 }
 
