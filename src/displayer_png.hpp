@@ -29,7 +29,7 @@ namespace centaurus
 		public:
 			virtual ~displayer_png();
 
-			virtual void display(const buffer &, std::ostream &);
+			virtual void display(const Magick::Image &, std::ostream &);
 	};
 }
 

@@ -20,7 +20,7 @@
 
 #include <ostream>
 
-#include "buffer.hpp"
+#include <Magick++.h>
 
 namespace centaurus
 {
@@ -29,7 +29,7 @@ namespace centaurus
 		private:
 		public:
 			virtual ~displayer() {};
-			virtual void display(const buffer &, std::ostream &) = 0;
+			virtual void display(const Magick::Image &, std::ostream &) = 0;
 	};
 }
 

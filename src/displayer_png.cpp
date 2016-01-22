@@ -17,8 +17,6 @@
  */
 #include "displayer_png.hpp"
 
-#include <Magick++.h>
-
 using namespace std;
 using namespace centaurus;
 using namespace Magick;
@@ -27,21 +25,9 @@ displayer_png::~displayer_png()
 {
 }
 
-void displayer_png::display(const buffer & b, ostream & out)
+void displayer_png::display(const Image & i, ostream & out)
 {
-	Geometry size(b.get_width(), b.get_height());
-	Color background(0, 0, 0, 0);
-	Image image(size, background);
-
-	for (unsigned int h=0; h<b.get_height(); h++)
-	{
-		for (unsigned int w=0; w<b.get_width(); w++)
-		{
-			unsigned int c = (unsigned int)(MaxRGB * b(h,w));
-			Color color(c, c, c);
-			image.pixelColor(w, h, color);
-		}
-	}
+	Image image(i);
 	Blob blob;
 	image.magick("PNG");
 	image.write(&blob);

@@ -20,6 +20,8 @@
 
 #include "displayer.hpp"
 
+#include <Magick++.h>
+
 namespace centaurus
 {
 	class displayer_txt:
@@ -29,10 +31,10 @@ namespace centaurus
 		public:
 			virtual ~displayer_txt();
 
-			virtual void display(const buffer &, std::ostream &);
+			virtual void display(const Magick::Image &, std::ostream &);
 
 		private:
-			unsigned int get_color_from_value(const double);
+			unsigned int get_color_from_value(const Magick::Color &);
 	};
 }
 

@@ -5,8 +5,6 @@ AM_CPPFLAGS = \
 
 bin_PROGRAMS = centaurus
 centaurus_SOURCES = \
-	buffer.cpp \
-	buffer.hpp \
 	centaurus.cpp \
 	displayer.hpp \
 	displayer_png.cpp \

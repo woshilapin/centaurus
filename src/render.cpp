@@ -27,14 +27,17 @@
 #include "factory_displayer.hpp"
 
 using namespace centaurus;
+using namespace Magick;
 
 render::render(void)
 {
+	Geometry g(80, 36);
+	this->image_.size(g);
 }
 
 render::render(const render &src)
 {
-	this->buffer_ = src.buffer_;
+	this->image_ = src.image_;
 }
 
 render::~render(void)
@@ -50,8 +53,8 @@ void render::run(void)
 	triangle o(p1, p2, p3);
 	point pl(0.25f, 0.25f, 0.25f);
 	light_point l(pl);
-	unsigned int width = this->buffer_.get_width();
-	unsigned int height = this->buffer_.get_height();
+	unsigned int width = this->image_.columns();
+	unsigned int height = this->image_.rows();
 	float color = 0.0f;
 	point pixel, I;
 	ray r;
@@ -66,22 +69,24 @@ void render::run(void)
 					0.0);
 			r = ray(cam-pixel);
 			unsigned int is_intersect = o.intersect(cam, r, I);
-			this->buffer_(h,w) = 0.0;
+			Color background(0, 0, 0);
+			this->image_.pixelColor(w, h, background);
 			if (is_intersect == true)
 			{
 				reflect_ray = o.reflect(r);
 				light_ray = l.get_ray(I);
 				color = o.get_normal() * light_ray.get_dir();
-				this->buffer_(h,w) = color;
+				Color c(color*MaxRGB, color*MaxRGB, color*MaxRGB);
+				this->image_.pixelColor(w, h, c);
 			}
 		}
 	}
 	displayer * txt = factory_displayer::create(factory_displayer::TXT);
 	std::ofstream txt_file("image.txt", std::ofstream::out);
-	txt->display(this->buffer_, txt_file);
-	txt->display(this->buffer_, std::cout);
+	txt->display(this->image_, txt_file);
+	txt->display(this->image_, std::cout);
 	displayer * png = factory_displayer::create(factory_displayer::PNG);
 	std::ofstream png_file("image.png", std::ofstream::out | std::ofstream::binary);
-	png->display(this->buffer_, png_file);
+	png->display(this->image_, png_file);
 	return;
 }
