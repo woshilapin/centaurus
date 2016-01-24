@@ -6,6 +6,8 @@ AM_CPPFLAGS = \
 bin_PROGRAMS = centaurus
 centaurus_SOURCES = \
 	centaurus.cpp \
+	color.cpp \
+	color.hpp \
 	displayer.hpp \
 	displayer_png.cpp \
 	displayer_png.hpp \

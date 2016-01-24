@@ -18,7 +18,7 @@
 #include "matrix.hpp"
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE `matrix` test suite
-#define TOLERANCE 0.0001f
+#define TOLERANCE 0.0001
 #include <boost/test/unit_test.hpp>
 
 using namespace centaurus;

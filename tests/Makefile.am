@@ -1,22 +1,29 @@
 TESTS = \
+	color_test \
 	matrix_test \
 	point_test \
 	ray_test \
 	triangle_test \
 	vector_test
 check_PROGRAMS = \
+	color_test \
 	matrix_test \
 	point_test \
 	ray_test \
 	triangle_test \
 	vector_test
 
-AM_CPPFLAGS = -I$(top_builddir)/src/
+AM_CPPFLAGS = \
+	-I$(top_builddir)/src/ \
+	@MAGICK_CFLAGS@
 LDADD = \
+	$(top_builddir)/src/color.o \
 	$(top_builddir)/src/ray.o \
 	$(top_builddir)/src/triangle.o \
-	-lboost_unit_test_framework
+	-lboost_unit_test_framework \
+	@MAGICK_LIBS@
 
+color_test_SOURCES = color_test.cpp $(top_builddir)/src/color.hpp
 matrix_test_SOURCES = matrix_test.cpp $(top_builddir)/src/matrix.hpp
 point_test_SOURCES = point_test.cpp $(top_builddir)/src/point.hpp
 ray_test_SOURCES = ray_test.cpp $(top_builddir)/src/ray.hpp

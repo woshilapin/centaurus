@@ -18,6 +18,8 @@
 #ifndef __OBJECT_HPP__
 #define __OBJECT_HPP__
 
+#include <Magick++.h>
+
 #include "ray.hpp"
 #include "point.hpp"
 
@@ -30,6 +32,11 @@ namespace centaurus
 			static const bool OBJECT_INTERSECTION = true;
 			static const bool OBJECT_NO_INTERSECTION = false;
 		public:
+			Magick::Color material;
+			Magick::Color diffuse;
+			Magick::Color specular;
+			double shininess;
+
 			virtual bool intersect(const point &, const ray &, point &) = 0;
 			virtual ray reflect(const ray &) = 0;
 	};

@@ -18,7 +18,7 @@
 #include "point.hpp"
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE `point` test suite
-#define TOLERANCE 0.0001f
+#define TOLERANCE 0.0001
 #include <boost/test/unit_test.hpp>
 
 using namespace centaurus;
