@@ -1,15 +1,12 @@
-language: cpp
+language: rust
 
-addons:
-    apt:
-        packages:
-            - autopoint
-            - libboost-dev
-            - libboost-test-dev
-            - libmagick++-dev
+rust:
+    - stable
+    - beta
+    - nightly
 
-compiler:
-    - clang
-    - gcc
+matrix:
+    allow_failures:
+        - rust: nightly
+    fast_finish: true
 
-script: ./autogen.sh && ./configure && make && make check

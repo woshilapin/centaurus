@@ -1,9 +1,0 @@
-.deps/
-cov/
-*_test
-*.o
-*.gcno
-*.gcda
-*.log
-*.trs
-lcov.info

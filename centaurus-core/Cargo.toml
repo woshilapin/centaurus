@@ -1,0 +1,6 @@
+[package]
+name = "centaurus-core"
+version = "0.1.0"
+authors = ["woshilapin <woshilapin@tuziwo.info>"]
+
+[dependencies]

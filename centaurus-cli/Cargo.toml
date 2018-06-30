@@ -1,0 +1,8 @@
+[package]
+name = "centaurus-cli"
+version = "0.1.0"
+authors = ["woshilapin <woshilapin@tuziwo.info>"]
+
+[dependencies]
+clap = "2.31.2"
+centaurus-core = { path = "../centaurus-core" }
