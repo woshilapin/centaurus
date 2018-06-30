@@ -5,7 +5,7 @@ pub struct Scene {
 /// Some nice structure
 /// ```
 /// # use centaurus_core::SceneBuilder;
-/// let scene = SceneBuilder::new().dimension(3).build();
+/// let scene = SceneBuilder::new().with_dimension(3).build();
 /// assert_eq!(scene.render(), 3);
 /// ```
 pub struct SceneBuilder {
