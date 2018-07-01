@@ -1,3 +1,7 @@
+#[cfg(test)]
+#[macro_use]
+extern crate pretty_assertions;
+
 #[derive(Debug, Default, Copy, Clone)]
 pub struct Scene {
     width: u32,

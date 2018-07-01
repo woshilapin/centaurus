@@ -3,4 +3,5 @@ name = "centaurus-core"
 version = "0.1.0"
 authors = ["woshilapin <woshilapin@tuziwo.info>"]
 
-[dependencies]
+[dev-dependencies]
+pretty_assertions = "0.5.1"
