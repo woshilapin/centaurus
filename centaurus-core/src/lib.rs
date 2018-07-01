@@ -1,4 +1,7 @@
+#[derive(Debug, Default, Copy, Clone)]
 pub struct Scene {
+    width: u32,
+    height: u32,
     dimension: u8,
 }
 
@@ -8,33 +11,41 @@ pub struct Scene {
 /// let scene = SceneBuilder::new().with_dimension(3).build();
 /// assert_eq!(scene.render(), 3);
 /// ```
+#[derive(Default)]
 pub struct SceneBuilder {
-    dimension: u8,
+    scene: Scene,
 }
 
 impl SceneBuilder {
     pub fn new() -> SceneBuilder {
         SceneBuilder {
-            dimension: 3,
+            scene: Scene {
+                width: 600,
+                height: 400,
+                dimension: 3,
+                ..Default::default()
+            },
             ..Default::default()
         }
     }
 
+    pub fn with_width(&mut self, width: u32) -> &mut Self {
+        self.scene.width = width;
+        self
+    }
+
+    pub fn with_height(&mut self, height: u32) -> &mut Self {
+        self.scene.height = height;
+        self
+    }
+
     pub fn with_dimension(&mut self, dimension: u8) -> &mut Self {
-        self.dimension = dimension;
+        self.scene.dimension = dimension;
         self
     }
 
     pub fn build(&self) -> Scene {
-        Scene {
-            dimension: self.dimension,
-        }
-    }
-}
-
-impl Scene {
-    pub fn new(dimension: u8) -> Scene {
-        Scene { dimension }
+        self.scene.clone()
     }
 }
 
@@ -44,21 +55,13 @@ impl Scene {
     }
 }
 
-impl Default for SceneBuilder {
-    fn default() -> SceneBuilder {
-        SceneBuilder {
-            dimension: 3,
-        }
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
     fn render_dimension() {
-        let scene: Scene = Scene { dimension: 3 };
+        let scene: Scene = SceneBuilder::new().build();
         assert_eq!(scene.render(), 3);
     }
 }
