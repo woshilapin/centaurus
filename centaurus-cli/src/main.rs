@@ -49,6 +49,12 @@ fn main() {
             .default_value("600")
             .help("Height of the final output images")
             .takes_value(true))
+        .arg(Arg::with_name("output-file")
+            .short("o")
+            .long("output-file")
+            .default_value("centaurus.png")
+            .help("Path for the output file")
+            .takes_value(true))
         .get_matches();
 
     let mut scene_builder = SceneBuilder::new();
@@ -76,7 +82,11 @@ fn main() {
         image::Rgb([color.get_red(), color.get_green(), color.get_blue()])
     });
 
-    if let Ok(_) = image::ImageRgb8(image_buffer).save("image.png") {
-        println!("'image.png' saved!");
+    let output_filename = match matches.value_of("output-file") {
+        Some(f) => f,
+        None => "centaurus.png",
+    };
+    if let Ok(_) = image::ImageRgb8(image_buffer).save(output_filename) {
+        println!("'{}' saved!", output_filename);
     }
 }
