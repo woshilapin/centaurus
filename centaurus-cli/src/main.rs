@@ -7,7 +7,7 @@ use std::cmp::PartialOrd;
 use std::fmt::Debug;
 use std::str::FromStr;
 use std::string::String;
-use std::u32;
+use std::usize;
 use std::u8;
 
 fn is_integer_between<T: FromStr + PartialOrd + Debug>(string: String, min: T, max: T) -> Result<(), String> {
@@ -35,7 +35,7 @@ fn main() {
             .short("w")
             .long("width")
             .value_name("INTEGER")
-            .validator(|value| is_integer_between(value, 1, u32::MAX))
+            .validator(|value| is_integer_between(value, 1, usize::MAX))
             .default_value("600")
             .help("Width of the final output images")
             .takes_value(true))
@@ -43,7 +43,7 @@ fn main() {
             .short("h")
             .long("height")
             .value_name("INTEGER")
-            .validator(|value| is_integer_between(value, 1, u32::MAX))
+            .validator(|value| is_integer_between(value, 1, usize::MAX))
             .default_value("600")
             .help("Height of the final output images")
             .takes_value(true))
@@ -68,6 +68,5 @@ fn main() {
     }
 
     let scene = scene_builder.build();
-
-    println!("The scene is {:?}", scene);
+    let image = scene.render();
 }
