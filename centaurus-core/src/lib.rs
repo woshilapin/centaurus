@@ -2,19 +2,17 @@
 #[macro_use]
 extern crate pretty_assertions;
 
+use image::Image;
+
+pub mod image;
+
 #[derive(Debug, Default, Copy, Clone)]
 pub struct Scene {
-    width: u32,
-    height: u32,
+    width: usize,
+    height: usize,
     dimension: u8,
 }
 
-/// Some nice structure
-/// ```
-/// # use centaurus_core::SceneBuilder;
-/// let scene = SceneBuilder::new().with_dimension(3).build();
-/// assert_eq!(scene.render(), 3);
-/// ```
 #[derive(Default)]
 pub struct SceneBuilder {
     scene: Scene,
@@ -33,12 +31,12 @@ impl SceneBuilder {
         }
     }
 
-    pub fn with_width(&mut self, width: u32) -> &mut Self {
+    pub fn with_width(&mut self, width: usize) -> &mut Self {
         self.scene.width = width;
         self
     }
 
-    pub fn with_height(&mut self, height: u32) -> &mut Self {
+    pub fn with_height(&mut self, height: usize) -> &mut Self {
         self.scene.height = height;
         self
     }
@@ -54,8 +52,17 @@ impl SceneBuilder {
 }
 
 impl Scene {
-    pub fn render(&self) -> u8 {
+    pub fn get_width(&self) -> usize {
+        self.width
+    }
+    pub fn get_height(&self) -> usize {
+        self.height
+    }
+    pub fn get_dimension(&self) -> u8 {
         self.dimension
+    }
+    pub fn render(&self) -> Image {
+        Image::new((self.width, self.height))
     }
 }
 
@@ -64,8 +71,10 @@ mod tests {
     use super::*;
 
     #[test]
-    fn render_dimension() {
+    fn default_constructor() {
         let scene: Scene = SceneBuilder::new().build();
-        assert_eq!(scene.render(), 3);
+        assert_eq!(scene.get_dimension(), 3);
+        assert_eq!(scene.get_width(), 600);
+        assert_eq!(scene.get_height(), 400);
     }
 }

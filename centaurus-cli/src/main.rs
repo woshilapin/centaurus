@@ -1,14 +1,16 @@
 extern crate centaurus_core;
 extern crate clap;
+extern crate image;
 
 use centaurus_core::SceneBuilder;
 use clap::{App, Arg};
+use image::ImageBuffer;
 use std::cmp::PartialOrd;
 use std::fmt::Debug;
 use std::str::FromStr;
 use std::string::String;
-use std::u32;
 use std::u8;
+use std::usize;
 
 fn is_integer_between<T: FromStr + PartialOrd + Debug>(string: String, min: T, max: T) -> Result<(), String> {
     match string.parse::<T>() {
@@ -35,7 +37,7 @@ fn main() {
             .short("w")
             .long("width")
             .value_name("INTEGER")
-            .validator(|value| is_integer_between(value, 1, u32::MAX))
+            .validator(|value| is_integer_between(value, 1, usize::MAX))
             .default_value("600")
             .help("Width of the final output images")
             .takes_value(true))
@@ -43,7 +45,7 @@ fn main() {
             .short("h")
             .long("height")
             .value_name("INTEGER")
-            .validator(|value| is_integer_between(value, 1, u32::MAX))
+            .validator(|value| is_integer_between(value, 1, usize::MAX))
             .default_value("600")
             .help("Height of the final output images")
             .takes_value(true))
@@ -68,6 +70,13 @@ fn main() {
     }
 
     let scene = scene_builder.build();
+    let image = scene.render();
+    let image_buffer = ImageBuffer::from_fn(image.get_width() as u32, image.get_heigth() as u32, |x, y| {
+        let color = image.get_color(x as usize, y as usize);
+        image::Rgb([color.get_red(), color.get_green(), color.get_blue()])
+    });
 
-    println!("The scene is {:?}", scene);
+    if let Ok(_) = image::ImageRgb8(image_buffer).save("image.png") {
+        println!("'image.png' saved!");
+    }
 }
