@@ -82,8 +82,8 @@ fn main() {
 
     let scene = scene_builder.build();
     let image = scene.render();
-    let image_buffer = ImageBuffer::from_fn(image.get_width() as u32, image.get_heigth() as u32, |x, y| {
-        let color = image.get_color(x as usize, y as usize);
+    let image_buffer = ImageBuffer::from_fn(image.width() as u32, image.height() as u32, |x, y| {
+        let color = image.color(x as usize, y as usize);
         image::Rgb([color.get_red(), color.get_green(), color.get_blue()])
     });
 

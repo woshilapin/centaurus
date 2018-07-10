@@ -6,9 +6,11 @@ pub struct Color {
 }
 
 impl Color {
-    pub fn new() -> Color {
+    pub fn new(red: u8, green: u8, blue: u8) -> Color {
         Color {
-            ..Default::default()
+            red,
+            green,
+            blue,
         }
     }
 
