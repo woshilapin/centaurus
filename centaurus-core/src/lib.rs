@@ -2,8 +2,12 @@
 #[macro_use]
 extern crate pretty_assertions;
 
-use image::Image;
 use camera::Camera;
+use image::color::Color;
+use image::Image;
+use object::Intersect;
+use object::Ray;
+use object::triangle::Triangle;
 
 pub mod image;
 mod camera;
@@ -55,17 +59,43 @@ impl SceneBuilder {
 }
 
 impl Scene {
-    pub fn get_width(&self) -> usize {
+    pub fn width(&self) -> usize {
         self.width
     }
-    pub fn get_height(&self) -> usize {
+    pub fn height(&self) -> usize {
         self.height
     }
-    pub fn get_dimension(&self) -> u8 {
+    pub fn dimension(&self) -> u8 {
         self.dimension
     }
     pub fn render(&self) -> Image {
-        Image::new((self.width, self.height))
+        let mut image = Image::new((self.width, self.height));
+        let triangle = Triangle::new([
+            [-0.5, -0.5, 0.0],
+            [0.5, -0.5, 0.0],
+            [0.0, 0.5, 0.0],
+        ]);
+        let camera = Camera::new(
+            [0.0, 0.0, -1.0],
+            [0.0, 0.0, 1.0],
+            1.0,
+            [1.0, -1.0, -1.0, 1.0],
+        );
+        for i in 0..self.width() as usize {
+            for j in 0..self.height() as usize {
+                let x = (i as f64) * 2.0 / (self.width() as f64) - 1.0;
+                let y = (j as f64) * 2.0 / (self.height() as f64) - 1.0;
+                let ray = Ray::new(
+                    [x, y, -1.0],
+                    [0.0, 0.0, 1.0],
+                );
+                match triangle.intersect(&ray) {
+                    Some(intersection) => image.set_color(i, j, Color::new(u8::max_value(), u8::max_value(), u8::max_value())),
+                    None => image.set_color(i, j, Color::new(0, 0, 0)),
+                }
+            }
+        }
+        image
     }
 }
 
@@ -76,8 +106,8 @@ mod tests {
     #[test]
     fn default_constructor() {
         let scene: Scene = SceneBuilder::new().build();
-        assert_eq!(scene.get_dimension(), 3);
-        assert_eq!(scene.get_width(), 600);
-        assert_eq!(scene.get_height(), 400);
+        assert_eq!(scene.dimension(), 3);
+        assert_eq!(scene.width(), 600);
+        assert_eq!(scene.height(), 400);
     }
 }

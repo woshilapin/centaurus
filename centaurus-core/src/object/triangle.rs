@@ -10,6 +10,14 @@ pub struct Triangle {
     vertices: [[f64; 3]; 3],
 }
 
+impl Triangle {
+    pub fn new(vertices: [[f64; 3]; 3]) -> Triangle {
+        Triangle {
+            vertices
+        }
+    }
+}
+
 fn vector(p1: &[f64; 3], p2: &[f64; 3]) -> [f64; 3] {
     [
         p2[0] - p1[0],
