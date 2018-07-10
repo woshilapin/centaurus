@@ -52,14 +52,13 @@ fn main() {
         .help("Path for the output file")
         .takes_value(true);
     let arguments = [argument_width, argument_height, argument_dimension, argument_output_file];
-    let application = App::new("Centaurus")
+    let mut application = App::new("Centaurus")
         .version("0.1.0")
         .author("woshilapin <woshilapin@tuziwo.info")
-        .about("A relativist ray-tracer")
-        .arg(&arguments[0])
-        .arg(&arguments[1])
-        .arg(&arguments[2])
-        .arg(&arguments[3]);
+        .about("A relativist ray-tracer");
+    for argument in arguments.iter() {
+        application = application.arg(argument);
+    }
 
     let matches = application.get_matches();
 

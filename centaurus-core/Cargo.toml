@@ -3,5 +3,8 @@ name = "centaurus-core"
 version = "0.1.0"
 authors = ["woshilapin <woshilapin@tuziwo.info>"]
 
+[dependencies]
+spectral = "0.6.0"
+
 [dev-dependencies]
 pretty_assertions = "0.5.1"

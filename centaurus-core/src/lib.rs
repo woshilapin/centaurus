@@ -3,8 +3,11 @@
 extern crate pretty_assertions;
 
 use image::Image;
+use camera::Camera;
 
 pub mod image;
+mod camera;
+mod object;
 
 #[derive(Debug, Default, Copy, Clone)]
 pub struct Scene {
