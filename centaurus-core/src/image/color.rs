@@ -6,9 +6,11 @@ pub struct Color {
 }
 
 impl Color {
-    pub fn new() -> Color {
+    pub fn new(red: u8, green: u8, blue: u8) -> Color {
         Color {
-            ..Default::default()
+            red,
+            green,
+            blue,
         }
     }
 
@@ -31,7 +33,7 @@ mod tests {
 
     #[test]
     fn default_constructor() {
-        let color = Color::new();
+        let color = Color::new(0, 0, 0);
         assert_eq!(color.red, 0);
         assert_eq!(color.green, 0);
         assert_eq!(color.blue, 0);
