@@ -1,6 +1,8 @@
+use nalgebra::Vector3;
+
 pub struct Camera {
-    position: [f64; 3],
-    direction: [f64; 3],
+    position: Vector3<f64>,
+    direction: Vector3<f64>,
     focal_length: f64,
     upper_bound: f64,
     lower_bound: f64,
@@ -9,7 +11,7 @@ pub struct Camera {
 }
 
 impl Camera {
-    pub fn new(position: [f64; 3], direction: [f64; 3], focal_length: f64, bounds: [f64; 4]) -> Camera {
+    pub fn new(position: Vector3<f64>, direction: Vector3<f64>, focal_length: f64, bounds: [f64; 4]) -> Camera {
         Camera {
             position,
             direction,

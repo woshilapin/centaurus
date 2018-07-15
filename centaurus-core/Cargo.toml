@@ -4,10 +4,11 @@ version = "0.1.0"
 authors = ["woshilapin <woshilapin@tuziwo.info>"]
 
 [dependencies]
-spectral = "0.6.0"
+nalgebra = "0.15.3"
+spectral = "0.6"
 
 [dev-dependencies]
-pretty_assertions = "0.5.1"
+pretty_assertions = "0.5"
 criterion = "0.2"
 
 [[bench]]
