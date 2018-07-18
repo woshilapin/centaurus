@@ -53,8 +53,6 @@ impl Intersect for Triangle {
 
 #[cfg(test)]
 mod tests {
-    use spectral::assert_that;
-    use spectral::numeric::FloatAssertions;
     use super::*;
 
 

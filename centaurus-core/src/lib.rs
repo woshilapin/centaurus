@@ -2,7 +2,6 @@ extern crate nalgebra;
 #[cfg(test)]
 #[macro_use]
 extern crate pretty_assertions;
-extern crate spectral;
 
 use camera::Camera;
 use image::color::Color;

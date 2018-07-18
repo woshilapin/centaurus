@@ -5,7 +5,6 @@ authors = ["woshilapin <woshilapin@tuziwo.info>"]
 
 [dependencies]
 nalgebra = "0.15.3"
-spectral = "0.6"
 
 [dev-dependencies]
 pretty_assertions = "0.5"
