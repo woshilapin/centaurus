@@ -7,7 +7,6 @@ authors = ["woshilapin <woshilapin@tuziwo.info>"]
 nalgebra = "0.15.3"
 
 [dev-dependencies]
-pretty_assertions = "0.5"
 criterion = "0.2"
 
 [[bench]]
