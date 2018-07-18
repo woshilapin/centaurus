@@ -7,7 +7,7 @@ extern crate spectral;
 use camera::Camera;
 use image::color::Color;
 use image::Image;
-use nalgebra::Vector3;
+use nalgebra::{Point3, Vector3};
 use object::Intersect;
 use object::Ray;
 use object::triangle::Triangle;
@@ -74,12 +74,12 @@ impl Scene {
     pub fn render(&self) -> Image {
         let mut image = Image::new((self.width, self.height));
         let triangle = Triangle::new([
-            Vector3::new(-0.5, -0.5, 0.0),
-            Vector3::new(0.5, -0.5, 0.0),
-            Vector3::new(0.0, 0.5, 0.0),
+            Point3::new(-0.5, -0.5, 0.0),
+            Point3::new(0.5, -0.5, 0.0),
+            Point3::new(0.0, 0.5, 0.0),
         ]);
         let camera = Camera::new(
-            Vector3::new(0.0, 0.0, -1.0),
+            Point3::new(0.0, 0.0, -1.0),
             Vector3::new(0.0, 0.0, 1.0),
             1.0,
             [1.0, -1.0, -1.0, 1.0],
@@ -89,7 +89,7 @@ impl Scene {
                 let x = (i as f64) * 2.0 / (self.width() as f64) - 1.0;
                 let y = (j as f64) * 2.0 / (self.height() as f64) - 1.0;
                 let ray = Ray::new(
-                    Vector3::new(x, y, -1.0),
+                    Point3::new(x, y, -1.0),
                     Vector3::new(0.0, 0.0, 1.0),
                 );
                 match triangle.intersect(&ray) {

@@ -1,4 +1,4 @@
-use nalgebra::{Matrix, Matrix4, MatrixArray, U4, Vector3, Vector4};
+use nalgebra::{Point3, Vector3};
 use std::option::Option;
 
 pub mod triangle;
@@ -10,18 +10,18 @@ pub trait Intersect {
 }
 
 pub struct Ray {
-    origin: Vector3<f64>,
+    origin: Point3<f64>,
     direction: Vector3<f64>,
 }
 
 impl Ray {
-    pub fn new(origin: Vector3<f64>, direction: Vector3<f64>) -> Ray {
+    pub fn new(origin: Point3<f64>, direction: Vector3<f64>) -> Ray {
         Ray {
             origin,
             direction,
         }
     }
-    pub fn origin(&self) -> Vector3<f64> {
+    pub fn origin(&self) -> Point3<f64> {
         self.origin
     }
     pub fn direction(&self) -> Vector3<f64> {
@@ -31,5 +31,5 @@ impl Ray {
 
 
 pub struct Intersection {
-    position: Vector3<f64>,
+    position: Point3<f64>,
 }
