@@ -12,9 +12,9 @@ use std::string::String;
 use std::u8;
 use std::usize;
 
-fn is_integer_between<T: FromStr + PartialOrd + Debug>(string: String, min: T, max: T) -> Result<(), String> {
+fn is_integer_between<T: FromStr + PartialOrd + Debug>(string: &str, min: &T, max: &T) -> Result<(), String> {
     match string.parse::<T>() {
-        Ok(ref v) if *v >= min && *v <= max => Ok(()),
+        Ok(ref v) if *v >= *min && *v <= *max => Ok(()),
         Ok(ref v) => Err(format!("'{:?}' is invalid; dimension should be strictly greater than {:?} and less than {:?}.", *v, min, max)),
         Err(_) => Err(format!("'{}' is not a integer.", string)),
     }
@@ -25,7 +25,7 @@ fn main() {
         .short("d")
         .long("dimension")
         .value_name("INTEGER")
-        .validator(|value| is_integer_between(value, 1, u8::MAX))
+        .validator(|value| is_integer_between(&value, &1, &u8::MAX))
         .default_value("3")
         .help("Spatial dimension of the scene")
         .takes_value(true);
@@ -33,7 +33,7 @@ fn main() {
         .short("w")
         .long("width")
         .value_name("INTEGER")
-        .validator(|value| is_integer_between(value, 1, usize::MAX))
+        .validator(|value| is_integer_between(&value, &1, &usize::MAX))
         .default_value("600")
         .help("Width of the final output images")
         .takes_value(true);
@@ -41,7 +41,7 @@ fn main() {
         .short("h")
         .long("height")
         .value_name("INTEGER")
-        .validator(|value| is_integer_between(value, 1, usize::MAX))
+        .validator(|value| is_integer_between(&value, &1, &usize::MAX))
         .default_value("600")
         .help("Height of the final output images")
         .takes_value(true);
@@ -56,7 +56,7 @@ fn main() {
         .version("0.1.0")
         .author("woshilapin <woshilapin@tuziwo.info")
         .about("A relativist ray-tracer");
-    for argument in arguments.iter() {
+    for argument in &arguments {
         application = application.arg(argument);
     }
 
@@ -91,7 +91,7 @@ fn main() {
         Some(f) => f,
         None => "centaurus.png",
     };
-    if let Ok(_) = image::ImageRgb8(image_buffer).save(output_filename) {
+    if image::ImageRgb8(image_buffer).save(output_filename).is_ok() {
         println!("'{}' saved!", output_filename);
     }
 }
