@@ -12,10 +12,17 @@ use std::string::String;
 use std::u8;
 use std::usize;
 
-fn is_integer_between<T: FromStr + PartialOrd + Debug>(string: &str, min: &T, max: &T) -> Result<(), String> {
+fn is_integer_between<T: FromStr + PartialOrd + Debug>(
+    string: &str,
+    min: &T,
+    max: &T,
+) -> Result<(), String> {
     match string.parse::<T>() {
         Ok(ref v) if *v >= *min && *v <= *max => Ok(()),
-        Ok(ref v) => Err(format!("'{:?}' is invalid; dimension should be strictly greater than {:?} and less than {:?}.", *v, min, max)),
+        Ok(ref v) => Err(format!(
+            "'{:?}' is invalid; dimension should be strictly greater than {:?} and less than {:?}.",
+            *v, min, max
+        )),
         Err(_) => Err(format!("'{}' is not a integer.", string)),
     }
 }
@@ -51,7 +58,12 @@ fn main() {
         .default_value("centaurus.png")
         .help("Path for the output file")
         .takes_value(true);
-    let arguments = [argument_width, argument_height, argument_dimension, argument_output_file];
+    let arguments = [
+        argument_width,
+        argument_height,
+        argument_dimension,
+        argument_output_file,
+    ];
     let mut application = App::new("Centaurus")
         .version("0.1.0")
         .author("woshilapin <woshilapin@tuziwo.info")

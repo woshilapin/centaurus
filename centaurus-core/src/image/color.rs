@@ -7,11 +7,7 @@ pub struct Color {
 
 impl Color {
     pub fn new(red: u8, green: u8, blue: u8) -> Color {
-        Color {
-            red,
-            green,
-            blue,
-        }
+        Color { red, green, blue }
     }
 
     pub fn get_red(&self) -> u8 {
@@ -39,4 +35,3 @@ mod tests {
         assert_eq!(color.blue, 0);
     }
 }
-

@@ -16,10 +16,7 @@ pub struct Ray {
 
 impl Ray {
     pub fn new(origin: Point3<f64>, direction: Vector3<f64>) -> Ray {
-        Ray {
-            origin,
-            direction,
-        }
+        Ray { origin, direction }
     }
     pub fn origin(&self) -> Point3<f64> {
         self.origin
@@ -28,7 +25,6 @@ impl Ray {
         self.direction
     }
 }
-
 
 pub struct Intersection {
     position: Point3<f64>,

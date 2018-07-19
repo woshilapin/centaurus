@@ -11,7 +11,12 @@ pub struct Camera {
 }
 
 impl Camera {
-    pub fn new(position: Point3<f64>, direction: Vector3<f64>, focal_length: f64, bounds: [f64; 4]) -> Camera {
+    pub fn new(
+        position: Point3<f64>,
+        direction: Vector3<f64>,
+        focal_length: f64,
+        bounds: [f64; 4],
+    ) -> Camera {
         Camera {
             position,
             direction,

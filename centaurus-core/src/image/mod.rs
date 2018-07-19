@@ -17,7 +17,7 @@ impl Image {
                 line.push(Color::new(0, 0, 0));
             }
             data.push(line);
-        };
+        }
         Image {
             width: w,
             height: h,

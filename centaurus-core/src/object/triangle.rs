@@ -10,9 +10,7 @@ pub struct Triangle {
 
 impl Triangle {
     pub fn new(vertices: [Point3<f64>; 3]) -> Triangle {
-        Triangle {
-            vertices
-        }
+        Triangle { vertices }
     }
 }
 
@@ -23,14 +21,12 @@ impl Intersect for Triangle {
         let edge_1 = self.vertices[1] - self.vertices[0];
         let edge_2 = self.vertices[2] - self.vertices[0];
         let normal = edge_1.cross(&edge_2);
-        let affine_matrix = Matrix4::from_columns(
-            &[
-                edge_1.to_homogeneous(),
-                edge_2.to_homogeneous(),
-                normal.to_homogeneous(),
-                self.vertices[0].to_homogeneous(),
-            ]
-        );
+        let affine_matrix = Matrix4::from_columns(&[
+            edge_1.to_homogeneous(),
+            edge_2.to_homogeneous(),
+            normal.to_homogeneous(),
+            self.vertices[0].to_homogeneous(),
+        ]);
         let inverse_affine_matrix = match affine_matrix.try_inverse() {
             Some(i) => i,
             None => return None,
@@ -54,7 +50,6 @@ impl Intersect for Triangle {
 #[cfg(test)]
 mod tests {
     use super::*;
-
 
     #[test]
     fn no_intersection_with_perpendicular_plan() {

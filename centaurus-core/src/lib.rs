@@ -4,12 +4,12 @@ use camera::Camera;
 use image::color::Color;
 use image::Image;
 use nalgebra::{Point3, Vector3};
+use object::triangle::Triangle;
 use object::Intersect;
 use object::Ray;
-use object::triangle::Triangle;
 
-pub mod image;
 mod camera;
+pub mod image;
 mod object;
 
 #[derive(Debug, Default, Copy, Clone)]
@@ -84,12 +84,13 @@ impl Scene {
             for j in 0..self.height() as usize {
                 let x = (i as f64) * 2.0 / (self.width() as f64) - 1.0;
                 let y = (j as f64) * 2.0 / (self.height() as f64) - 1.0;
-                let ray = Ray::new(
-                    Point3::new(x, y, -1.0),
-                    Vector3::new(0.0, 0.0, 1.0),
-                );
+                let ray = Ray::new(Point3::new(x, y, -1.0), Vector3::new(0.0, 0.0, 1.0));
                 match triangle.intersect(&ray) {
-                    Some(intersection) => image.set_color(i, j, Color::new(u8::max_value(), u8::max_value(), u8::max_value())),
+                    Some(intersection) => image.set_color(
+                        i,
+                        j,
+                        Color::new(u8::max_value(), u8::max_value(), u8::max_value()),
+                    ),
                     None => image.set_color(i, j, Color::new(0, 0, 0)),
                 }
             }
