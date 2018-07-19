@@ -3,3 +3,9 @@ target/
 *.swp
 *.iml
 **/*.rs.bk
+
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
