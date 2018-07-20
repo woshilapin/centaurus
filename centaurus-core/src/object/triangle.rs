@@ -1,7 +1,7 @@
 use nalgebra::{Matrix4, Point3, Vector3};
 use object::Intersect;
 use object::Intersection;
-use object::Ray;
+use ray::Ray;
 use std::option::Option;
 
 pub struct Triangle {
@@ -53,10 +53,7 @@ mod tests {
 
     #[test]
     fn no_intersection_with_perpendicular_plan() {
-        let ray = Ray {
-            origin: Point3::new(0.0, 0.0, -1.0),
-            direction: Vector3::new(0.0, 0.0, 1.0),
-        };
+        let ray = Ray::new(Point3::new(0.0, 0.0, -1.0), Vector3::new(0.0, 0.0, 1.0));
         let triangle = Triangle {
             vertices: [
                 Point3::new(-1.0, 1.0, 0.0),
@@ -70,10 +67,7 @@ mod tests {
 
     #[test]
     fn intersection_outside_triangle() {
-        let ray = Ray {
-            origin: Point3::new(2.0, 2.0, -1.0),
-            direction: Vector3::new(0.0, 0.0, 1.0),
-        };
+        let ray = Ray::new(Point3::new(2.0, 2.0, -1.0), Vector3::new(0.0, 0.0, 1.0));
         let triangle = Triangle {
             vertices: [
                 Point3::new(-1.0, 1.0, 0.0),
@@ -87,10 +81,7 @@ mod tests {
 
     #[test]
     fn intersection_inside_symetric_triangle() {
-        let ray = Ray {
-            origin: Point3::new(-1.0, -1.0, -1.0),
-            direction: Vector3::new(0.0, 0.0, 1.0),
-        };
+        let ray = Ray::new(Point3::new(-1.0, -1.0, -1.0), Vector3::new(0.0, 0.0, 1.0));
         let triangle = Triangle {
             vertices: [
                 Point3::new(-1.0, 1.0, 0.0),
@@ -104,10 +95,7 @@ mod tests {
 
     #[test]
     fn intersection_with_triangle() {
-        let ray = Ray {
-            origin: Point3::new(0.0, 0.0, -1.0),
-            direction: Vector3::new(0.0, 0.0, 1.0),
-        };
+        let ray = Ray::new(Point3::new(0.0, 0.0, -1.0), Vector3::new(0.0, 0.0, 1.0));
         let triangle = Triangle {
             vertices: [
                 Point3::new(-1.0, 0.0, 0.0),

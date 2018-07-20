@@ -6,11 +6,12 @@ use image::Image;
 use nalgebra::{Point3, Vector3};
 use object::triangle::Triangle;
 use object::Intersect;
-use object::Ray;
+use ray::Ray;
 
 mod camera;
 pub mod image;
 mod object;
+mod ray;
 
 #[derive(Debug, Default, Copy, Clone)]
 pub struct Scene {
