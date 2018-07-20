@@ -6,11 +6,12 @@ use std::option::Option;
 
 pub struct Triangle {
     vertices: [Point3<f64>; 3],
+    normal: Vector3<f64>,
 }
 
 impl Triangle {
-    pub fn new(vertices: [Point3<f64>; 3]) -> Triangle {
-        Triangle { vertices }
+    pub fn new(vertices: [Point3<f64>; 3], normal: Vector3<f64>) -> Triangle {
+        Triangle { vertices, normal }
     }
 }
 
@@ -20,11 +21,10 @@ impl Intersect for Triangle {
         let direction = ray.direction().to_homogeneous();
         let edge_1 = self.vertices[1] - self.vertices[0];
         let edge_2 = self.vertices[2] - self.vertices[0];
-        let normal = edge_1.cross(&edge_2);
         let affine_matrix = Matrix4::from_columns(&[
             edge_1.to_homogeneous(),
             edge_2.to_homogeneous(),
-            normal.to_homogeneous(),
+            self.normal.to_homogeneous(),
             self.vertices[0].to_homogeneous(),
         ]);
         let inverse_affine_matrix = match affine_matrix.try_inverse() {
@@ -63,6 +63,7 @@ mod tests {
                 Point3::new(1.0, 1.0, 0.0),
                 Point3::new(0.0, 1.0, 1.0),
             ],
+            normal: Vector3::new(0.0, 0.0, -1.0),
         };
         assert_eq!(triangle.intersect(&ray).is_none(), true);
     }
@@ -79,6 +80,7 @@ mod tests {
                 Point3::new(1.0, 1.0, 0.0),
                 Point3::new(1.0, -1.0, 0.0),
             ],
+            normal: Vector3::new(0.0, 0.0, -1.0),
         };
         assert_eq!(triangle.intersect(&ray).is_none(), true);
     }
@@ -95,6 +97,7 @@ mod tests {
                 Point3::new(1.0, 1.0, 0.0),
                 Point3::new(1.0, -1.0, 0.0),
             ],
+            normal: Vector3::new(0.0, 0.0, -1.0),
         };
         assert_eq!(triangle.intersect(&ray).is_none(), true);
     }
@@ -111,6 +114,7 @@ mod tests {
                 Point3::new(1.0, 0.0, 0.0),
                 Point3::new(0.0, 1.0, 0.0),
             ],
+            normal: Vector3::new(0.0, 0.0, -1.0),
         };
         assert_eq!(triangle.intersect(&ray).is_some(), true);
     }

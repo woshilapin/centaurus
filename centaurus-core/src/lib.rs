@@ -69,11 +69,14 @@ impl Scene {
     }
     pub fn render(&self) -> Image {
         let mut image = Image::new((self.width, self.height));
-        let triangle = Triangle::new([
-            Point3::new(-0.5, -0.5, 0.0),
-            Point3::new(0.5, -0.5, 0.0),
-            Point3::new(0.0, 0.5, 0.0),
-        ]);
+        let triangle = Triangle::new(
+            [
+                Point3::new(-0.5, -0.5, 0.0),
+                Point3::new(0.5, -0.5, 0.0),
+                Point3::new(0.0, 0.5, 0.0),
+            ],
+            Vector3::new(0.0, 0.0, -1.0),
+        );
         let camera = Camera::new(
             Point3::new(0.0, 0.0, -1.0),
             Vector3::new(0.0, 0.0, 1.0),
