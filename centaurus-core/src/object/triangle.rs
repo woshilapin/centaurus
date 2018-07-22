@@ -36,10 +36,11 @@ impl Intersect for Triangle {
         let t = -new_origin[2] / new_direction[2];
         let u = new_origin[0] + t * new_direction[0];
         let v = new_origin[1] + t * new_direction[1];
-        let intersection = Intersection {
-            position: Point3::new(0.0, 0.0, 0.0),
-        };
         if t >= 0.0 && u >= 0.0 && v >= 0.0 && u + v <= 1.0 {
+            let intersection = Intersection {
+                position: ray.origin() + t * ray.direction(),
+                normal: self.normal,
+            };
             Some(intersection)
         } else {
             None
@@ -62,7 +63,8 @@ mod tests {
             ],
             normal: Vector3::new(0.0, 0.0, -1.0),
         };
-        assert_eq!(triangle.intersect(&ray).is_none(), true);
+        let intersection = triangle.intersect(&ray);
+        assert_eq!(intersection.is_none(), true);
     }
 
     #[test]
@@ -76,7 +78,8 @@ mod tests {
             ],
             normal: Vector3::new(0.0, 0.0, -1.0),
         };
-        assert_eq!(triangle.intersect(&ray).is_none(), true);
+        let intersection = triangle.intersect(&ray);
+        assert_eq!(intersection.is_none(), true);
     }
 
     #[test]
@@ -90,7 +93,8 @@ mod tests {
             ],
             normal: Vector3::new(0.0, 0.0, -1.0),
         };
-        assert_eq!(triangle.intersect(&ray).is_none(), true);
+        let intersection = triangle.intersect(&ray);
+        assert_eq!(intersection.is_none(), true);
     }
 
     #[test]
@@ -104,6 +108,16 @@ mod tests {
             ],
             normal: Vector3::new(0.0, 0.0, -1.0),
         };
-        assert_eq!(triangle.intersect(&ray).is_some(), true);
+        let intersection_opt = triangle.intersect(&ray);
+        assert_eq!(intersection_opt.is_some(), true);
+        let intersection = intersection_opt.unwrap();
+        let position = intersection.position;
+        assert_eq!(position[0], 0.0);
+        assert_eq!(position[1], 0.0);
+        assert_eq!(position[2], 0.0);
+        let normal = intersection.normal;
+        assert_eq!(normal[0], 0.0);
+        assert_eq!(normal[1], 0.0);
+        assert_eq!(normal[2], -1.0);
     }
 }

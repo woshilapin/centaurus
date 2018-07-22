@@ -12,4 +12,5 @@ pub trait Intersect {
 
 pub struct Intersection {
     position: Point3<f64>,
+    normal: Vector3<f64>,
 }
