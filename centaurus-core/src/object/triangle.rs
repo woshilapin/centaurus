@@ -6,12 +6,12 @@ use std::option::Option;
 
 pub struct Triangle {
     vertices: [Point3<f64>; 3],
-    normal: Vector3<f64>,
+    normals: [Vector3<f64>; 3],
 }
 
 impl Triangle {
-    pub fn new(vertices: [Point3<f64>; 3], normal: Vector3<f64>) -> Triangle {
-        Triangle { vertices, normal }
+    pub fn new(vertices: [Point3<f64>; 3], normals: [Vector3<f64>; 3]) -> Triangle {
+        Triangle { vertices, normals }
     }
 }
 
@@ -24,7 +24,7 @@ impl Intersect for Triangle {
         let affine_matrix = Matrix4::from_columns(&[
             edge_1.to_homogeneous(),
             edge_2.to_homogeneous(),
-            self.normal.to_homogeneous(),
+            self.normals[0].to_homogeneous(),
             self.vertices[0].to_homogeneous(),
         ]);
         let inverse_affine_matrix = match affine_matrix.try_inverse() {
@@ -37,9 +37,11 @@ impl Intersect for Triangle {
         let u = new_origin[0] + t * new_direction[0];
         let v = new_origin[1] + t * new_direction[1];
         if t >= 0.0 && u >= 0.0 && v >= 0.0 && u + v <= 1.0 {
+            // TODO: create a weighted mean of the three normals of vertices of the triangle
+            let normal = self.normals[0];
             let intersection = Intersection {
                 position: ray.origin() + t * ray.direction(),
-                normal: self.normal,
+                normal,
             };
             Some(intersection)
         } else {
@@ -61,7 +63,11 @@ mod tests {
                 Point3::new(1.0, 1.0, 0.0),
                 Point3::new(0.0, 1.0, 1.0),
             ],
-            normal: Vector3::new(0.0, 0.0, -1.0),
+            normals: [
+                Vector3::new(0.0, 0.0, -1.0),
+                Vector3::new(0.0, 0.0, -1.0),
+                Vector3::new(0.0, 0.0, -1.0),
+            ],
         };
         let intersection = triangle.intersect(&ray);
         assert_eq!(intersection.is_none(), true);
@@ -76,7 +82,11 @@ mod tests {
                 Point3::new(1.0, 1.0, 0.0),
                 Point3::new(1.0, -1.0, 0.0),
             ],
-            normal: Vector3::new(0.0, 0.0, -1.0),
+            normals: [
+                Vector3::new(0.0, 0.0, -1.0),
+                Vector3::new(0.0, 0.0, -1.0),
+                Vector3::new(0.0, 0.0, -1.0),
+            ],
         };
         let intersection = triangle.intersect(&ray);
         assert_eq!(intersection.is_none(), true);
@@ -91,7 +101,11 @@ mod tests {
                 Point3::new(1.0, 1.0, 0.0),
                 Point3::new(1.0, -1.0, 0.0),
             ],
-            normal: Vector3::new(0.0, 0.0, -1.0),
+            normals: [
+                Vector3::new(0.0, 0.0, -1.0),
+                Vector3::new(0.0, 0.0, -1.0),
+                Vector3::new(0.0, 0.0, -1.0),
+            ],
         };
         let intersection = triangle.intersect(&ray);
         assert_eq!(intersection.is_none(), true);
@@ -106,7 +120,11 @@ mod tests {
                 Point3::new(1.0, 0.0, 0.0),
                 Point3::new(0.0, 1.0, 0.0),
             ],
-            normal: Vector3::new(0.0, 0.0, -1.0),
+            normals: [
+                Vector3::new(0.0, 0.0, -1.0),
+                Vector3::new(0.0, 0.0, -1.0),
+                Vector3::new(0.0, 0.0, -1.0),
+            ],
         };
         let intersection_opt = triangle.intersect(&ray);
         assert_eq!(intersection_opt.is_some(), true);
