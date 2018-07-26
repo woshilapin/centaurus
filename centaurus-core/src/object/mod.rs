@@ -10,6 +10,7 @@ pub trait Intersect {
     }
 }
 
+#[derive(Debug)]
 pub struct Intersection {
     position: Point3<f64>,
     normal: Vector3<f64>,

@@ -24,7 +24,7 @@ impl Intersect for Triangle {
         let affine_matrix = Matrix4::from_columns(&[
             edge_1.to_homogeneous(),
             edge_2.to_homogeneous(),
-            self.normals[0].to_homogeneous(),
+            direction,
             self.vertices[0].to_homogeneous(),
         ]);
         let inverse_affine_matrix = match affine_matrix.try_inverse() {
@@ -37,8 +37,15 @@ impl Intersect for Triangle {
         let u = new_origin[0] + t * new_direction[0];
         let v = new_origin[1] + t * new_direction[1];
         if t >= 0.0 && u >= 0.0 && v >= 0.0 && u + v <= 1.0 {
-            // TODO: create a weighted mean of the three normals of vertices of the triangle
-            let normal = self.normals[0];
+            let u_prime = 1.0 - u;
+            let v_prime = 1.0 - v;
+            let normal = u_prime * v_prime * inverse_affine_matrix * self.normals[0].to_homogeneous()
+                    + u_prime * v * inverse_affine_matrix * self.normals[1].to_homogeneous()
+                    + u * v_prime * inverse_affine_matrix * self.normals[2].to_homogeneous();
+            let normal = match Vector3::from_homogeneous((affine_matrix*normal).normalize()) {
+                Some(i) => i,
+                None => return None,
+            };
             let intersection = Intersection {
                 position: ray.origin() + t * ray.direction(),
                 normal,
@@ -116,14 +123,14 @@ mod tests {
         let ray = Ray::new(Point3::new(0.0, 0.0, -1.0), Vector3::new(0.0, 0.0, 1.0));
         let triangle = Triangle {
             vertices: [
+                Point3::new(0.0, 1.0, 0.0),
                 Point3::new(-1.0, 0.0, 0.0),
                 Point3::new(1.0, 0.0, 0.0),
-                Point3::new(0.0, 1.0, 0.0),
             ],
             normals: [
-                Vector3::new(0.0, 0.0, -1.0),
-                Vector3::new(0.0, 0.0, -1.0),
-                Vector3::new(0.0, 0.0, -1.0),
+                Vector3::new(0.0, 0.0, -1.0).normalize(),
+                Vector3::new(-1.0, 0.0, -1.0).normalize(),
+                Vector3::new(1.0, 0.0, -1.0).normalize(),
             ],
         };
         let intersection_opt = triangle.intersect(&ray);
