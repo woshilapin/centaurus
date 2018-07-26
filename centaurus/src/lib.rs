@@ -7,11 +7,13 @@ use nalgebra::{Point3, Vector3};
 use object::Intersect;
 use object::triangle::Triangle;
 use ray::Ray;
+use vertex::Vertex;
 
 mod camera;
 pub mod image;
 mod object;
 mod ray;
+mod vertex;
 
 #[derive(Debug, Default, Copy, Clone)]
 pub struct Scene {
@@ -72,15 +74,19 @@ impl Scene {
         let mut image = Image::new((self.width, self.height));
         let triangle = Triangle::new(
             [
-                Point3::new(-0.5, -0.5, 0.0),
-                Point3::new(0.5, -0.5, 0.0),
-                Point3::new(0.0, 0.5, 0.0),
-            ],
-            [
-                Vector3::new(0.0, 0.0, -1.0),
-                Vector3::new(0.0, 0.0, -1.0),
-                Vector3::new(0.0, 0.0, -1.0),
-            ],
+                Vertex::new(
+                    Point3::new(-0.5, -0.5, 0.0),
+                    Vector3::new(0.0, 0.0, -1.0),
+                ),
+                Vertex::new(
+                    Point3::new(0.5, -0.5, 0.0),
+                    Vector3::new(0.0, 0.0, -1.0),
+                ),
+                Vertex::new(
+                    Point3::new(0.0, 0.5, 0.0),
+                    Vector3::new(0.0, 0.0, -1.0),
+                ),
+            ]
         );
         let camera = Camera::new(
             Point3::new(0.0, 0.0, -1.0),
