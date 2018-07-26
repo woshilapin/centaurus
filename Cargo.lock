@@ -97,20 +97,20 @@ version = "1.0.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
-name = "centaurus-cli"
-version = "0.1.0"
-dependencies = [
- "centaurus-core 0.1.0",
- "clap 2.31.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "image 0.19.0 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "centaurus-core"
+name = "centaurus"
 version = "0.1.0"
 dependencies = [
  "criterion 0.2.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "nalgebra 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "centaurus-cli"
+version = "0.1.0"
+dependencies = [
+ "centaurus 0.1.0",
+ "clap 2.31.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "image 0.19.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]

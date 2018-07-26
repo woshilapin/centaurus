@@ -1,8 +1,8 @@
-extern crate centaurus_core;
+extern crate centaurus;
 extern crate clap;
 extern crate image;
 
-use centaurus_core::SceneBuilder;
+use centaurus::SceneBuilder;
 use clap::{App, Arg};
 use image::ImageBuffer;
 use std::cmp::PartialOrd;
