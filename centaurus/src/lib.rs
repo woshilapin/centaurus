@@ -3,6 +3,9 @@ extern crate nalgebra;
 use camera::Camera;
 use image::color::Color;
 use image::Image;
+use light::Light;
+use light::Lightbulb;
+use light::Spot;
 use nalgebra::{Point3, Vector3};
 use object::Intersect;
 use object::triangle::Triangle;
@@ -12,6 +15,7 @@ use vertex::Vertex;
 mod camera;
 pub mod image;
 mod object;
+mod light;
 mod ray;
 mod vertex;
 
@@ -76,15 +80,15 @@ impl Scene {
             [
                 Vertex::new(
                     Point3::new(-0.5, -0.5, 0.0),
-                    Vector3::new(0.0, 0.0, -1.0),
+                    Vector3::new(-0.5, -0.5, -0.5).normalize(),
                 ),
                 Vertex::new(
                     Point3::new(0.5, -0.5, 0.0),
-                    Vector3::new(0.0, 0.0, -1.0),
+                    Vector3::new(0.0, 0.0, -0.5).normalize(),
                 ),
                 Vertex::new(
                     Point3::new(0.0, 0.5, 0.0),
-                    Vector3::new(0.0, 0.0, -1.0),
+                    Vector3::new(0.5, 0.5, -0.5).normalize(),
                 ),
             ]
         );
@@ -94,18 +98,25 @@ impl Scene {
             1.0,
             [1.0, -1.0, -1.0, 1.0],
         );
+        let light = Lightbulb::new(Point3::new(0.0, 0.0, -2.0));
+        let light = Spot::new(Point3::new(0.0, 0.0, -1.0), Vector3::new(0.4,-0.4,1.0), 0.2);
         for i in 0..self.width() as usize {
             for j in 0..self.height() as usize {
                 let x = (i as f64) * 2.0 / (self.width() as f64) - 1.0;
                 let y = (j as f64) * 2.0 / (self.height() as f64) - 1.0;
                 let ray = Ray::new(Point3::new(x, y, -1.0), Vector3::new(0.0, 0.0, 1.0));
-                match triangle.intersect(&ray) {
-                    Some(intersection) => image.set_color(
-                        i,
-                        j,
-                        Color::new(u8::max_value(), u8::max_value(), u8::max_value()),
-                    ),
-                    None => image.set_color(i, j, Color::new(0, 0, 0)),
+                if let Some(intersection) = triangle.intersect(&ray) {
+                    let i_position = intersection.position();
+                    let i_normal = intersection.normal();
+                    if let Some(l_direction) = light.light_direction(&i_position) {
+                        let intensity = i_normal.dot(&(-l_direction));
+                        let intensity = (intensity * (u8::max_value() as f64)) as u8;
+                        image.set_color(
+                            i,
+                            j,
+                            Color::new(intensity, intensity, intensity),
+                        );
+                    }
                 }
             }
         }

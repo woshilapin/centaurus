@@ -15,3 +15,12 @@ pub struct Intersection {
     position: Point3<f64>,
     normal: Vector3<f64>,
 }
+
+impl Intersection {
+    pub fn position(&self) -> Point3<f64> {
+        self.position
+    }
+    pub fn normal(&self) -> Vector3<f64> {
+        self.normal
+    }
+}
