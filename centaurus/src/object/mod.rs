@@ -2,8 +2,6 @@ use nalgebra::{Point3, Vector3};
 use ray::Ray;
 use std::option::Option;
 
-pub mod triangle;
-
 pub trait Intersect {
     fn intersect(&self, ray: &Ray) -> Option<Intersection> {
         None
@@ -24,3 +22,7 @@ impl Intersection {
         self.normal
     }
 }
+
+mod triangle;
+
+pub use object::triangle::*;

@@ -1,7 +1,5 @@
 use image::color::Color;
 
-pub mod color;
-
 pub struct Image {
     width: usize,
     height: usize,
@@ -54,3 +52,7 @@ mod tests {
         assert_eq!(image.data.len(), 42);
     }
 }
+
+mod color;
+
+pub use self::color::*;

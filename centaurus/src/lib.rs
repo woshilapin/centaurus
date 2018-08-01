@@ -1,14 +1,10 @@
 extern crate nalgebra;
 
 use camera::Camera;
-use image::color::Color;
-use image::Image;
-use light::Light;
-use light::Lightbulb;
-use light::Spot;
+use image::{Color, Image};
+use light::{Light, Lightbulb, Spot};
 use nalgebra::{Point3, Vector3};
-use object::Intersect;
-use object::triangle::Triangle;
+use object::{Intersect, Triangle};
 use ray::Ray;
 use vertex::Vertex;
 
