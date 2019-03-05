@@ -1,8 +1,8 @@
-extern crate centaurus_core;
+extern crate centaurus;
 #[macro_use]
 extern crate criterion;
 
-use centaurus_core::SceneBuilder;
+use centaurus::SceneBuilder;
 use criterion::Criterion;
 
 fn render_over_image_size(width: usize, height: usize) {

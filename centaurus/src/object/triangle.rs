@@ -1,8 +1,8 @@
 use nalgebra::{Matrix4, Vector3};
-use object::Intersect;
-use object::Intersection;
-use ray::Ray;
-use self::super::super::vertex::Vertex;
+use crate::object::Intersect;
+use crate::object::Intersection;
+use crate::ray::Ray;
+use crate::vertex::Vertex;
 use std::option::Option;
 
 pub struct Triangle {

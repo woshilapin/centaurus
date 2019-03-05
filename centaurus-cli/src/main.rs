@@ -1,6 +1,7 @@
-extern crate centaurus;
 extern crate clap;
 extern crate image;
+
+extern crate centaurus;
 
 use centaurus::SceneBuilder;
 use clap::{App, Arg};

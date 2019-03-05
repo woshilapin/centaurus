@@ -1,5 +1,3 @@
-use image::color::Color;
-
 pub struct Image {
     width: usize,
     height: usize,
@@ -9,9 +7,9 @@ pub struct Image {
 impl Image {
     pub fn new((w, h): (usize, usize)) -> Image {
         let mut data = Vec::new();
-        for i in 0..w {
+        for _i in 0..w {
             let mut line = Vec::new();
-            for j in 0..h {
+            for _j in 0..h {
                 line.push(Color::new(0, 0, 0));
             }
             data.push(line);
@@ -55,4 +53,4 @@ mod tests {
 
 mod color;
 
-pub use self::color::*;
+pub use self::color::Color;

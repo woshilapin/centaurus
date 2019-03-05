@@ -1,12 +1,12 @@
 extern crate nalgebra;
 
-use camera::Camera;
-use image::{Color, Image};
-use light::{Light, Lightbulb, Spot};
+use crate::camera::Camera;
+use crate::image::{Color, Image};
+use crate::light::{Light, Lightbulb, Spot};
 use nalgebra::{Point3, Vector3};
-use object::{Intersect, Triangle};
-use ray::Ray;
-use vertex::Vertex;
+use crate::object::{Intersect, Triangle};
+use crate::ray::Ray;
+use crate::vertex::Vertex;
 
 mod camera;
 pub mod image;
@@ -88,13 +88,13 @@ impl Scene {
                 ),
             ]
         );
-        let camera = Camera::new(
+        let _camera = Camera::new(
             Point3::new(0.0, 0.0, -1.0),
             Vector3::new(0.0, 0.0, 1.0),
             1.0,
             [1.0, -1.0, -1.0, 1.0],
         );
-        let light = Lightbulb::new(Point3::new(0.0, 0.0, -2.0));
+        let _light = Lightbulb::new(Point3::new(0.0, 0.0, -2.0));
         let light = Spot::new(Point3::new(0.0, 0.0, -1.0), Vector3::new(0.4,-0.4,1.0), 0.2);
         for i in 0..self.width() as usize {
             for j in 0..self.height() as usize {

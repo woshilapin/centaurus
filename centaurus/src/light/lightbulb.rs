@@ -1,4 +1,4 @@
-use light::Light;
+use crate::light::Light;
 use nalgebra::{Point3, Vector3};
 use std::option::Option;
 

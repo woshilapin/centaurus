@@ -1,4 +1,4 @@
-use light::Light;
+use crate::light::Light;
 use nalgebra::{Point3, Vector3};
 use std::option::Option;
 
@@ -15,7 +15,7 @@ impl Sun {
 }
 
 impl Light for Sun {
-    fn light_direction(&self, illuminated_position: &Point3<f64>) -> Option<Vector3<f64>> {
+    fn light_direction(&self, _illuminated_position: &Point3<f64>) -> Option<Vector3<f64>> {
         Some(self.direction)
     }
 }
