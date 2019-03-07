@@ -1,4 +1,3 @@
-extern crate centaurus;
 #[macro_use]
 extern crate criterion;
 

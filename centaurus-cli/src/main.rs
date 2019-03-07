@@ -1,110 +1,74 @@
-extern crate clap;
-extern crate image;
-
-extern crate centaurus;
-
 use centaurus::SceneBuilder;
-use clap::{App, Arg};
-use image::ImageBuffer;
-use std::cmp::PartialOrd;
-use std::fmt::Debug;
-use std::str::FromStr;
-use std::string::String;
-use std::u8;
-use std::usize;
+use clap_verbosity_flag::Verbosity;
+use image::{ImageBuffer, Rgb};
+use std::path::PathBuf;
+use structopt::StructOpt;
 
-fn is_integer_between<T: FromStr + PartialOrd + Debug>(
-    string: &str,
-    min: &T,
-    max: &T,
-) -> Result<(), String> {
-    match string.parse::<T>() {
-        Ok(ref v) if *v >= *min && *v <= *max => Ok(()),
-        Ok(ref v) => Err(format!(
-            "'{:?}' is invalid; dimension should be strictly greater than {:?} and less than {:?}.",
-            *v, min, max
-        )),
-        Err(_) => Err(format!("'{}' is not a integer.", string)),
-    }
+#[derive(Debug, StructOpt)]
+#[structopt(
+    name = "Centaurus",
+    version = "0.1.0",
+    author = "woshilapin <woshilapin@tuziwo.info",
+    about = "A relativist ray-tracer"
+)]
+struct CentaurusArguments {
+    #[structopt(
+        name = "dimension",
+        short = "d",
+        long = "dimension",
+        default_value = "3",
+        help = "Spatial dimension of the scene",
+        takes_value = true
+    )]
+    dimension: u8,
+    #[structopt(
+        name = "width",
+        short = "w",
+        long = "width",
+        default_value = "600",
+        help = "Width of the final output images",
+        takes_value = true
+    )]
+    width: usize,
+    #[structopt(
+        name = "height",
+        short = "h",
+        long = "height",
+        default_value = "600",
+        help = "Height of the final output images",
+        takes_value = true
+    )]
+    height: usize,
+    #[structopt(
+        name = "output-file",
+        short = "o",
+        long = "output-file",
+        default_value = "centaurus.png",
+        help = "Path for the output file",
+        parse(from_os_str),
+        takes_value = true
+    )]
+    output_filename: PathBuf,
+    #[structopt(flatten)]
+    verbose: Verbosity,
 }
 
 fn main() {
-    let argument_dimension = Arg::with_name("dimension")
-        .short("d")
-        .long("dimension")
-        .value_name("INTEGER")
-        .validator(|value| is_integer_between(&value, &1, &u8::MAX))
-        .default_value("3")
-        .help("Spatial dimension of the scene")
-        .takes_value(true);
-    let argument_width = Arg::with_name("width")
-        .short("w")
-        .long("width")
-        .value_name("INTEGER")
-        .validator(|value| is_integer_between(&value, &1, &usize::MAX))
-        .default_value("600")
-        .help("Width of the final output images")
-        .takes_value(true);
-    let argument_height = Arg::with_name("height")
-        .short("h")
-        .long("height")
-        .value_name("INTEGER")
-        .validator(|value| is_integer_between(&value, &1, &usize::MAX))
-        .default_value("600")
-        .help("Height of the final output images")
-        .takes_value(true);
-    let argument_output_file = Arg::with_name("output-file")
-        .short("o")
-        .long("output-file")
-        .default_value("centaurus.png")
-        .help("Path for the output file")
-        .takes_value(true);
-    let arguments = [
-        argument_width,
-        argument_height,
-        argument_dimension,
-        argument_output_file,
-    ];
-    let mut application = App::new("Centaurus")
-        .version("0.1.0")
-        .author("woshilapin <woshilapin@tuziwo.info")
-        .about("A relativist ray-tracer");
-    for argument in &arguments {
-        application = application.arg(argument);
-    }
-
-    let matches = application.get_matches();
+    let arguments = CentaurusArguments::from_args();
 
     let mut scene_builder = SceneBuilder::new();
-
-    if let Some(d) = matches.value_of("dimension") {
-        if let Ok(i) = d.parse() {
-            scene_builder.with_dimension(i);
-        }
-    }
-    if let Some(d) = matches.value_of("width") {
-        if let Ok(i) = d.parse() {
-            scene_builder.with_width(i);
-        }
-    }
-    if let Some(d) = matches.value_of("height") {
-        if let Ok(i) = d.parse() {
-            scene_builder.with_height(i);
-        }
-    }
+    scene_builder.with_dimension(arguments.dimension);
+    scene_builder.with_width(arguments.width);
+    scene_builder.with_height(arguments.height);
 
     let scene = scene_builder.build();
     let image = scene.render();
     let image_buffer = ImageBuffer::from_fn(image.width() as u32, image.height() as u32, |x, y| {
         let color = image.color(x as usize, y as usize);
-        image::Rgb([color.get_red(), color.get_green(), color.get_blue()])
+        Rgb([color.get_red(), color.get_green(), color.get_blue()])
     });
 
-    let output_filename = match matches.value_of("output-file") {
-        Some(f) => f,
-        None => "centaurus.png",
-    };
-    if image::ImageRgb8(image_buffer).save(output_filename).is_ok() {
-        println!("'{}' saved!", output_filename);
+    if image::ImageRgb8(image_buffer).save(&arguments.output_filename).is_ok() {
+        println!("{:?} saved!", &arguments.output_filename);
     }
 }

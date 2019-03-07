@@ -8,9 +8,7 @@ pub struct Lightbulb {
 
 impl Lightbulb {
     pub fn new(position: Point3<f64>) -> Lightbulb {
-        Lightbulb {
-            position,
-        }
+        Lightbulb { position }
     }
 }
 

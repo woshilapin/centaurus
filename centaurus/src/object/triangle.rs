@@ -1,8 +1,8 @@
-use nalgebra::{Matrix4, Vector3};
 use crate::object::Intersect;
 use crate::object::Intersection;
 use crate::ray::Ray;
 use crate::vertex::Vertex;
+use nalgebra::{Matrix4, Vector3};
 use std::option::Option;
 
 pub struct Triangle {
@@ -39,10 +39,12 @@ impl Intersect for Triangle {
         if t >= 0.0 && u >= 0.0 && v >= 0.0 && u + v <= 1.0 {
             let u_prime = 1.0 - u;
             let v_prime = 1.0 - v;
-            let normal =
-                u_prime * v_prime * inverse_affine_matrix * self.vertices[0].normal().to_homogeneous()
-                    + u_prime * v * inverse_affine_matrix * self.vertices[1].normal().to_homogeneous()
-                    + u * v_prime * inverse_affine_matrix * self.vertices[2].normal().to_homogeneous();
+            let normal = u_prime
+                * v_prime
+                * inverse_affine_matrix
+                * self.vertices[0].normal().to_homogeneous()
+                + u_prime * v * inverse_affine_matrix * self.vertices[1].normal().to_homogeneous()
+                + u * v_prime * inverse_affine_matrix * self.vertices[2].normal().to_homogeneous();
             let normal = match Vector3::from_homogeneous((affine_matrix * normal).normalize()) {
                 Some(i) => i,
                 None => return None,
@@ -68,18 +70,9 @@ mod tests {
         let ray = Ray::new(Point3::new(0.0, 0.0, -1.0), Vector3::new(0.0, 0.0, 1.0));
         let triangle = Triangle {
             vertices: [
-                Vertex::new(
-                    Point3::new(-1.0, 1.0, 0.0),
-                    Vector3::new(0.0, 0.0, -1.0),
-                ),
-                Vertex::new(
-                    Point3::new(1.0, 1.0, 0.0),
-                    Vector3::new(0.0, 0.0, -1.0),
-                ),
-                Vertex::new(
-                    Point3::new(0.0, 1.0, 1.0),
-                    Vector3::new(0.0, 0.0, -1.0),
-                ),
+                Vertex::new(Point3::new(-1.0, 1.0, 0.0), Vector3::new(0.0, 0.0, -1.0)),
+                Vertex::new(Point3::new(1.0, 1.0, 0.0), Vector3::new(0.0, 0.0, -1.0)),
+                Vertex::new(Point3::new(0.0, 1.0, 1.0), Vector3::new(0.0, 0.0, -1.0)),
             ],
         };
         let intersection = triangle.intersect(&ray);
@@ -91,18 +84,9 @@ mod tests {
         let ray = Ray::new(Point3::new(2.0, 2.0, -1.0), Vector3::new(0.0, 0.0, 1.0));
         let triangle = Triangle {
             vertices: [
-                Vertex::new(
-                    Point3::new(-1.0, 1.0, 0.0),
-                    Vector3::new(0.0, 0.0, -1.0),
-                ),
-                Vertex::new(
-                    Point3::new(1.0, 1.0, 0.0),
-                    Vector3::new(0.0, 0.0, -1.0),
-                ),
-                Vertex::new(
-                    Point3::new(0.0, 1.0, 1.0),
-                    Vector3::new(0.0, 0.0, -1.0),
-                ),
+                Vertex::new(Point3::new(-1.0, 1.0, 0.0), Vector3::new(0.0, 0.0, -1.0)),
+                Vertex::new(Point3::new(1.0, 1.0, 0.0), Vector3::new(0.0, 0.0, -1.0)),
+                Vertex::new(Point3::new(0.0, 1.0, 1.0), Vector3::new(0.0, 0.0, -1.0)),
             ],
         };
         let intersection = triangle.intersect(&ray);
@@ -114,18 +98,9 @@ mod tests {
         let ray = Ray::new(Point3::new(-1.0, -1.0, -1.0), Vector3::new(0.0, 0.0, 1.0));
         let triangle = Triangle {
             vertices: [
-                Vertex::new(
-                    Point3::new(-1.0, 1.0, 0.0),
-                    Vector3::new(0.0, 0.0, -1.0),
-                ),
-                Vertex::new(
-                    Point3::new(1.0, 1.0, 0.0),
-                    Vector3::new(0.0, 0.0, -1.0),
-                ),
-                Vertex::new(
-                    Point3::new(0.0, 1.0, 1.0),
-                    Vector3::new(0.0, 0.0, -1.0),
-                ),
+                Vertex::new(Point3::new(-1.0, 1.0, 0.0), Vector3::new(0.0, 0.0, -1.0)),
+                Vertex::new(Point3::new(1.0, 1.0, 0.0), Vector3::new(0.0, 0.0, -1.0)),
+                Vertex::new(Point3::new(0.0, 1.0, 1.0), Vector3::new(0.0, 0.0, -1.0)),
             ],
         };
         let intersection = triangle.intersect(&ray);

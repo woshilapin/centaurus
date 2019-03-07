@@ -7,4 +7,6 @@ edition = "2018"
 [dependencies]
 centaurus = { path = "../centaurus" }
 clap = "2.32.0"
+clap-verbosity-flag = "0.2.0"
 image = "0.21.0"
+structopt = "0.2.14"

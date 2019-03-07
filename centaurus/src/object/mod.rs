@@ -1,5 +1,5 @@
-use nalgebra::{Point3, Vector3};
 use crate::ray::Ray;
+use nalgebra::{Point3, Vector3};
 use std::option::Option;
 
 pub trait Intersect {

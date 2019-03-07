@@ -12,11 +12,8 @@ impl<T> Vertex<T>
 where
     T: Scalar,
 {
-    pub fn new(position: Point3<T>, normal:Vector3<T>) -> Vertex<T> {
-        Vertex {
-            position,
-            normal,
-        }
+    pub fn new(position: Point3<T>, normal: Vector3<T>) -> Vertex<T> {
+        Vertex { position, normal }
     }
     pub fn position(&self) -> Point3<T> {
         self.position
