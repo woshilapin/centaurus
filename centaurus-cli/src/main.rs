@@ -1,8 +1,11 @@
 mod arguments;
+mod properties;
 
+use crate::arguments::Arguments;
+use crate::properties::scene::Scene;
 use centaurus::SceneBuilder;
 use image::{ImageBuffer, Rgb};
-use crate::arguments::Arguments;
+use std::fs::File;
 use structopt::StructOpt;
 
 fn main() {
@@ -13,6 +16,11 @@ fn main() {
     scene_builder.with_width(arguments.width);
     scene_builder.with_height(arguments.height);
 
+    let scene_file = File::open(arguments.input_filename).expect("Couldn't read the input file.");
+    let scene_from_file: Scene =
+        serde_yaml::from_reader(scene_file).expect("Couldn't parse the YAML file.");
+    scene_builder.with_dimension(scene_from_file.dimension);
+
     let scene = scene_builder.build();
     let image = scene.render();
     let image_buffer = ImageBuffer::from_fn(image.width() as u32, image.height() as u32, |x, y| {
@@ -20,7 +28,10 @@ fn main() {
         Rgb([color.get_red(), color.get_green(), color.get_blue()])
     });
 
-    if image::ImageRgb8(image_buffer).save(&arguments.output_filename).is_ok() {
+    if image::ImageRgb8(image_buffer)
+        .save(&arguments.output_filename)
+        .is_ok()
+    {
         println!("{:?} saved!", &arguments.output_filename);
     }
 }
