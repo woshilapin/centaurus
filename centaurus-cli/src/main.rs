@@ -20,6 +20,8 @@ fn main() {
     let properties_from_file: Properties =
         serde_yaml::from_reader(scene_file).expect("Couldn't parse the YAML file.");
     scene_builder.with_dimension(properties_from_file.scene.dimension);
+    scene_builder.with_width(properties_from_file.scene.width);
+    scene_builder.with_height(properties_from_file.scene.height);
 
     let scene = scene_builder.build();
     let image = scene.render();
