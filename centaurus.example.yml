@@ -1,1 +1,18 @@
-dimension: 3
+scene:
+  width: 256
+  height: 256
+  dimension: 3
+  camera:
+    position:
+      - 0
+      - 0
+      - -1
+    direction:
+      - 0
+      - 0
+      - 1
+    focal_length: 1
+    upper_bound: 0.5
+    lower_bound: -0.5
+    left_bound: -0.5
+    right_bound: 0.5

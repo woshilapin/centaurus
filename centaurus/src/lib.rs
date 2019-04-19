@@ -5,6 +5,7 @@ use crate::object::{Intersect, Triangle};
 use crate::ray::Ray;
 use crate::vertex::Vertex;
 use nalgebra::{Point3, Vector3};
+use serde_derive::Deserialize;
 
 mod camera;
 pub mod image;
@@ -13,11 +14,12 @@ mod object;
 mod ray;
 mod vertex;
 
-#[derive(Debug, Default, Copy, Clone)]
+#[derive(Debug, Default, Deserialize, Copy, Clone)]
 pub struct Scene {
-    width: usize,
-    height: usize,
-    dimension: u8,
+    pub width: usize,
+    pub height: usize,
+    pub dimension: u8,
+    pub camera: Camera,
 }
 
 #[derive(Default)]

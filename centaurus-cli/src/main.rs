@@ -2,7 +2,7 @@ mod arguments;
 mod properties;
 
 use crate::arguments::Arguments;
-use crate::properties::scene::Scene;
+use crate::properties::Properties;
 use centaurus::SceneBuilder;
 use image::{ImageBuffer, Rgb};
 use std::fs::File;
@@ -17,9 +17,9 @@ fn main() {
     scene_builder.with_height(arguments.height);
 
     let scene_file = File::open(arguments.input_filename).expect("Couldn't read the input file.");
-    let scene_from_file: Scene =
+    let properties_from_file: Properties =
         serde_yaml::from_reader(scene_file).expect("Couldn't parse the YAML file.");
-    scene_builder.with_dimension(scene_from_file.dimension);
+    scene_builder.with_dimension(properties_from_file.scene.dimension);
 
     let scene = scene_builder.build();
     let image = scene.render();
