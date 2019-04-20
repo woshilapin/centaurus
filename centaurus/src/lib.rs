@@ -20,6 +20,7 @@ pub struct Scene {
     pub height: usize,
     pub dimension: u8,
     pub camera: Camera,
+    pub background_color: Color,
 }
 
 impl Scene {
@@ -64,6 +65,8 @@ impl Scene {
                         let intensity = (intensity * (u8::max_value() as f64)) as u8;
                         image.set_color(i, j, Color::new(intensity, intensity, intensity));
                     }
+                } else {
+                    image.set_color(i, j, self.background_color);
                 }
             }
         }
