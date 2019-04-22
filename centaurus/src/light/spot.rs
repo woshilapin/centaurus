@@ -5,7 +5,6 @@ use std::option::Option;
 pub struct Spot {
     position: Point3<f64>,
     direction: Vector3<f64>,
-    angle: f64,
     cosinus_angle: f64,
 }
 
@@ -14,7 +13,6 @@ impl Spot {
         Spot {
             position,
             direction: direction.normalize(),
-            angle,
             cosinus_angle: f64::cos(angle),
         }
     }
