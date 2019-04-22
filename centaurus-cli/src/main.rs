@@ -1,3 +1,6 @@
+#[macro_use]
+extern crate log;
+
 mod arguments;
 mod properties;
 
@@ -8,6 +11,8 @@ use std::fs::File;
 use structopt::StructOpt;
 
 fn main() {
+    log4rs::init_file("log4rs.yml", Default::default()).unwrap();
+
     let arguments = Arguments::from_args();
 
     let scene_file = File::open(arguments.input_filename).expect("Couldn't read the input file.");
@@ -25,6 +30,6 @@ fn main() {
         .save(&arguments.output_filename)
         .is_ok()
     {
-        println!("{:?} saved!", &arguments.output_filename);
+        info!("File {:?} created.", &arguments.output_filename);
     }
 }

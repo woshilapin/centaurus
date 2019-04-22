@@ -1,0 +1,21 @@
+refresh_rate: 30 seconds
+appenders:
+  stdout:
+    kind: console
+    encoder:
+      kind: pattern
+      pattern: "{highlight([{level}])} {message}{n}"
+  stdout-full:
+    kind: console
+    encoder:
+      kind: pattern
+      pattern: "{date} {highlight([{level}])} {module}:{file}:{line} {message}{n}"
+
+root:
+  level: debug
+  appenders:
+    - stdout
+
+loggers:
+  centaurus::object::triangle:
+    level: debug

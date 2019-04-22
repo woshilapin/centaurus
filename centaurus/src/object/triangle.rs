@@ -17,6 +17,7 @@ impl Triangle {
 
 impl Intersect for Triangle {
     fn intersect(&self, ray: &Ray) -> Option<Intersection> {
+        trace!("Searching for intersection with {:?}", ray);
         let origin = ray.origin().to_homogeneous();
         let direction = ray.direction().to_homogeneous();
         let edge_1 = self.vertices[1].position() - self.vertices[0].position();
@@ -39,13 +40,11 @@ impl Intersect for Triangle {
         if t >= 0.0 && u >= 0.0 && v >= 0.0 && u + v <= 1.0 {
             let u_prime = 1.0 - u;
             let v_prime = 1.0 - v;
-            let normal = u_prime
-                * v_prime
-                * inverse_affine_matrix
-                * self.vertices[0].normal().to_homogeneous()
-                + u_prime * v * inverse_affine_matrix * self.vertices[1].normal().to_homogeneous()
-                + u * v_prime * inverse_affine_matrix * self.vertices[2].normal().to_homogeneous();
-            let normal = match Vector3::from_homogeneous((affine_matrix * normal).normalize()) {
+            let normal_0 = u_prime * v_prime * self.vertices[0].normal().to_homogeneous();
+            let normal_1 = u * v_prime * self.vertices[1].normal().to_homogeneous();
+            let normal_2 = u_prime * v * self.vertices[2].normal().to_homogeneous();
+            let normal = normal_0 + normal_1 + normal_2;
+            let normal = match Vector3::from_homogeneous((normal).normalize()) {
                 Some(i) => i,
                 None => return None,
             };
@@ -53,8 +52,10 @@ impl Intersect for Triangle {
                 position: ray.origin() + t * ray.direction(),
                 normal,
             };
+            trace!("Found {:?}", intersection);
             Some(intersection)
         } else {
+            trace!("No intersection found");
             None
         }
     }

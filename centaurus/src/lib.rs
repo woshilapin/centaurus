@@ -1,3 +1,6 @@
+#[macro_use]
+extern crate log;
+
 use crate::camera::Camera;
 use crate::image::{Color, Image};
 use crate::light::{Light, Lightbulb, Spot};
@@ -28,57 +31,57 @@ impl Scene {
         let mut image = Image::new((self.width, self.height));
         let triangle1 = Triangle::new([
             Vertex::new(
-                Point3::new(0.0, 0.0, -0.5),
+                Point3::new(0.0, 0.0, -1.0),
                 Vector3::new(0.0, 0.0, -1.0).normalize(),
             ),
             Vertex::new(
-                Point3::new(-0.5, 0.0, 0.0),
+                Point3::new(-1.0, 0.0, 0.0),
                 Vector3::new(-1.0, 0.0, 0.0).normalize(),
             ),
             Vertex::new(
-                Point3::new(0.0, 0.5, 0.0),
+                Point3::new(0.0, 1.0, 0.0),
                 Vector3::new(0.0, 1.0, 0.0).normalize(),
             ),
         ]);
         let triangle2 = Triangle::new([
             Vertex::new(
-                Point3::new(0.0, 0.0, -0.5),
+                Point3::new(0.0, 0.0, -1.0),
                 Vector3::new(0.0, 0.0, -1.0).normalize(),
             ),
             Vertex::new(
-                Point3::new(0.5, 0.0, 0.0),
+                Point3::new(1.0, 0.0, 0.0),
                 Vector3::new(1.0, 0.0, 0.0).normalize(),
             ),
             Vertex::new(
-                Point3::new(0.0, 0.5, 0.0),
+                Point3::new(0.0, 1.0, 0.0),
                 Vector3::new(0.0, 1.0, 0.0).normalize(),
             ),
         ]);
         let triangle3 = Triangle::new([
             Vertex::new(
-                Point3::new(0.0, 0.0, -0.5),
+                Point3::new(0.0, 0.0, -1.0),
                 Vector3::new(0.0, 0.0, -1.0).normalize(),
             ),
             Vertex::new(
-                Point3::new(-0.5, 0.0, 0.0),
+                Point3::new(-1.0, 0.0, 0.0),
                 Vector3::new(-1.0, 0.0, 0.0).normalize(),
             ),
             Vertex::new(
-                Point3::new(0.0, -0.5, 0.0),
+                Point3::new(0.0, -1.0, 0.0),
                 Vector3::new(0.0, -1.0, 0.0).normalize(),
             ),
         ]);
         let triangle4 = Triangle::new([
             Vertex::new(
-                Point3::new(0.0, 0.0, -0.5),
+                Point3::new(0.0, 0.0, -1.0),
                 Vector3::new(0.0, 0.0, -1.0).normalize(),
             ),
             Vertex::new(
-                Point3::new(0.5, 0.0, 0.0),
+                Point3::new(1.0, 0.0, 0.0),
                 Vector3::new(1.0, 0.0, 0.0).normalize(),
             ),
             Vertex::new(
-                Point3::new(0.0, -0.5, 0.0),
+                Point3::new(0.0, -1.0, 0.0),
                 Vector3::new(0.0, -1.0, 0.0).normalize(),
             ),
         ]);
@@ -89,26 +92,30 @@ impl Scene {
             1.0,
             [1.0, -1.0, -1.0, 1.0],
         );
-        let light = Lightbulb::new(Point3::new(2.0, 2.0, -2.0));
-        let _light = Spot::new(
-            Point3::new(0.0, 0.0, -1.0),
-            Vector3::new(0.4, -0.4, 1.0),
+        let _light = Lightbulb::new(Point3::new(0.0, 0.0, -2.0));
+        let __light = Lightbulb::new(Point3::new(1.0, 1.0, -2.0));
+        let light = Spot::new(
+            Point3::new(0.5, 0.5, -1.0),
+            Vector3::new(-0.4, -0.4, 1.0),
             0.2,
         );
-        for i in 0..self.width as usize {
-            for j in 0..self.height as usize {
-                let x = (i as f64) / ((self.width - 1) as f64) - 0.5;
-                let y = (j as f64) / ((self.height - 1) as f64) - 0.5;
+        for i in 0..self.height as usize {
+            for j in 0..self.width as usize {
+                info!("Rendering pixel from line {} column {} ", i, j);
+                let x = 2.0 * (j as f64) / ((self.width - 1) as f64) - 1.0;
+                let y = 2.0 * (i as f64) / ((self.height - 1) as f64) - 1.0;
                 let ray = Ray::new(Point3::new(x, y, -1.0), Vector3::new(0.0, 0.0, 1.0));
                 image.set_color(i, j, self.background_color);
                 for object in &objects {
                     if let Some(intersection) = object.intersect(&ray) {
-                        let i_position = intersection.position();
-                        let i_normal = intersection.normal();
+                        let i_position = intersection.position;
+                        let i_normal = intersection.normal;
                         if let Some(l_direction) = light.light_direction(&i_position) {
                             let intensity = i_normal.dot(&(-l_direction));
-                            let intensity = (intensity * (u8::max_value() as f64)) as u8;
-                            image.set_color(i, j, Color::new(intensity, intensity, intensity));
+                            if intensity >= 0.0 && intensity <= 1.0 {
+                                let intensity = (intensity * (u8::max_value() as f64)) as u8;
+                                image.set_color(i, j, Color::new(intensity, intensity, intensity));
+                            }
                         }
                     }
                 }
