@@ -3,8 +3,10 @@ use crate::object::Intersection;
 use crate::ray::Ray;
 use crate::vertex::Vertex;
 use nalgebra::{Matrix4, Vector3};
+use serde_derive::Deserialize;
 use std::option::Option;
 
+#[derive(Debug, Deserialize)]
 pub struct Triangle {
     vertices: [Vertex<f64>; 3],
 }

@@ -2,7 +2,7 @@
 use nalgebra::{Point3, Vector3};
 use serde_derive::Deserialize;
 
-#[derive(Debug, Deserialize, Copy, Clone)]
+#[derive(Debug, Deserialize)]
 pub struct Camera {
     pub position: Point3<f64>,
     pub direction: Vector3<f64>,

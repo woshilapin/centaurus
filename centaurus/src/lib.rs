@@ -6,7 +6,6 @@ use crate::image::{Color, Image};
 use crate::light::{Light, Lightbulb, Spot, Sun};
 use crate::object::{Intersect, Triangle};
 use crate::ray::Ray;
-use crate::vertex::Vertex;
 use nalgebra::{Point3, Vector3};
 use serde_derive::Deserialize;
 use indicatif::ProgressBar;
@@ -18,75 +17,19 @@ mod object;
 mod ray;
 mod vertex;
 
-#[derive(Debug, Default, Deserialize, Copy, Clone)]
+#[derive(Debug, Deserialize)]
 pub struct Scene {
     pub width: usize,
     pub height: usize,
     pub dimension: u8,
     pub camera: Camera,
     pub background_color: Color,
+    pub objects: Vec<Triangle>,
 }
 
 impl Scene {
     pub fn render(&self) -> Image {
         let mut image = Image::new((self.width, self.height));
-        let triangle1 = Triangle::new([
-            Vertex::new(
-                Point3::new(0.0, 0.0, -1.0),
-                Vector3::new(0.0, 0.0, -1.0).normalize(),
-            ),
-            Vertex::new(
-                Point3::new(-1.0, 0.0, 0.0),
-                Vector3::new(-1.0, 0.0, 0.0).normalize(),
-            ),
-            Vertex::new(
-                Point3::new(0.0, 1.0, 0.0),
-                Vector3::new(0.0, 1.0, 0.0).normalize(),
-            ),
-        ]);
-        let triangle2 = Triangle::new([
-            Vertex::new(
-                Point3::new(0.0, 0.0, -1.0),
-                Vector3::new(0.0, 0.0, -1.0).normalize(),
-            ),
-            Vertex::new(
-                Point3::new(1.0, 0.0, 0.0),
-                Vector3::new(1.0, 0.0, 0.0).normalize(),
-            ),
-            Vertex::new(
-                Point3::new(0.0, 1.0, 0.0),
-                Vector3::new(0.0, 1.0, 0.0).normalize(),
-            ),
-        ]);
-        let triangle3 = Triangle::new([
-            Vertex::new(
-                Point3::new(0.0, 0.0, -1.0),
-                Vector3::new(0.0, 0.0, -1.0).normalize(),
-            ),
-            Vertex::new(
-                Point3::new(-1.0, 0.0, 0.0),
-                Vector3::new(-1.0, 0.0, 0.0).normalize(),
-            ),
-            Vertex::new(
-                Point3::new(0.0, -1.0, 0.0),
-                Vector3::new(0.0, -1.0, 0.0).normalize(),
-            ),
-        ]);
-        let triangle4 = Triangle::new([
-            Vertex::new(
-                Point3::new(0.0, 0.0, -1.0),
-                Vector3::new(0.0, 0.0, -1.0).normalize(),
-            ),
-            Vertex::new(
-                Point3::new(1.0, 0.0, 0.0),
-                Vector3::new(1.0, 0.0, 0.0).normalize(),
-            ),
-            Vertex::new(
-                Point3::new(0.0, -1.0, 0.0),
-                Vector3::new(0.0, -1.0, 0.0).normalize(),
-            ),
-        ]);
-        let objects = vec![triangle1, triangle2, triangle3, triangle4];
         let _camera = Camera::new(
             Point3::new(0.0, 0.0, -1.0),
             Vector3::new(0.0, 0.0, 1.0),
@@ -108,7 +51,7 @@ impl Scene {
                 let y = 2.0 * (i as f64) / ((self.height - 1) as f64) - 1.0;
                 let ray = Ray::new(Point3::new(x, y, -1.0), Vector3::new(0.0, 0.0, 1.0));
                 image.set_color(i, j, self.background_color);
-                for object in &objects {
+                for object in &self.objects {
                     if let Some(intersection) = object.intersect(&ray) {
                         let i_position = intersection.position;
                         let i_normal = intersection.normal;

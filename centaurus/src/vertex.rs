@@ -1,5 +1,7 @@
 use nalgebra::{Point3, Scalar, Vector3};
+use serde_derive::Deserialize;
 
+#[derive(Debug, Deserialize)]
 pub struct Vertex<T>
 where
     T: Scalar,

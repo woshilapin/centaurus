@@ -20,3 +20,104 @@ scene:
     lower_bound: -0.5
     left_bound: -0.5
     right_bound: 0.5
+  objects:
+    - vertices:
+      - position:
+          - 0.0
+          - 0.0
+          - -1.0
+        normal:
+          - 0.0
+          - 0.0
+          - -1.0
+      - position:
+          - -1.0
+          - 0.0
+          - 0.0
+        normal:
+          - -1.0
+          - 0.0
+          - 0.0
+      - position:
+          - 0.0
+          - 1.0
+          - 0.0
+        normal:
+          - 0.0
+          - 1.0
+          - 0.0
+    - vertices:
+      - position:
+          - 0.0
+          - 0.0
+          - -1.0
+        normal:
+          - 0.0
+          - 0.0
+          - -1.0
+      - position:
+          - 1.0
+          - 0.0
+          - 0.0
+        normal:
+          - 1.0
+          - 0.0
+          - 0.0
+      - position:
+          - 0.0
+          - 1.0
+          - 0.0
+        normal:
+          - 0.0
+          - 1.0
+          - 0.0
+    - vertices:
+      - position:
+          - 0.0
+          - 0.0
+          - -1.0
+        normal:
+          - 0.0
+          - 0.0
+          - -1.0
+      - position:
+          - -1.0
+          - 0.0
+          - 0.0
+        normal:
+          - -1.0
+          - 0.0
+          - 0.0
+      - position:
+          - 0.0
+          - -1.0
+          - 0.0
+        normal:
+          - 0.0
+          - -1.0
+          - 0.0
+    - vertices:
+      - position:
+          - 0.0
+          - 0.0
+          - -1.0
+        normal:
+          - 0.0
+          - 0.0
+          - -1.0
+      - position:
+          - 1.0
+          - 0.0
+          - 0.0
+        normal:
+          - 1.0
+          - 0.0
+          - 0.0
+      - position:
+          - 0.0
+          - -1.0
+          - 0.0
+        normal:
+          - 0.0
+          - -1.0
+          - 0.0
