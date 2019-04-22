@@ -1,5 +1,5 @@
 [package]
-name = "centaurus"
+name = "centaurus_core"
 version = "0.1.0"
 authors = ["woshilapin <woshilapin@tuziwo.info>"]
 edition = "2018"

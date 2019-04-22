@@ -12,6 +12,14 @@
             ]
         },
         {
+            "label": "Rust: cargo clippy",
+            "type": "shell",
+            "command": "cargo clippy",
+            "problemMatcher": [
+                "$rustc"
+            ]
+        },
+        {
             "type": "cargo",
             "subcommand": "build",
             "problemMatcher": [

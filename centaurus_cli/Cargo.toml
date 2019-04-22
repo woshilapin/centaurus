@@ -1,11 +1,11 @@
 [package]
-name = "centaurus-cli"
+name = "centaurus_cli"
 version = "0.1.0"
 authors = ["woshilapin <woshilapin@tuziwo.info>"]
 edition = "2018"
 
 [dependencies]
-centaurus = { path = "../centaurus" }
+centaurus_core = { path = "../centaurus_core" }
 clap = "2.33.0"
 clap-verbosity-flag = "0.2.0"
 log4rs = "0.8.3"
