@@ -8,7 +8,9 @@ pub struct Sun {
 
 impl Sun {
     pub fn new(direction: Vector3<f64>) -> Sun {
-        Sun { direction }
+        Sun {
+            direction: direction.normalize(),
+        }
     }
 }
 

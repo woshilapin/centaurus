@@ -3,7 +3,7 @@ extern crate log;
 
 use crate::camera::Camera;
 use crate::image::{Color, Image};
-use crate::light::{Light, Lightbulb, Spot};
+use crate::light::{Light, Lightbulb, Spot, Sun};
 use crate::object::{Intersect, Triangle};
 use crate::ray::Ray;
 use crate::vertex::Vertex;
@@ -93,9 +93,9 @@ impl Scene {
             1.0,
             [1.0, -1.0, -1.0, 1.0],
         );
-        let _light = Lightbulb::new(Point3::new(0.0, 0.0, -2.0));
+        let light = Sun::new(Vector3::new(-0.5, 0.5, 1.0));
         let __light = Lightbulb::new(Point3::new(1.0, 1.0, -2.0));
-        let light = Spot::new(
+        let _light = Spot::new(
             Point3::new(0.5, 0.5, -1.0),
             Vector3::new(-0.4, -0.4, 1.0),
             0.2,
