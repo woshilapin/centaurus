@@ -12,6 +12,14 @@
             ]
         },
         {
+            "label": "Rust: cargo fmt",
+            "type": "shell",
+            "command": "cargo fmt",
+            "problemMatcher": [
+                "$rustc"
+            ]
+        },
+        {
             "label": "Rust: cargo clippy",
             "type": "shell",
             "command": "cargo clippy",
