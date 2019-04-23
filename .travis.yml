@@ -2,64 +2,61 @@ sudo: required
 language: rust
 cache: cargo
 env:
-    - secure: "Qr7YoxbcipvsGNMcuHiRiRqKKF2h69jB6LwncPdfxArVdSvRsLivM+xFpIBcFca7hdVoJuMo+quKsgz3vBZXjgc8GFMOCSOugUo2dOG6H0SG4SYB3XHgij12SG5UxJidAyAtWJBI3l80sES4UERUzGQvQlR/oydHuUvPNwlz80o="
-    - secure: "AQp3+Ykuth5+VuePcXdGIHJPaeeV3VR3cqTvFprR8JISZVKIkzzE2F4PRJd1HmxIFwY6uMvDXtGWg2FC6nQC7yBKVXESKXJm2rzFYD922j9qKdNGmPMm4T0xrEixMEZLLhOe+uifAwQGloxTq3GOD/v8geNdqVh434XzF5YzGJ8="
-
+  matrix:
+  - secure: Qr7YoxbcipvsGNMcuHiRiRqKKF2h69jB6LwncPdfxArVdSvRsLivM+xFpIBcFca7hdVoJuMo+quKsgz3vBZXjgc8GFMOCSOugUo2dOG6H0SG4SYB3XHgij12SG5UxJidAyAtWJBI3l80sES4UERUzGQvQlR/oydHuUvPNwlz80o=
+  - secure: AQp3+Ykuth5+VuePcXdGIHJPaeeV3VR3cqTvFprR8JISZVKIkzzE2F4PRJd1HmxIFwY6uMvDXtGWg2FC6nQC7yBKVXESKXJm2rzFYD922j9qKdNGmPMm4T0xrEixMEZLLhOe+uifAwQGloxTq3GOD/v8geNdqVh434XzF5YzGJ8=
+  global:
+  - secure: Aaz3BkTXCGo/2wDde5QDxYY4WrQcTkypDxoIu9cXzpQHMwjKxc+vKtpqEwrJIkOBJuIA2cshDHf6Uue+iFj9rDD91EVbQgsd6DRmzGupmXwBSJK7qIgeK6EVDHrN+1PZLY1hG+NcVSuXzKGf+LeJaZKZgVcCr6evLZCJKUGmcQA=
+  - secure: LUQRqGIR5ZpvLbVkIdkdOFO3VUDUDMegaMeqoaROnWiBnGgixqYiMX7+PtrYcgqOvGBbe2i6sFcmqusWB3NsLDwy4XM58e9sWe+QSkBXZ0bJQE4MTEAHzAl/v+FbIcz8HaFY3hg9fhmRnILOSdMOmrpKUUOnG4AHHHp8ySYt8Pg=
 os:
-    - linux
-    - osx
-
+- linux
+- osx
 before_script:
-    - rustup component add clippy-preview
-
+- rustup component add clippy-preview
 rust:
-    - stable
-    - beta
-    - nightly
-
+- stable
+- beta
+- nightly
 script:
-    - cargo build
-    - cargo test
-    - cargo clippy
-    - cargo doc
-
+- cargo build
+- cargo test
+- cargo clippy
+- cargo doc
 matrix:
-    allow_failures:
-        - rust: nightly
-    fast_finish: true
-
+  allow_failures:
+  - rust: nightly
+  fast_finish: true
 addons:
-    apt:
-        packages:
-            - libcurl4-openssl-dev
-            - libelf-dev
-            - libdw-dev
-            - cmake
-            - gcc
-            - binutils-dev
-            - libiberty-dev
-
-after_success: 
-    - |
-        if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_RUST_VERSION" == "stable" && "$TRAVIS_PULL_REQUEST" = "false" && "$TRAVIS_BRANCH" == "develop" ]]; then
-            echo "<meta http-equiv=refresh content=0;url=centaurus_core/index.html>" > target/doc/index.html &&
-            git clone https://github.com/davisp/ghp-import.git &&
-            ./ghp-import/ghp_import.py --no-jekyll --push --force --message="Documentation upload" --remote="https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG.git" target/doc &&
-            echo "Uploaded documentation"
-        fi
-    - |
-        if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_RUST_VERSION" == "stable" ]]; then
-            wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
-            tar xzf master.tar.gz &&
-            cd kcov-master &&
-            mkdir build &&
-            cd build &&
-            cmake .. &&
-            make &&
-            make install DESTDIR=../../kcov-build &&
-            cd ../.. &&
-            rm -rf kcov-master &&
-            for file in target/debug/centaurus_core*; do [ -f "${file}" -a -x "${file}" ] || continue; mkdir -p "target/cov/$(basename $file)"; ./kcov-build/usr/local/bin/kcov --exclude-pattern=/.cargo,/usr/lib --verify "target/cov/$(basename $file)" "$file"; done &&
-            bash <(curl -s https://codecov.io/bash) &&
-            echo "Uploaded code coverage"
-        fi
+  apt:
+    packages:
+    - libcurl4-openssl-dev
+    - libelf-dev
+    - libdw-dev
+    - cmake
+    - gcc
+    - binutils-dev
+    - libiberty-dev
+after_success:
+- |
+  if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_RUST_VERSION" == "stable" && "$TRAVIS_PULL_REQUEST" = "false" && "$TRAVIS_BRANCH" == "develop" ]]; then
+      echo "<meta http-equiv=refresh content=0;url=centaurus_core/index.html>" > target/doc/index.html &&
+      git clone https://github.com/davisp/ghp-import.git &&
+      ./ghp-import/ghp_import.py --no-jekyll --push --force --message="Documentation upload" --remote="https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG.git" target/doc &&
+      echo "Uploaded documentation"
+  fi
+- |-
+  if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_RUST_VERSION" == "stable" ]]; then
+      wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
+      tar xzf master.tar.gz &&
+      cd kcov-master &&
+      mkdir build &&
+      cd build &&
+      cmake .. &&
+      make &&
+      make install DESTDIR=../../kcov-build &&
+      cd ../.. &&
+      rm -rf kcov-master &&
+      for file in target/debug/centaurus_core*; do [ -f "${file}" -a -x "${file}" ] || continue; mkdir -p "target/cov/$(basename $file)"; ./kcov-build/usr/local/bin/kcov --exclude-pattern=/.cargo,/usr/lib --verify "target/cov/$(basename $file)" "$file"; done &&
+      bash <(curl -s https://codecov.io/bash) &&
+      echo "Uploaded code coverage"
+  fi
