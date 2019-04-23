@@ -58,7 +58,7 @@ impl Scene {
                         if let Some(l_direction) = light.light_direction(&i_position) {
                             let intensity = i_normal.dot(&(-l_direction));
                             if intensity >= 0.0 && intensity <= 1.0 {
-                                let intensity = (intensity * (u8::max_value() as f64)) as u8;
+                                let intensity = (intensity * f64::from(u8::max_value())) as u8;
                                 image.set_color(i, j, Color::new(intensity, intensity, intensity));
                             }
                         }
