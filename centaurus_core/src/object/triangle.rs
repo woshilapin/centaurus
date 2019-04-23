@@ -20,15 +20,15 @@ impl Triangle {
 impl Intersect for Triangle {
     fn intersect(&self, ray: &Ray) -> Option<Intersection> {
         trace!("Searching for intersection with {:?}", ray);
-        let origin = ray.origin().to_homogeneous();
-        let direction = ray.direction().to_homogeneous();
-        let edge_1 = self.vertices[1].position() - self.vertices[0].position();
-        let edge_2 = self.vertices[2].position() - self.vertices[0].position();
+        let origin = ray.origin.to_homogeneous();
+        let direction = ray.direction.to_homogeneous();
+        let edge_1 = self.vertices[1].position - self.vertices[0].position;
+        let edge_2 = self.vertices[2].position - self.vertices[0].position;
         let affine_matrix = Matrix4::from_columns(&[
             edge_1.to_homogeneous(),
             edge_2.to_homogeneous(),
             direction,
-            self.vertices[0].position().to_homogeneous(),
+            self.vertices[0].position.to_homogeneous(),
         ]);
         let inverse_affine_matrix = match affine_matrix.try_inverse() {
             Some(i) => i,
@@ -42,16 +42,16 @@ impl Intersect for Triangle {
         if t >= 0.0 && u >= 0.0 && v >= 0.0 && u + v <= 1.0 {
             let u_prime = 1.0 - u;
             let v_prime = 1.0 - v;
-            let normal_0 = u_prime * v_prime * self.vertices[0].normal().to_homogeneous();
-            let normal_1 = u * v_prime * self.vertices[1].normal().to_homogeneous();
-            let normal_2 = u_prime * v * self.vertices[2].normal().to_homogeneous();
+            let normal_0 = u_prime * v_prime * self.vertices[0].normal.to_homogeneous();
+            let normal_1 = u * v_prime * self.vertices[1].normal.to_homogeneous();
+            let normal_2 = u_prime * v * self.vertices[2].normal.to_homogeneous();
             let normal = normal_0 + normal_1 + normal_2;
             let normal = match Vector3::from_homogeneous((normal).normalize()) {
                 Some(i) => i,
                 None => return None,
             };
             let intersection = Intersection {
-                position: ray.origin() + t * ray.direction(),
+                position: ray.origin + t * ray.direction,
                 normal,
             };
             trace!("Found {:?}", intersection);
