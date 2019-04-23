@@ -1,6 +1,10 @@
 sudo: required
 language: rust
 cache: cargo
+env:
+    - secure: "Qr7YoxbcipvsGNMcuHiRiRqKKF2h69jB6LwncPdfxArVdSvRsLivM+xFpIBcFca7hdVoJuMo+quKsgz3vBZXjgc8GFMOCSOugUo2dOG6H0SG4SYB3XHgij12SG5UxJidAyAtWJBI3l80sES4UERUzGQvQlR/oydHuUvPNwlz80o="
+    - secure: "AQp3+Ykuth5+VuePcXdGIHJPaeeV3VR3cqTvFprR8JISZVKIkzzE2F4PRJd1HmxIFwY6uMvDXtGWg2FC6nQC7yBKVXESKXJm2rzFYD922j9qKdNGmPMm4T0xrEixMEZLLhOe+uifAwQGloxTq3GOD/v8geNdqVh434XzF5YzGJ8="
+
 os:
     - linux
     - osx
