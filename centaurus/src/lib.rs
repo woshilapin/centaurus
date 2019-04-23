@@ -6,9 +6,9 @@ use crate::image::{Color, Image};
 use crate::light::{Light, Lightbulb, Spot, Sun};
 use crate::object::{Intersect, Triangle};
 use crate::ray::Ray;
+use indicatif::ProgressBar;
 use nalgebra::{Point3, Vector3};
 use serde_derive::Deserialize;
-use indicatif::ProgressBar;
 
 mod camera;
 pub mod image;

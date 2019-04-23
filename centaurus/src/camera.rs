@@ -1,4 +1,3 @@
-
 use nalgebra::{Point3, Vector3};
 use serde_derive::Deserialize;
 
