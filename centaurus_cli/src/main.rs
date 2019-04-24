@@ -6,7 +6,6 @@ mod properties;
 
 use crate::arguments::Arguments;
 use crate::properties::Properties;
-use image::{ImageBuffer, Rgb};
 use std::fs::File;
 use structopt::StructOpt;
 
@@ -20,13 +19,8 @@ fn main() {
         serde_yaml::from_reader(scene_file).expect("Couldn't parse the YAML file.");
 
     let scene = properties_from_file.scene;
-    let image = scene.render();
-    let image_buffer = ImageBuffer::from_fn(image.width as u32, image.height as u32, |x, y| {
-        let color = image.color(y as usize, x as usize);
-        Rgb([color.red, color.green, color.blue])
-    });
-
-    if image::ImageRgb8(image_buffer)
+    let image_buffer = scene.render();
+    if image::ImageRgba8(image_buffer)
         .save(&arguments.output_filename)
         .is_ok()
     {

@@ -3,9 +3,10 @@ scene:
   height: 128
   dimension: 3
   background_color:
-    red: 16
-    green: 16
-    blue: 16
+    - 16
+    - 16
+    - 16
+    - 255
   camera:
     position:
       - 0

@@ -6,6 +6,7 @@ edition = "2018"
 
 [dependencies]
 alga = "0.8.2"
+image = "0.21.1"
 indicatif = "0.11.0"
 serde = "1.0.90"
 serde_derive = "1.0.90"
