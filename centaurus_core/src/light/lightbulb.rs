@@ -15,8 +15,8 @@ impl Lightbulb {
 }
 
 impl Light for Lightbulb {
-    fn hit(&self, illuminated_position: &Point3<f64>) -> Option<(Vector3<f64>, Rgba<u8>)> {
-        let direction = illuminated_position - self.position;
+    fn hit(&self, position: &Point3<f64>) -> Option<(Vector3<f64>, Rgba<u8>)> {
+        let direction = position - self.position;
         let direction = direction.normalize();
         let distance_factor = 1.0f64 / (1.0f64 + direction.norm());
         let color = Rgba([

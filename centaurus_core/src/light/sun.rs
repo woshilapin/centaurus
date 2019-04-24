@@ -18,7 +18,7 @@ impl Sun {
 }
 
 impl Light for Sun {
-    fn hit(&self, _illuminated_position: &Point3<f64>) -> Option<(Vector3<f64>, Rgba<u8>)> {
+    fn hit(&self, _position: &Point3<f64>) -> Option<(Vector3<f64>, Rgba<u8>)> {
         Some((self.direction, self.color))
     }
 }

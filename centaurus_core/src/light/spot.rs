@@ -27,8 +27,8 @@ impl Spot {
 }
 
 impl Light for Spot {
-    fn hit(&self, illuminated_position: &Point3<f64>) -> Option<(Vector3<f64>, Rgba<u8>)> {
-        let direction = illuminated_position - self.position;
+    fn hit(&self, position: &Point3<f64>) -> Option<(Vector3<f64>, Rgba<u8>)> {
+        let direction = position - self.position;
         let direction = direction.normalize();
         let cosinus = direction.dot(&self.direction);
         if cosinus > self.cosinus_angle {
