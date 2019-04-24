@@ -21,8 +21,8 @@ fn main() {
 
     let scene = properties_from_file.scene;
     let image = scene.render();
-    let image_buffer = ImageBuffer::from_fn(image.width() as u32, image.height() as u32, |x, y| {
-        let color = image.color(x as usize, y as usize);
+    let image_buffer = ImageBuffer::from_fn(image.width as u32, image.height as u32, |x, y| {
+        let color = image.color(y as usize, x as usize);
         Rgb([color.red, color.green, color.blue])
     });
 

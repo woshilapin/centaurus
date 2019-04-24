@@ -29,18 +29,18 @@ pub struct Scene {
 
 impl Scene {
     pub fn render(&self) -> Image {
-        let mut image = Image::new((self.width, self.height));
+        let mut image = Image::new((self.height, self.width));
         let _camera = Camera::new(
             Point3::new(0.0, 0.0, -1.0),
             Vector3::new(0.0, 0.0, 1.0),
             1.0,
             [1.0, -1.0, -1.0, 1.0],
         );
-        let light = Sun::new(Vector3::new(-0.5, 0.5, 1.0));
+        let _light = Sun::new(Vector3::new(-0.5, 0.5, 1.0));
         let __light = Lightbulb::new(Point3::new(1.0, 1.0, -2.0));
-        let _light = Spot::new(
+        let light = Spot::new(
             Point3::new(0.5, 0.5, -1.0),
-            Vector3::new(-0.4, -0.4, 1.0),
+            Vector3::new(0.0, 0.0, 1.0),
             0.2,
         );
         let progress_bar = ProgressBar::new(self.height as u64 * self.width as u64);
