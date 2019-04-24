@@ -29,8 +29,6 @@ pub struct Scene {
 
 impl Scene {
     pub fn render(&self) -> RgbaImage {
-        let bg_color = Rgba(self.background_color);
-        let mut image = RgbaImage::from_pixel(self.height, self.width, bg_color);
         let _camera = Camera::new(
             Point3::new(0.0, 0.0, -1.0),
             Vector3::new(0.0, 0.0, 1.0),
@@ -45,31 +43,25 @@ impl Scene {
             0.2,
         );
         let progress_bar = ProgressBar::new(self.height as u64 * self.width as u64);
-        for i in 0..self.height {
-            for j in 0..self.width {
-                progress_bar.inc(1);
-                let x = 2.0 * (j as f64) / ((self.width - 1) as f64) - 1.0;
-                let y = 2.0 * (i as f64) / ((self.height - 1) as f64) - 1.0;
-                let ray = Ray::new(Point3::new(x, y, -1.0), Vector3::new(0.0, 0.0, 1.0));
-                for object in &self.objects {
-                    if let Some(intersection) = object.intersect(&ray) {
-                        let i_position = intersection.position;
-                        let i_normal = intersection.normal;
-                        if let Some(l_direction) = light.light_direction(&i_position) {
-                            let intensity = i_normal.dot(&(-l_direction));
-                            if intensity >= 0.0 && intensity <= 1.0 {
-                                let intensity = (intensity * f64::from(u8::max_value())) as u8;
-                                image.put_pixel(
-                                    i,
-                                    j,
-                                    Rgba([intensity, intensity, intensity, u8::max_value()]),
-                                );
-                            }
+        RgbaImage::from_fn(self.height, self.width, |i, j| {
+            progress_bar.inc(1);
+            let x = 2.0 * (i as f64) / ((self.width - 1) as f64) - 1.0;
+            let y = 2.0 * (j as f64) / ((self.height - 1) as f64) - 1.0;
+            let ray = Ray::new(Point3::new(x, y, -1.0), Vector3::new(0.0, 0.0, 1.0));
+            for object in &self.objects {
+                if let Some(intersection) = object.intersect(&ray) {
+                    let i_position = intersection.position;
+                    let i_normal = intersection.normal;
+                    if let Some(l_direction) = light.light_direction(&i_position) {
+                        let intensity = i_normal.dot(&(-l_direction));
+                        if intensity >= 0.0 && intensity <= 1.0 {
+                            let intensity = (intensity * f64::from(u8::max_value())) as u8;
+                            return Rgba([intensity, intensity, intensity, u8::max_value()]);
                         }
                     }
                 }
             }
-        }
-        image
+            Rgba(self.background_color)
+        })
     }
 }
