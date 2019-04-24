@@ -34,6 +34,17 @@ fn bounded_add(v1: u8, v2: u8) -> u8 {
         u8::max_value()
     }
 }
+fn bounded_multiply(value: u8, scalar: f64) -> u8 {
+    ((value as f64) * scalar) as u8
+}
+fn multiply_color_scalar(c: Rgba<u8>, scalar: f64) -> Rgba<u8> {
+    Rgba([
+        bounded_multiply(c[0], scalar),
+        bounded_multiply(c[1], scalar),
+        bounded_multiply(c[2], scalar),
+        c[3],
+    ])
+}
 fn combine_color(c1: Rgba<u8>, c2: Rgba<u8>) -> Rgba<u8> {
     Rgba([
         bounded_add(c1[0], c2[0]),
@@ -51,13 +62,30 @@ impl Scene {
             1.0,
             [1.0, -1.0, -1.0, 1.0],
         );
-        let light1 = Sun::new(Vector3::new(0.5, 0.5, 1.0));
+        let light1 = Sun::new(
+            Vector3::new(0.5, 0.5, 1.0),
+            Rgba([128, 128, 128, u8::max_value()]),
+        );
         let light2 = Spot::new(
             Point3::new(0.5, 0.5, -2.0),
             Vector3::new(-0.5, -0.5, 1.0),
             0.2,
+            Rgba([
+                u8::max_value(),
+                u8::min_value(),
+                u8::min_value(),
+                u8::max_value(),
+            ]),
         );
-        let light3 = Lightbulb::new(Point3::new(-1.0, 1.0, 0.0));
+        let light3 = Lightbulb::new(
+            Point3::new(-1.0, 1.0, 0.0),
+            Rgba([
+                u8::min_value(),
+                u8::max_value(),
+                u8::min_value(),
+                u8::max_value(),
+            ]),
+        );
         let lights: Vec<Box<Light>> = vec![Box::new(light1), Box::new(light2), Box::new(light3)];
         let progress_bar = ProgressBar::new(self.height as u64 * self.width as u64);
         RgbaImage::from_fn(self.width, self.height, |i, j| {
@@ -71,12 +99,10 @@ impl Scene {
                     let i_position = intersection.position;
                     let i_normal = intersection.normal;
                     for light in &lights {
-                        if let Some(l_direction) = light.light_direction(&i_position) {
+                        if let Some((l_direction, l_color)) = light.hit(&i_position) {
                             let intensity = i_normal.dot(&(-l_direction));
                             if intensity >= 0.0 && intensity <= 1.0 {
-                                let intensity = (intensity * f64::from(u8::max_value())) as u8;
-                                let new_color =
-                                    Rgba([intensity, intensity, intensity, u8::max_value()]);
+                                let new_color = multiply_color_scalar(l_color, intensity);
                                 color = combine_color(color, new_color);
                             }
                         }
