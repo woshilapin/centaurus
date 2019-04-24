@@ -11,11 +11,11 @@ use indicatif::ProgressBar;
 use nalgebra::{Point3, Vector3};
 use serde_derive::Deserialize;
 
-mod camera;
-mod light;
-mod object;
-mod ray;
-mod vertex;
+pub mod camera;
+pub mod light;
+pub mod object;
+pub mod ray;
+pub mod vertex;
 
 #[derive(Debug, Deserialize)]
 pub struct Scene {

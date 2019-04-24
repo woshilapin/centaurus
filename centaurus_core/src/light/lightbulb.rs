@@ -3,12 +3,26 @@ use image::Rgba;
 use nalgebra::{Point3, Vector3};
 use std::option::Option;
 
+/// A Lightbulb will light the whole scene from one point in space.
+/// Color of the light will dim inversely proportional to the distance to the surface of impact.
 pub struct Lightbulb {
     position: Point3<f64>,
     color: Rgba<u8>,
 }
 
 impl Lightbulb {
+    /// Create a new Lightbulb object.
+    ///
+    /// For example, you can create a red lightbulb top-right of the center of the scene with the following code.
+    /// ```
+    /// # use centaurus_core::light::Lightbulb;
+    /// # use nalgebra::Point3;
+    /// # use image::Rgba;
+    /// let red_lightbulb = Lightbulb::new(
+    ///     Point3::new(1.0, 1.0, 0.0),
+    ///     Rgba([u8::max_value(), 0, 0, u8::max_value()]),
+    /// );
+    /// ```
     pub fn new(position: Point3<f64>, color: Rgba<u8>) -> Lightbulb {
         Lightbulb { position, color }
     }
@@ -35,7 +49,15 @@ mod tests {
 
     #[test]
     fn should_return_normalized_direction() {
-        let sun = Lightbulb::new(Point3::new(-2.0, 0.0, 0.0), Rgba([u8::max_value(), u8::max_value(), u8::max_value(), u8::max_value()]));
+        let sun = Lightbulb::new(
+            Point3::new(-2.0, 0.0, 0.0),
+            Rgba([
+                u8::max_value(),
+                u8::max_value(),
+                u8::max_value(),
+                u8::max_value(),
+            ]),
+        );
         let hit = sun.hit(&Point3::new(0.0, 0.0, 0.0));
         let (direction, _) = hit.unwrap();
         assert_eq!(direction[0], 1.0);
@@ -45,7 +67,10 @@ mod tests {
 
     #[test]
     fn should_return_dimmed_color() {
-        let sun = Lightbulb::new(Point3::new(2.0, 0.0, 0.0), Rgba([128, 128, 128, u8::max_value()]));
+        let sun = Lightbulb::new(
+            Point3::new(2.0, 0.0, 0.0),
+            Rgba([128, 128, 128, u8::max_value()]),
+        );
         let hit = sun.hit(&Point3::new(0.0, 0.0, 0.0));
         let (_, color) = hit.unwrap();
         assert_eq!(color[0], 64);

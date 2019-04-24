@@ -3,12 +3,25 @@ use image::Rgba;
 use nalgebra::{Point3, Vector3};
 use std::option::Option;
 
+/// A sun will light in one direction without dimming with distance.
 pub struct Sun {
     direction: Vector3<f64>,
     color: Rgba<u8>,
 }
 
 impl Sun {
+    ///
+    /// 
+    /// For example, creating a blue light that would shine from the zenith.
+    /// ```
+    /// # use centaurus_core::light::Sun;
+    /// # use nalgebra::Vector3;
+    /// # use image::Rgba;
+    /// let sun = Sun::new(
+    ///     Vector3::new(0.0, -1.0, 0.0),
+    ///     Rgba([0, 0, u8::max_value(), u8::max_value()])
+    /// );
+    /// ```
     pub fn new(direction: Vector3<f64>, color: Rgba<u8>) -> Sun {
         Sun {
             direction: direction.normalize(),
@@ -29,7 +42,10 @@ mod tests {
 
     #[test]
     fn should_return_normalized_direction() {
-        let sun = Sun::new(Vector3::new(2.0, 0.0, 0.0), Rgba([12, 34, 56, u8::max_value()]));
+        let sun = Sun::new(
+            Vector3::new(2.0, 0.0, 0.0),
+            Rgba([12, 34, 56, u8::max_value()]),
+        );
         let hit = sun.hit(&Point3::new(0.0, 0.0, 0.0));
         let (direction, _) = hit.unwrap();
         assert_eq!(direction[0], 1.0);
@@ -39,7 +55,10 @@ mod tests {
 
     #[test]
     fn should_return_same_color() {
-        let sun = Sun::new(Vector3::new(2.0, 0.0, 0.0), Rgba([12, 34, 56, u8::max_value()]));
+        let sun = Sun::new(
+            Vector3::new(2.0, 0.0, 0.0),
+            Rgba([12, 34, 56, u8::max_value()]),
+        );
         let hit = sun.hit(&Point3::new(0.0, 0.0, 0.0));
         let (_, color) = hit.unwrap();
         assert_eq!(color[0], 12);

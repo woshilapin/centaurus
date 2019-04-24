@@ -3,6 +3,9 @@ use image::Rgba;
 use nalgebra::{Point3, Vector3};
 use std::option::Option;
 
+/// A Spot will light only in a specific direction in a cone of light.
+/// It is defined through a position, a direction, and the angle of the cone light.
+/// A color is also associated.
 pub struct Spot {
     position: Point3<f64>,
     direction: Vector3<f64>,
@@ -11,6 +14,22 @@ pub struct Spot {
 }
 
 impl Spot {
+    /// Create a new Spot object.
+    /// 
+    /// For example, if you want to create a spot, just above the center of the scene, which would light the scene with a green cone of light.
+    /// ```
+    /// # use centaurus_core::light::Spot;
+    /// # use nalgebra::{Point3, Vector3};
+    /// # use image::Rgba;
+    /// let spot = Spot::new(
+    ///     Point3::new(0.0, 1.0, 0.0),
+    ///     Vector3::new(0.0, -1.0, 0.0),
+    ///     0.5,
+    ///     Rgba([0, u8::max_value(), 0, u8::max_value()]),
+    /// );
+    /// ```
+    /// 
+    /// Note: the `angle` value is given in radians.
     pub fn new(
         position: Point3<f64>,
         direction: Vector3<f64>,
@@ -52,7 +71,12 @@ mod tests {
 
     #[test]
     fn should_return_normalized_direction() {
-        let sun = Spot::new(Point3::new(-2.0, 0.0, 0.0), Vector3::new(1.0,0.0,0.0),0.5,Rgba([128, 128, 128, u8::max_value()]));
+        let sun = Spot::new(
+            Point3::new(-2.0, 0.0, 0.0),
+            Vector3::new(1.0, 0.0, 0.0),
+            0.5,
+            Rgba([128, 128, 128, u8::max_value()]),
+        );
         let hit = sun.hit(&Point3::new(0.0, 0.0, 0.0));
         let (direction, _) = hit.unwrap();
         assert_eq!(direction[0], 1.0);
@@ -62,7 +86,12 @@ mod tests {
 
     #[test]
     fn should_return_dimmed_color() {
-        let sun = Spot::new(Point3::new(-2.0, 0.0, 0.0), Vector3::new(1.0,0.0,0.0),0.5,Rgba([128, 128, 128, u8::max_value()]));
+        let sun = Spot::new(
+            Point3::new(-2.0, 0.0, 0.0),
+            Vector3::new(1.0, 0.0, 0.0),
+            0.5,
+            Rgba([128, 128, 128, u8::max_value()]),
+        );
         let hit = sun.hit(&Point3::new(0.0, 0.0, 0.0));
         let (_, color) = hit.unwrap();
         assert_eq!(color[0], 64);
@@ -73,7 +102,12 @@ mod tests {
 
     #[test]
     fn should_return_none() {
-        let sun = Spot::new(Point3::new(-2.0, 0.0, 0.0), Vector3::new(1.0,0.0,0.0),0.5,Rgba([128, 128, 128, u8::max_value()]));
+        let sun = Spot::new(
+            Point3::new(-2.0, 0.0, 0.0),
+            Vector3::new(1.0, 0.0, 0.0),
+            0.5,
+            Rgba([128, 128, 128, u8::max_value()]),
+        );
         let hit = sun.hit(&Point3::new(-4.0, 0.0, 0.0));
         assert_eq!(hit.is_none(), true);
     }
