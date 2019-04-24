@@ -35,7 +35,7 @@ impl Scene {
             1.0,
             [1.0, -1.0, -1.0, 1.0],
         );
-        let light = Sun::new(Vector3::new(-0.5, 0.5, 1.0));
+        let light = Sun::new(Vector3::new(0.5, 0.5, 1.0));
         let __light = Lightbulb::new(Point3::new(1.0, 1.0, -2.0));
         let _light = Spot::new(
             Point3::new(0.5, 0.5, -1.0),
@@ -43,10 +43,10 @@ impl Scene {
             0.2,
         );
         let progress_bar = ProgressBar::new(self.height as u64 * self.width as u64);
-        RgbaImage::from_fn(self.height, self.width, |i, j| {
+        RgbaImage::from_fn(self.width, self.height, |i, j| {
             progress_bar.inc(1);
             let x = 2.0 * (i as f64) / ((self.width - 1) as f64) - 1.0;
-            let y = 2.0 * (j as f64) / ((self.height - 1) as f64) - 1.0;
+            let y = 2.0 * ((self.height - j) as f64) / ((self.height - 1) as f64) - 1.0;
             let ray = Ray::new(Point3::new(x, y, -1.0), Vector3::new(0.0, 0.0, 1.0));
             for object in &self.objects {
                 if let Some(intersection) = object.intersect(&ray) {
