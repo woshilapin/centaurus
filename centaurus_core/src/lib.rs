@@ -90,8 +90,10 @@ impl Scene {
         let progress_bar = ProgressBar::new(self.height as u64 * self.width as u64);
         RgbaImage::from_fn(self.width, self.height, |i, j| {
             progress_bar.inc(1);
-            let x = 2.0 * (i as f64) / ((self.width - 1) as f64) - 1.0;
-            let y = 2.0 * ((self.height - j) as f64) / ((self.height - 1) as f64) - 1.0;
+            let x_unit = (self.camera.right_bound - self.camera.left_bound) / ((self.width) as f64);
+            let y_unit = (self.camera.upper_bound - self.camera.lower_bound) / ((self.height) as f64);
+            let x = self.camera.left_bound + (i as f64 + 0.5) * x_unit;
+            let y = self.camera.lower_bound + ((self.height - j) as f64 - 0.5) * y_unit;
             let ray = Ray::new(Point3::new(x, y, -1.0), Vector3::new(0.0, 0.0, 1.0));
             let mut color = Rgba(self.background_color);
             for object in &self.objects {
