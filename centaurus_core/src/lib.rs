@@ -91,7 +91,8 @@ impl Scene {
         RgbaImage::from_fn(self.width, self.height, |i, j| {
             progress_bar.inc(1);
             let x_unit = (self.camera.right_bound - self.camera.left_bound) / ((self.width) as f64);
-            let y_unit = (self.camera.upper_bound - self.camera.lower_bound) / ((self.height) as f64);
+            let y_unit =
+                (self.camera.upper_bound - self.camera.lower_bound) / ((self.height) as f64);
             let x = self.camera.left_bound + (i as f64 + 0.5) * x_unit;
             let y = self.camera.lower_bound + ((self.height - j) as f64 - 0.5) * y_unit;
             let ray = Ray::new(Point3::new(x, y, -1.0), Vector3::new(0.0, 0.0, 1.0));

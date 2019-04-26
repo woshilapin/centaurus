@@ -15,7 +15,7 @@ pub struct Spot {
 
 impl Spot {
     /// Create a new Spot object.
-    /// 
+    ///
     /// For example, if you want to create a spot, just above the center of the scene, which would light the scene with a green cone of light.
     /// ```
     /// # use centaurus_core::light::Spot;
@@ -28,7 +28,7 @@ impl Spot {
     ///     Rgba([0, u8::max_value(), 0, u8::max_value()]),
     /// );
     /// ```
-    /// 
+    ///
     /// Note: the `angle` value is given in radians.
     pub fn new(
         position: Point3<f64>,

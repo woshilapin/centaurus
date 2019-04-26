@@ -11,7 +11,7 @@ pub struct Sun {
 
 impl Sun {
     ///
-    /// 
+    ///
     /// For example, creating a blue light that would shine from the zenith.
     /// ```
     /// # use centaurus_core::light::Sun;

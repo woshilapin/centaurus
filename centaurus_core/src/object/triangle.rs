@@ -40,11 +40,9 @@ impl Intersect for Triangle {
         let u = new_origin[0] + t * new_direction[0];
         let v = new_origin[1] + t * new_direction[1];
         if t >= 0.0 && u >= 0.0 && v >= 0.0 && u + v <= 1.0 {
-            let u_prime = 1.0 - u;
-            let v_prime = 1.0 - v;
-            let normal_0 = u_prime * v_prime * self.vertices[0].normal.to_homogeneous();
-            let normal_1 = u * v_prime * self.vertices[1].normal.to_homogeneous();
-            let normal_2 = u_prime * v * self.vertices[2].normal.to_homogeneous();
+            let normal_0 = (1.0 - u - v) * self.vertices[0].normal.to_homogeneous();
+            let normal_1 = u * self.vertices[1].normal.to_homogeneous();
+            let normal_2 = v * self.vertices[2].normal.to_homogeneous();
             let normal = normal_0 + normal_1 + normal_2;
             let normal = match Vector3::from_homogeneous((normal).normalize()) {
                 Some(i) => i,
