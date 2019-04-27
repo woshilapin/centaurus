@@ -17,134 +17,47 @@ scene:
       - 0
       - 1
     focal_length: 1
-    upper_bound: 0.5
-    lower_bound: -0.5
-    left_bound: -0.5
-    right_bound: 0.5
+    upper_bound: 1.0
+    lower_bound: -1.0
+    left_bound: -1.0
+    right_bound: 1.0
+  lights:
+    - type: "sun"
+      direction: 
+        - 0.40825
+        - 0.40825
+        - 0.8165
+      color: 
+        - 255
+        - 255
+        - 255
+    - type: "spot"
+      position: 
+        - 0.5
+        - 0.5
+        - -2.0
+      direction: 
+        - -0.40825
+        - -0.40825
+        - 0.8165
+      cosinus_angle: 0.98
+      color:
+        - 255
+        - 0
+        - 0
+    - type: "lightbulb"
+      position: 
+        - -1.0
+        - 1.0
+        - 0.0
+      color:
+        - 0
+        - 255
+        - 0
   objects:
-    - vertices:
-      - position:
-          - 0.0
-          - 0.0
-          - -1.0
-        normal:
-          - 0.0
-          - 0.0
-          - -1.0
-      - position:
-          - -1.0
-          - 0.0
-          - 0.0
-        normal:
-          - -1.0
-          - 0.0
-          - 0.0
-      - position:
-          - 0.0
-          - 1.0
-          - 0.0
-        normal:
-          - 0.0
-          - 1.0
-          - 0.0
-    - vertices:
-      - position:
-          - 0.0
-          - 0.0
-          - -1.0
-        normal:
-          - 0.0
-          - 0.0
-          - -1.0
-      - position:
-          - 1.0
-          - 0.0
-          - 0.0
-        normal:
-          - 1.0
-          - 0.0
-          - 0.0
-      - position:
-          - 0.0
-          - 1.0
-          - 0.0
-        normal:
-          - 0.0
-          - 1.0
-          - 0.0
-    - vertices:
-      - position:
-          - 0.0
-          - 0.0
-          - -1.0
-        normal:
-          - 0.0
-          - 0.0
-          - -1.0
-      - position:
-          - -1.0
-          - 0.0
-          - 0.0
-        normal:
-          - -1.0
-          - 0.0
-          - 0.0
-      - position:
-          - 0.0
-          - -1.0
-          - 0.0
-        normal:
-          - 0.0
-          - -1.0
-          - 0.0
-
-    - vertices: 
-      - position:
-          - 0.0
-          - 0.0
-          - -1.0
-        normal:
-          - 0.0
-          - 0.0
-          - -1.0
-      - position:
-          - 0.0
-          - -1.0
-          - 0.0
-        normal:
-          - 0.0
-          - -1.0
-          - 0.0
-      - position:
-          - 0.707
-          - -0.707
-          - 0.0
-        normal:
-          - 0.707
-          - -0.707
-          - 0.0
-    - vertices: 
-      - position:
-          - 0.0
-          - 0.0
-          - -1.0
-        normal:
-          - 0.0
-          - 0.0
-          - -1.0
-      - position:
-          - 1.0
-          - 0.0
-          - 0.0
-        normal:
-          - 1.0
-          - 0.0
-          - 0.0
-      - position:
-          - 0.707
-          - -0.707
-          - 0.0
-        normal:
-          - 0.707
-          - -0.707
-          - 0.0
+    - type: "sphere"
+      center:
+        - 0.0
+        - 0.0
+        - -1.0
+      radius: 1.0

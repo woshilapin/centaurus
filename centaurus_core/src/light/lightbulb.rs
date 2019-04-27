@@ -71,6 +71,5 @@ mod tests {
         assert_eq!(color[0], 64);
         assert_eq!(color[1], 64);
         assert_eq!(color[2], 64);
-        assert_eq!(color[3], u8::max_value());
     }
 }

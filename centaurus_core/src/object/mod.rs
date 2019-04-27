@@ -11,10 +11,13 @@ pub trait Intersect {
 
 #[derive(Debug)]
 pub struct Intersection {
+    // TODO: Replace by Vertex object
     pub position: Point3<f64>,
     pub normal: Vector3<f64>,
 }
 
+mod sphere;
 mod triangle;
 
+pub use self::sphere::*;
 pub use self::triangle::*;
