@@ -1,4 +1,4 @@
-use image::Rgba;
+use image::Rgb;
 use nalgebra::{Point3, Vector3};
 use std::option::Option;
 
@@ -6,7 +6,7 @@ use std::option::Option;
 #[typetag::deserialize(tag = "type")]
 pub trait Light {
     /// Calculate from which direction and with which amount of color the `position` is hit by the current `Light`.
-    fn hit(&self, position: &Point3<f64>) -> Option<(Vector3<f64>, Rgba<u8>)>;
+    fn hit(&self, position: &Point3<f64>) -> Option<(Vector3<f64>, Rgb<u8>)>;
 }
 
 mod lightbulb;

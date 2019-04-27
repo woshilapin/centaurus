@@ -1,19 +1,19 @@
-use image::Rgba;
+use image::Rgb;
 use serde::de::value::SeqAccessDeserializer;
 use serde::de::{Error, SeqAccess, Visitor};
 use serde::{Deserialize, Deserializer};
 
-pub fn deserialize_rgba<'de, D>(deserializer: D) -> Result<Rgba<u8>, D::Error>
+pub fn deserialize_rgb<'de, D>(deserializer: D) -> Result<Rgb<u8>, D::Error>
 where
     D: Deserializer<'de>,
 {
-    deserializer.deserialize_seq(RgbaVisitor)
+    deserializer.deserialize_seq(RgbVisitor)
 }
 
-struct RgbaVisitor;
+struct RgbVisitor;
 
-impl<'de> Visitor<'de> for RgbaVisitor {
-    type Value = Rgba<u8>;
+impl<'de> Visitor<'de> for RgbVisitor {
+    type Value = Rgb<u8>;
 
     fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
         formatter.write_str("an integer between 0 and 255")
@@ -23,11 +23,8 @@ impl<'de> Visitor<'de> for RgbaVisitor {
     where
         A: SeqAccess<'de>,
     {
-        let data: [u8; 4] = Deserialize::deserialize(SeqAccessDeserializer::new(seq)).unwrap();
-        if data.len() != 4 {
-            Err(Error::invalid_length(4, &"Need 4 values for an Rgba color"))
-        } else {
-            Ok(Rgba(data))
-        }
+        Deserialize::deserialize(SeqAccessDeserializer::new(seq))
+            .map(|data| Rgb(data))
+            .map_err(|_| Error::invalid_length(3, &"Need Red, Green and Blue colors"))
     }
 }

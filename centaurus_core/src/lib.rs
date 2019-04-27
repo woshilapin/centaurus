@@ -76,6 +76,8 @@ impl Scene {
                         if let Some((l_direction, l_color)) = light.hit(&i_position) {
                             let intensity = i_normal.dot(&(-l_direction));
                             if intensity >= 0.0 && intensity <= 1.0 {
+                                let l_color =
+                                    Rgba([l_color[0], l_color[1], l_color[2], u8::max_value()]);
                                 let new_color = multiply_color_scalar(l_color, intensity);
                                 color = combine_color(color, new_color);
                             }

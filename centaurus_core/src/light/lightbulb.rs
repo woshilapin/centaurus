@@ -1,5 +1,5 @@
 use crate::light::Light;
-use image::Rgba;
+use image::Rgb;
 use nalgebra::{Point3, Vector3};
 use serde_derive::Deserialize;
 use std::option::Option;
@@ -9,8 +9,8 @@ use std::option::Option;
 #[derive(Deserialize)]
 pub struct Lightbulb {
     position: Point3<f64>,
-    #[serde(deserialize_with = "crate::serde::deserialize_rgba")]
-    color: Rgba<u8>,
+    #[serde(deserialize_with = "crate::serde::deserialize_rgb")]
+    color: Rgb<u8>,
 }
 
 impl Lightbulb {
@@ -20,28 +20,27 @@ impl Lightbulb {
     /// ```
     /// # use centaurus_core::light::Lightbulb;
     /// # use nalgebra::Point3;
-    /// # use image::Rgba;
+    /// # use image::Rgb;
     /// let red_lightbulb = Lightbulb::new(
     ///     Point3::new(1.0, 1.0, 0.0),
-    ///     Rgba([u8::max_value(), 0, 0, u8::max_value()]),
+    ///     Rgb([u8::max_value(), 0, 0]),
     /// );
     /// ```
-    pub fn new(position: Point3<f64>, color: Rgba<u8>) -> Lightbulb {
+    pub fn new(position: Point3<f64>, color: Rgb<u8>) -> Lightbulb {
         Lightbulb { position, color }
     }
 }
 
 #[typetag::deserialize(name = "lightbulb")]
 impl Light for Lightbulb {
-    fn hit(&self, position: &Point3<f64>) -> Option<(Vector3<f64>, Rgba<u8>)> {
+    fn hit(&self, position: &Point3<f64>) -> Option<(Vector3<f64>, Rgb<u8>)> {
         let direction = position - self.position;
         let direction = direction.normalize();
         let distance_factor = 1.0f64 / (1.0f64 + direction.norm());
-        let color = Rgba([
+        let color = Rgb([
             ((self.color[0] as f64) * distance_factor) as u8,
             ((self.color[1] as f64) * distance_factor) as u8,
             ((self.color[2] as f64) * distance_factor) as u8,
-            self.color[3],
         ]);
         Some((direction, color))
     }
@@ -55,12 +54,7 @@ mod tests {
     fn should_return_normalized_direction() {
         let sun = Lightbulb::new(
             Point3::new(-2.0, 0.0, 0.0),
-            Rgba([
-                u8::max_value(),
-                u8::max_value(),
-                u8::max_value(),
-                u8::max_value(),
-            ]),
+            Rgb([u8::max_value(), u8::max_value(), u8::max_value()]),
         );
         let hit = sun.hit(&Point3::new(0.0, 0.0, 0.0));
         let (direction, _) = hit.unwrap();
@@ -71,10 +65,7 @@ mod tests {
 
     #[test]
     fn should_return_dimmed_color() {
-        let sun = Lightbulb::new(
-            Point3::new(2.0, 0.0, 0.0),
-            Rgba([128, 128, 128, u8::max_value()]),
-        );
+        let sun = Lightbulb::new(Point3::new(2.0, 0.0, 0.0), Rgb([128, 128, 128]));
         let hit = sun.hit(&Point3::new(0.0, 0.0, 0.0));
         let (_, color) = hit.unwrap();
         assert_eq!(color[0], 64);

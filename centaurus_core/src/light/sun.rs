@@ -1,5 +1,5 @@
 use crate::light::Light;
-use image::Rgba;
+use image::Rgb;
 use nalgebra::{Point3, Vector3};
 use serde_derive::Deserialize;
 use std::option::Option;
@@ -8,8 +8,8 @@ use std::option::Option;
 #[derive(Deserialize)]
 pub struct Sun {
     direction: Vector3<f64>,
-    #[serde(deserialize_with = "crate::serde::deserialize_rgba")]
-    color: Rgba<u8>,
+    #[serde(deserialize_with = "crate::serde::deserialize_rgb")]
+    color: Rgb<u8>,
 }
 
 impl Sun {
@@ -19,13 +19,13 @@ impl Sun {
     /// ```
     /// # use centaurus_core::light::Sun;
     /// # use nalgebra::Vector3;
-    /// # use image::Rgba;
+    /// # use image::Rgb;
     /// let sun = Sun::new(
     ///     Vector3::new(0.0, -1.0, 0.0),
-    ///     Rgba([0, 0, u8::max_value(), u8::max_value()])
+    ///     Rgb([0, 0, u8::max_value()])
     /// );
     /// ```
-    pub fn new(direction: Vector3<f64>, color: Rgba<u8>) -> Sun {
+    pub fn new(direction: Vector3<f64>, color: Rgb<u8>) -> Sun {
         Sun {
             direction: direction.normalize(),
             color,
@@ -35,7 +35,7 @@ impl Sun {
 
 #[typetag::deserialize(name = "sun")]
 impl Light for Sun {
-    fn hit(&self, _position: &Point3<f64>) -> Option<(Vector3<f64>, Rgba<u8>)> {
+    fn hit(&self, _position: &Point3<f64>) -> Option<(Vector3<f64>, Rgb<u8>)> {
         Some((self.direction, self.color))
     }
 }
@@ -46,10 +46,7 @@ mod tests {
 
     #[test]
     fn should_return_normalized_direction() {
-        let sun = Sun::new(
-            Vector3::new(2.0, 0.0, 0.0),
-            Rgba([12, 34, 56, u8::max_value()]),
-        );
+        let sun = Sun::new(Vector3::new(2.0, 0.0, 0.0), Rgb([12, 34, 56]));
         let hit = sun.hit(&Point3::new(0.0, 0.0, 0.0));
         let (direction, _) = hit.unwrap();
         assert_eq!(direction[0], 1.0);
@@ -59,10 +56,7 @@ mod tests {
 
     #[test]
     fn should_return_same_color() {
-        let sun = Sun::new(
-            Vector3::new(2.0, 0.0, 0.0),
-            Rgba([12, 34, 56, u8::max_value()]),
-        );
+        let sun = Sun::new(Vector3::new(2.0, 0.0, 0.0), Rgb([12, 34, 56]));
         let hit = sun.hit(&Point3::new(0.0, 0.0, 0.0));
         let (_, color) = hit.unwrap();
         assert_eq!(color[0], 12);
