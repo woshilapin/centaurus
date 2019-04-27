@@ -3,10 +3,9 @@ scene:
   height: 128
   dimension: 3
   background_color:
-    - 16
-    - 16
-    - 16
-    - 255
+    - 0.1
+    - 0.1
+    - 0.1
   camera:
     position:
       - 0
@@ -28,9 +27,9 @@ scene:
         - 0.40825
         - 0.8165
       color: 
-        - 255
-        - 255
-        - 255
+        - 1.0
+        - 1.0
+        - 1.0
     - type: "spot"
       position: 
         - 0.5
@@ -42,18 +41,18 @@ scene:
         - 0.8165
       cosinus_angle: 0.98
       color:
-        - 255
-        - 0
-        - 0
+        - 1.0
+        - 0.0
+        - 0.0
     - type: "lightbulb"
       position: 
         - -1.0
         - 1.0
         - 0.0
       color:
-        - 0
-        - 255
-        - 0
+        - 0.0
+        - 1.0
+        - 0.0
   objects:
     - type: "sphere"
       center:

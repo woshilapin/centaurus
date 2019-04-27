@@ -9,7 +9,7 @@ use std::option::Option;
 pub struct Sun {
     direction: Vector3<f64>,
     #[serde(deserialize_with = "crate::serde::deserialize_rgb")]
-    color: Rgb<u8>,
+    color: Rgb<f64>,
 }
 
 impl Sun {
@@ -22,10 +22,10 @@ impl Sun {
     /// # use image::Rgb;
     /// let sun = Sun::new(
     ///     Vector3::new(0.0, -1.0, 0.0),
-    ///     Rgb([0, 0, u8::max_value()])
+    ///     Rgb([0.0, 0.0, 1.0])
     /// );
     /// ```
-    pub fn new(direction: Vector3<f64>, color: Rgb<u8>) -> Sun {
+    pub fn new(direction: Vector3<f64>, color: Rgb<f64>) -> Sun {
         Sun {
             direction: direction.normalize(),
             color,
@@ -35,7 +35,7 @@ impl Sun {
 
 #[typetag::deserialize(name = "sun")]
 impl Light for Sun {
-    fn hit(&self, _position: &Point3<f64>) -> Option<(Vector3<f64>, Rgb<u8>)> {
+    fn hit(&self, _position: &Point3<f64>) -> Option<(Vector3<f64>, Rgb<f64>)> {
         Some((self.direction, self.color))
     }
 }
@@ -46,7 +46,7 @@ mod tests {
 
     #[test]
     fn should_return_normalized_direction() {
-        let sun = Sun::new(Vector3::new(2.0, 0.0, 0.0), Rgb([12, 34, 56]));
+        let sun = Sun::new(Vector3::new(2.0, 0.0, 0.0), Rgb([0.5, 0.5, 0.5]));
         let hit = sun.hit(&Point3::new(0.0, 0.0, 0.0));
         let (direction, _) = hit.unwrap();
         assert_eq!(direction[0], 1.0);
@@ -56,11 +56,11 @@ mod tests {
 
     #[test]
     fn should_return_same_color() {
-        let sun = Sun::new(Vector3::new(2.0, 0.0, 0.0), Rgb([12, 34, 56]));
+        let sun = Sun::new(Vector3::new(2.0, 0.0, 0.0), Rgb([0.5, 0.5, 0.5]));
         let hit = sun.hit(&Point3::new(0.0, 0.0, 0.0));
         let (_, color) = hit.unwrap();
-        assert_eq!(color[0], 12);
-        assert_eq!(color[1], 34);
-        assert_eq!(color[2], 56);
+        assert_eq!(color[0], 0.5);
+        assert_eq!(color[1], 0.5);
+        assert_eq!(color[2], 0.5);
     }
 }

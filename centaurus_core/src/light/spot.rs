@@ -13,7 +13,7 @@ pub struct Spot {
     direction: Vector3<f64>,
     cosinus_angle: f64,
     #[serde(deserialize_with = "crate::serde::deserialize_rgb")]
-    color: Rgb<u8>,
+    color: Rgb<f64>,
 }
 
 impl Spot {
@@ -28,12 +28,17 @@ impl Spot {
     ///     Point3::new(0.0, 1.0, 0.0),
     ///     Vector3::new(0.0, -1.0, 0.0),
     ///     0.5,
-    ///     Rgb([0, u8::max_value(), 0]),
+    ///     Rgb([0.0, 1.0, 0.0]),
     /// );
     /// ```
     ///
     /// Note: the `angle` value is given in radians.
-    pub fn new(position: Point3<f64>, direction: Vector3<f64>, angle: f64, color: Rgb<u8>) -> Spot {
+    pub fn new(
+        position: Point3<f64>,
+        direction: Vector3<f64>,
+        angle: f64,
+        color: Rgb<f64>,
+    ) -> Spot {
         Spot {
             position,
             direction: direction.normalize(),
@@ -45,16 +50,16 @@ impl Spot {
 
 #[typetag::deserialize(name = "spot")]
 impl Light for Spot {
-    fn hit(&self, position: &Point3<f64>) -> Option<(Vector3<f64>, Rgb<u8>)> {
+    fn hit(&self, position: &Point3<f64>) -> Option<(Vector3<f64>, Rgb<f64>)> {
         let direction = position - self.position;
         let direction = direction.normalize();
         let cosinus = direction.dot(&self.direction);
         if cosinus > self.cosinus_angle {
             let distance_factor = 1.0f64 / (1.0f64 + direction.norm());
             let color = Rgb([
-                ((self.color[0] as f64) * distance_factor) as u8,
-                ((self.color[1] as f64) * distance_factor) as u8,
-                ((self.color[2] as f64) * distance_factor) as u8,
+                self.color[0] * distance_factor,
+                self.color[1] * distance_factor,
+                self.color[2] * distance_factor,
             ]);
             Some((direction, color))
         } else {
@@ -73,7 +78,7 @@ mod tests {
             Point3::new(-2.0, 0.0, 0.0),
             Vector3::new(1.0, 0.0, 0.0),
             0.5,
-            Rgb([128, 128, 128]),
+            Rgb([0.5, 0.5, 0.5]),
         );
         let hit = sun.hit(&Point3::new(0.0, 0.0, 0.0));
         let (direction, _) = hit.unwrap();
@@ -88,13 +93,13 @@ mod tests {
             Point3::new(-2.0, 0.0, 0.0),
             Vector3::new(1.0, 0.0, 0.0),
             0.5,
-            Rgb([128, 128, 128]),
+            Rgb([0.5, 0.5, 0.5]),
         );
         let hit = sun.hit(&Point3::new(0.0, 0.0, 0.0));
         let (_, color) = hit.unwrap();
-        assert_eq!(color[0], 64);
-        assert_eq!(color[1], 64);
-        assert_eq!(color[2], 64);
+        assert_eq!(color[0], 0.25);
+        assert_eq!(color[1], 0.25);
+        assert_eq!(color[2], 0.25);
     }
 
     #[test]
@@ -103,7 +108,7 @@ mod tests {
             Point3::new(-2.0, 0.0, 0.0),
             Vector3::new(1.0, 0.0, 0.0),
             0.5,
-            Rgb([128, 128, 128]),
+            Rgb([0.5, 0.5, 0.5]),
         );
         let hit = sun.hit(&Point3::new(-4.0, 0.0, 0.0));
         assert_eq!(hit.is_none(), true);
