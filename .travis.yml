@@ -2,9 +2,6 @@ sudo: required
 language: rust
 cache: cargo
 env:
-  matrix:
-  - secure: Qr7YoxbcipvsGNMcuHiRiRqKKF2h69jB6LwncPdfxArVdSvRsLivM+xFpIBcFca7hdVoJuMo+quKsgz3vBZXjgc8GFMOCSOugUo2dOG6H0SG4SYB3XHgij12SG5UxJidAyAtWJBI3l80sES4UERUzGQvQlR/oydHuUvPNwlz80o=
-  - secure: AQp3+Ykuth5+VuePcXdGIHJPaeeV3VR3cqTvFprR8JISZVKIkzzE2F4PRJd1HmxIFwY6uMvDXtGWg2FC6nQC7yBKVXESKXJm2rzFYD922j9qKdNGmPMm4T0xrEixMEZLLhOe+uifAwQGloxTq3GOD/v8geNdqVh434XzF5YzGJ8=
   global:
   - secure: Aaz3BkTXCGo/2wDde5QDxYY4WrQcTkypDxoIu9cXzpQHMwjKxc+vKtpqEwrJIkOBJuIA2cshDHf6Uue+iFj9rDD91EVbQgsd6DRmzGupmXwBSJK7qIgeK6EVDHrN+1PZLY1hG+NcVSuXzKGf+LeJaZKZgVcCr6evLZCJKUGmcQA=
   - secure: LUQRqGIR5ZpvLbVkIdkdOFO3VUDUDMegaMeqoaROnWiBnGgixqYiMX7+PtrYcgqOvGBbe2i6sFcmqusWB3NsLDwy4XM58e9sWe+QSkBXZ0bJQE4MTEAHzAl/v+FbIcz8HaFY3hg9fhmRnILOSdMOmrpKUUOnG4AHHHp8ySYt8Pg=
