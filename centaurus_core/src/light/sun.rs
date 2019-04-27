@@ -1,11 +1,14 @@
 use crate::light::Light;
 use image::Rgba;
 use nalgebra::{Point3, Vector3};
+use serde_derive::Deserialize;
 use std::option::Option;
 
 /// A sun will light in one direction without dimming with distance.
+#[derive(Deserialize)]
 pub struct Sun {
     direction: Vector3<f64>,
+    #[serde(deserialize_with = "crate::serde::deserialize_rgba")]
     color: Rgba<u8>,
 }
 
@@ -30,6 +33,7 @@ impl Sun {
     }
 }
 
+#[typetag::deserialize(name = "sun")]
 impl Light for Sun {
     fn hit(&self, _position: &Point3<f64>) -> Option<(Vector3<f64>, Rgba<u8>)> {
         Some((self.direction, self.color))

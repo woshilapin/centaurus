@@ -1,15 +1,18 @@
 use crate::light::Light;
 use image::Rgba;
 use nalgebra::{Point3, Vector3};
+use serde_derive::Deserialize;
 use std::option::Option;
 
 /// A Spot will light only in a specific direction in a cone of light.
 /// It is defined through a position, a direction, and the angle of the cone light.
 /// A color is also associated.
+#[derive(Deserialize)]
 pub struct Spot {
     position: Point3<f64>,
     direction: Vector3<f64>,
     cosinus_angle: f64,
+    #[serde(deserialize_with = "crate::serde::deserialize_rgba")]
     color: Rgba<u8>,
 }
 
@@ -45,6 +48,7 @@ impl Spot {
     }
 }
 
+#[typetag::deserialize(name = "spot")]
 impl Light for Spot {
     fn hit(&self, position: &Point3<f64>) -> Option<(Vector3<f64>, Rgba<u8>)> {
         let direction = position - self.position;

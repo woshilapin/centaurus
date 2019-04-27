@@ -3,7 +3,7 @@ extern crate log;
 
 use crate::camera::Camera;
 
-use crate::light::{Light, Lightbulb, Spot, Sun};
+use crate::light::Light;
 use crate::object::Intersect;
 use crate::ray::Ray;
 use image::{Rgba, RgbaImage};
@@ -15,6 +15,7 @@ pub mod camera;
 pub mod light;
 pub mod object;
 pub mod ray;
+mod serde;
 pub mod vertex;
 
 #[derive(Deserialize)]
@@ -24,6 +25,7 @@ pub struct Scene {
     pub dimension: u8,
     pub camera: Camera,
     pub background_color: [u8; 4],
+    pub lights: Vec<Box<dyn Light>>,
     pub objects: Vec<Box<dyn Intersect>>,
 }
 
@@ -56,37 +58,6 @@ fn combine_color(c1: Rgba<u8>, c2: Rgba<u8>) -> Rgba<u8> {
 
 impl Scene {
     pub fn render(&self) -> RgbaImage {
-        let _camera = Camera::new(
-            Point3::new(0.0, 0.0, -1.0),
-            Vector3::new(0.0, 0.0, 1.0),
-            1.0,
-            [1.0, -1.0, -1.0, 1.0],
-        );
-        let light1 = Sun::new(
-            Vector3::new(0.5, 0.5, 1.0),
-            Rgba([128, 128, 128, u8::max_value()]),
-        );
-        let light2 = Spot::new(
-            Point3::new(0.5, 0.5, -2.0),
-            Vector3::new(-0.5, -0.5, 1.0),
-            0.2,
-            Rgba([
-                u8::max_value(),
-                u8::min_value(),
-                u8::min_value(),
-                u8::max_value(),
-            ]),
-        );
-        let light3 = Lightbulb::new(
-            Point3::new(-1.0, 1.0, 0.0),
-            Rgba([
-                u8::min_value(),
-                u8::max_value(),
-                u8::min_value(),
-                u8::max_value(),
-            ]),
-        );
-        let lights: Vec<Box<Light>> = vec![Box::new(light1), Box::new(light2), Box::new(light3)];
         let progress_bar = ProgressBar::new(self.height as u64 * self.width as u64);
         RgbaImage::from_fn(self.width, self.height, |i, j| {
             progress_bar.inc(1);
@@ -101,7 +72,7 @@ impl Scene {
                 if let Some(intersection) = object.intersect(&ray) {
                     let i_position = intersection.position;
                     let i_normal = intersection.normal;
-                    for light in &lights {
+                    for light in &self.lights {
                         if let Some((l_direction, l_color)) = light.hit(&i_position) {
                             let intensity = i_normal.dot(&(-l_direction));
                             if intensity >= 0.0 && intensity <= 1.0 {

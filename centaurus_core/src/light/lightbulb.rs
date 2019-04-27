@@ -1,12 +1,15 @@
 use crate::light::Light;
 use image::Rgba;
 use nalgebra::{Point3, Vector3};
+use serde_derive::Deserialize;
 use std::option::Option;
 
 /// A Lightbulb will light the whole scene from one point in space.
 /// Color of the light will dim inversely proportional to the distance to the surface of impact.
+#[derive(Deserialize)]
 pub struct Lightbulb {
     position: Point3<f64>,
+    #[serde(deserialize_with = "crate::serde::deserialize_rgba")]
     color: Rgba<u8>,
 }
 
@@ -28,6 +31,7 @@ impl Lightbulb {
     }
 }
 
+#[typetag::deserialize(name = "lightbulb")]
 impl Light for Lightbulb {
     fn hit(&self, position: &Point3<f64>) -> Option<(Vector3<f64>, Rgba<u8>)> {
         let direction = position - self.position;
