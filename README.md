@@ -8,4 +8,4 @@ An attempt to develop a relativist ray-tracer in Rust.
 
 ## Documentation
 
-The technical documentation is available [here](woshilapin.github.io/centaurus/).
+The technical documentation is available [here](https://woshilapin.github.io/centaurus/).
