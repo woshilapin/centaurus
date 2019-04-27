@@ -13,6 +13,6 @@ mod lightbulb;
 mod spot;
 mod sun;
 
-pub use self::lightbulb::*;
-pub use self::spot::*;
-pub use self::sun::*;
+pub use self::lightbulb::Lightbulb;
+pub use self::spot::Spot;
+pub use self::sun::Sun;

@@ -1,4 +1,4 @@
-use crate::ray::Ray;
+use crate::Ray;
 use nalgebra::{Point3, Vector3};
 use std::option::Option;
 
@@ -18,5 +18,5 @@ pub struct Intersection {
 mod sphere;
 mod triangle;
 
-pub use self::sphere::*;
-pub use self::triangle::*;
+pub use self::sphere::Sphere;
+pub use self::triangle::Triangle;

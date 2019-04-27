@@ -1,4 +1,4 @@
-use crate::scene::Scene;
+use crate::Scene;
 use image::{ImageBuffer, Rgba};
 
 pub trait Renderer {

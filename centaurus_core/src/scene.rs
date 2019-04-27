@@ -1,6 +1,6 @@
-use crate::camera::Camera;
 use crate::light::Light;
 use crate::object::Intersect;
+use crate::Camera;
 use serde_derive::Deserialize;
 
 #[derive(Deserialize)]

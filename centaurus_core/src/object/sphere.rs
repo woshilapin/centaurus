@@ -1,6 +1,5 @@
-use crate::object::Intersect;
-use crate::object::Intersection;
-use crate::ray::Ray;
+use crate::object::{Intersect, Intersection};
+use crate::Ray;
 use nalgebra::Point3;
 use serde_derive::Deserialize;
 

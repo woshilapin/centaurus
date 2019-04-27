@@ -1,6 +1,6 @@
-use crate::ray::Ray;
 use crate::render::Renderer;
-use crate::scene::Scene;
+use crate::Ray;
+use crate::Scene;
 use image::{ImageBuffer, Rgba};
 use indicatif::ProgressBar;
 use nalgebra::{Point3, Vector3};
