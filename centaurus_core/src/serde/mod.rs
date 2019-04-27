@@ -16,7 +16,7 @@ impl<'de> Visitor<'de> for RgbVisitor {
     type Value = Rgb<f64>;
 
     fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
-        formatter.write_str("an floating number between 0.0 and 1.1")
+        formatter.write_str("a floating number between 0.0 and 1.1")
     }
 
     fn visit_seq<A>(self, seq: A) -> Result<Self::Value, A::Error>
