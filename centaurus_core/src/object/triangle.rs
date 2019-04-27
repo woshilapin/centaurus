@@ -17,6 +17,7 @@ impl Triangle {
     }
 }
 
+#[typetag::deserialize(name = "triangle")]
 impl Intersect for Triangle {
     fn intersect(&self, ray: &Ray) -> Option<Intersection> {
         trace!("Searching for intersection with {:?}", ray);

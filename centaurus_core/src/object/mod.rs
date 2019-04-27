@@ -2,6 +2,7 @@ use crate::ray::Ray;
 use nalgebra::{Point3, Vector3};
 use std::option::Option;
 
+#[typetag::deserialize(tag = "type")]
 pub trait Intersect {
     fn intersect(&self, _ray: &Ray) -> Option<Intersection> {
         None

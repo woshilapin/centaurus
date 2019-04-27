@@ -4,7 +4,7 @@ extern crate log;
 use crate::camera::Camera;
 
 use crate::light::{Light, Lightbulb, Spot, Sun};
-use crate::object::{Intersect, Triangle};
+use crate::object::Intersect;
 use crate::ray::Ray;
 use image::{Rgba, RgbaImage};
 use indicatif::ProgressBar;
@@ -17,14 +17,14 @@ pub mod object;
 pub mod ray;
 pub mod vertex;
 
-#[derive(Debug, Deserialize)]
+#[derive(Deserialize)]
 pub struct Scene {
     pub width: u32,
     pub height: u32,
     pub dimension: u8,
     pub camera: Camera,
     pub background_color: [u8; 4],
-    pub objects: Vec<Triangle>,
+    pub objects: Vec<Box<dyn Intersect>>,
 }
 
 fn bounded_add(v1: u8, v2: u8) -> u8 {
