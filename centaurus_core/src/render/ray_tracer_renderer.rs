@@ -1,6 +1,5 @@
-use crate::render::Renderer;
-use crate::Ray;
-use crate::Scene;
+use crate::Renderer;
+use crate::{Intersection, Object, Ray, Scene};
 use image::{ImageBuffer, Rgba};
 use indicatif::ProgressBar;
 use nalgebra::{Point3, Vector3};
@@ -32,9 +31,18 @@ fn combine_color(c1: Rgba<f64>, c2: Rgba<f64>) -> Rgba<f64> {
     ])
 }
 
-pub struct DefaultRenderer;
+pub struct RayTracerRenderer;
 
-impl Renderer for DefaultRenderer {
+fn calculate_intersections(ray: &Ray, objects: &[Box<dyn Object>]) -> Vec<Intersection> {
+    objects
+        .iter()
+        .map(|object| object.intersect(ray))
+        .filter(Option::is_some)
+        .map(Option::unwrap)
+        .collect()
+}
+
+impl Renderer for RayTracerRenderer {
     fn render(scene: &Scene) -> ImageBuffer<Rgba<f64>, Vec<f64>> {
         let progress_bar = ProgressBar::new(u64::from(scene.height) * u64::from(scene.width));
         ImageBuffer::from_fn(scene.width, scene.height, |i, j| {
@@ -52,18 +60,17 @@ impl Renderer for DefaultRenderer {
                 scene.background_color[2],
                 1.0f64,
             ]);
-            for object in &scene.objects {
-                if let Some(intersection) = object.intersect(&ray) {
-                    let i_position = intersection.position;
-                    let i_normal = intersection.normal;
-                    for light in &scene.lights {
-                        if let Some((l_direction, l_color)) = light.hit(&i_position) {
-                            let intensity = i_normal.dot(&(-l_direction));
-                            if intensity >= 0.0 && intensity <= 1.0 {
-                                let l_color = Rgba([l_color[0], l_color[1], l_color[2], 1.0f64]);
-                                let new_color = multiply_color_scalar(l_color, intensity);
-                                color = combine_color(color, new_color);
-                            }
+            let intersections = calculate_intersections(&ray, &scene.objects);
+            for intersection in &intersections {
+                let i_position = intersection.position;
+                let i_normal = intersection.normal;
+                for light in &scene.lights {
+                    if let Some((l_direction, l_color)) = light.hit(&i_position) {
+                        let intensity = i_normal.dot(&(-l_direction));
+                        if intensity >= 0.0 && intensity <= 1.0 {
+                            let l_color = Rgba([l_color[0], l_color[1], l_color[2], 1.0f64]);
+                            let new_color = multiply_color_scalar(l_color, intensity);
+                            color = combine_color(color, new_color);
                         }
                     }
                 }

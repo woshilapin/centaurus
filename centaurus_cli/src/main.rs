@@ -6,7 +6,8 @@ mod properties;
 
 use crate::arguments::Arguments;
 use crate::properties::Properties;
-use centaurus_core::render::{DefaultRenderer, Renderer};
+use centaurus_core::render::RayTracerRenderer;
+use centaurus_core::Renderer;
 use image::{ImageBuffer, Rgba, RgbaImage};
 use std::fs::File;
 use structopt::StructOpt;
@@ -32,7 +33,7 @@ fn main() {
         serde_yaml::from_reader(scene_file).expect("Couldn't parse the YAML file.");
 
     let scene = properties_from_file.scene;
-    let image_buffer = DefaultRenderer::render(&scene);
+    let image_buffer = RayTracerRenderer::render(&scene);
     let image_buffer: RgbaImage = convert(image_buffer);
     if image::ImageRgba8(image_buffer)
         .save(&arguments.output_filename)

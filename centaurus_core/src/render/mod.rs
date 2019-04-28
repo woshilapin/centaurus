@@ -5,6 +5,6 @@ pub trait Renderer {
     fn render(scene: &Scene) -> ImageBuffer<Rgba<f64>, Vec<f64>>;
 }
 
-mod default_renderer;
+mod ray_tracer_renderer;
 
-pub use self::default_renderer::*;
+pub use self::ray_tracer_renderer::RayTracerRenderer;
