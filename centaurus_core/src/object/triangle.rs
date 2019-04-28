@@ -1,5 +1,5 @@
-use crate::Object;
 use crate::object::Intersection;
+use crate::Object;
 use crate::{Ray, Vertex};
 use nalgebra::{Matrix4, Vector3};
 use serde_derive::Deserialize;
@@ -65,6 +65,7 @@ impl Object for Triangle {
 mod tests {
     use super::*;
     use nalgebra::Point3;
+    use pretty_assertions::assert_eq;
 
     #[test]
     fn no_intersection_with_perpendicular_plan() {

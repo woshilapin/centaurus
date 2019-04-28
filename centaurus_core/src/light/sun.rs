@@ -43,6 +43,7 @@ impl Light for Sun {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use pretty_assertions::assert_eq;
 
     #[test]
     fn should_return_normalized_direction() {
