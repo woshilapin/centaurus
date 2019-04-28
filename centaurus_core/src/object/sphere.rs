@@ -1,4 +1,5 @@
-use crate::object::{Intersect, Intersection};
+use crate::Object;
+use crate::object::Intersection;
 use crate::Ray;
 use nalgebra::Point3;
 use serde_derive::Deserialize;
@@ -16,7 +17,7 @@ impl Sphere {
 }
 
 #[typetag::deserialize(name = "sphere")]
-impl Intersect for Sphere {
+impl Object for Sphere {
     /// The intersection between a sphere and a line is documented on Wikipedia
     /// See https://www.wikiwand.com/en/Line%E2%80%93sphere_intersection
     fn intersect(&self, ray: &Ray) -> Option<Intersection> {

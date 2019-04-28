@@ -1,4 +1,4 @@
-use crate::light::Light;
+use crate::Light;
 use image::Rgb;
 use nalgebra::{Point3, Vector3};
 use serde_derive::Deserialize;

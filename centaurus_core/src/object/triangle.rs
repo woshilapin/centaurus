@@ -1,4 +1,5 @@
-use crate::object::{Intersect, Intersection};
+use crate::Object;
+use crate::object::Intersection;
 use crate::{Ray, Vertex};
 use nalgebra::{Matrix4, Vector3};
 use serde_derive::Deserialize;
@@ -16,7 +17,7 @@ impl Triangle {
 }
 
 #[typetag::deserialize(name = "triangle")]
-impl Intersect for Triangle {
+impl Object for Triangle {
     fn intersect(&self, ray: &Ray) -> Option<Intersection> {
         trace!("Searching for intersection with {:?}", ray);
         let origin = ray.origin.to_homogeneous();

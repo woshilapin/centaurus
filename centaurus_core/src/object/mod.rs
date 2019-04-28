@@ -3,7 +3,7 @@ use nalgebra::{Point3, Vector3};
 use std::option::Option;
 
 #[typetag::deserialize(tag = "type")]
-pub trait Intersect {
+pub trait Object {
     fn intersect(&self, _ray: &Ray) -> Option<Intersection> {
         None
     }

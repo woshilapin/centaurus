@@ -1,5 +1,5 @@
-use crate::light::Light;
-use crate::object::Intersect;
+use crate::Light;
+use crate::Object;
 use crate::Camera;
 use serde_derive::Deserialize;
 
@@ -11,5 +11,5 @@ pub struct Scene {
     pub camera: Camera,
     pub background_color: [f64; 3],
     pub lights: Vec<Box<dyn Light>>,
-    pub objects: Vec<Box<dyn Intersect>>,
+    pub objects: Vec<Box<dyn Object>>,
 }
