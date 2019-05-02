@@ -11,6 +11,7 @@ pub trait Object {
 
 #[derive(Debug)]
 pub struct Intersection {
+    pub distance: f64,
     pub position: Point3<f64>,
     pub normal: Vector3<f64>,
 }

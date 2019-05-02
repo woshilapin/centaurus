@@ -44,6 +44,20 @@ scene:
         - 1.0
         - 0.0
         - 0.0
+    - type: "spot"
+      position: 
+        - 1.0
+        - 1.0
+        - -1.0
+      direction: 
+        - -0.707
+        - -0.707
+        - 0.0
+      cosinus_angle: 0.98
+      color:
+        - 0.0
+        - 0.0
+        - 1.0
     - type: "lightbulb"
       position: 
         - -1.0
@@ -53,6 +67,15 @@ scene:
         - 0.0
         - 1.0
         - 0.0
+    - type: "lightbulb"
+      position: 
+        - 0.25
+        - 0.75
+        - -1.0
+      color:
+        - 1.0
+        - 1.0
+        - 0.0
   objects:
     - type: "sphere"
       center:
@@ -60,3 +83,107 @@ scene:
         - 0.0
         - 0.0
       radius: 1.0
+    - type: "triangle"
+      vertices:
+        - position:
+            - 1.0
+            - 1.0
+            - -1.0
+          normal:
+            - -0.707
+            - 0.0
+            - -0.707
+        - position:
+            - 1.0
+            - -1.0
+            - -1.0
+          normal:
+            - -0.707
+            - 0.0
+            - -0.707
+        - position:
+            - 0.0
+            - 0.0
+            - 1.0
+          normal:
+            - -0.707
+            - 0.0
+            - -0.707
+    - type: "triangle"
+      vertices:
+        - position:
+            - 1.0
+            - -1.0
+            - -1.0
+          normal:
+            - 0.0
+            - 0.707
+            - -0.707
+        - position:
+            - -1.0
+            - -1.0
+            - -1.0
+          normal:
+            - 0.0
+            - 0.707
+            - -0.707
+        - position:
+            - 0.0
+            - 0.0
+            - 1.0
+          normal:
+            - 0.0
+            - 0.707
+            - -0.707
+    - type: "triangle"
+      vertices:
+        - position:
+            - -1.0
+            - -1.0
+            - -1.0
+          normal:
+            - 0.707
+            - 0.0
+            - -0.707
+        - position:
+            - -1.0
+            - 1.0
+            - -1.0
+          normal:
+            - 0.707
+            - 0.0
+            - -0.707
+        - position:
+            - 0.0
+            - 0.0
+            - 1.0
+          normal:
+            - 0.707
+            - 0.0
+            - -0.707
+    - type: "triangle"
+      vertices:
+        - position:
+            - -1.0
+            - 1.0
+            - -1.0
+          normal:
+            - 0.0
+            - -0.707
+            - -0.707
+        - position:
+            - 1.0
+            - 1.0
+            - -1.0
+          normal:
+            - 0.0
+            - -0.707
+            - -0.707
+        - position:
+            - 0.0
+            - 0.0
+            - 1.0
+          normal:
+            - 0.0
+            - -0.707
+            - -0.707

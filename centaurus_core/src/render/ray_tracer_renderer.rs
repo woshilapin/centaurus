@@ -1,35 +1,8 @@
 use crate::Renderer;
-use crate::{Intersection, Object, Ray, Scene};
-use image::{ImageBuffer, Rgba};
+use crate::{Intersection, Light, Object, Ray, Scene};
+use image::{ImageBuffer, Rgb, Rgba};
 use indicatif::ProgressBar;
 use nalgebra::{Point3, Vector3};
-
-fn bounded_add(v1: f64, v2: f64) -> f64 {
-    if v1 + v2 <= 1.0f64 {
-        v1 + v2
-    } else {
-        1.0f64
-    }
-}
-fn bounded_multiply(value: f64, scalar: f64) -> f64 {
-    value * scalar
-}
-fn multiply_color_scalar(c: Rgba<f64>, scalar: f64) -> Rgba<f64> {
-    Rgba([
-        bounded_multiply(c[0], scalar),
-        bounded_multiply(c[1], scalar),
-        bounded_multiply(c[2], scalar),
-        c[3],
-    ])
-}
-fn combine_color(c1: Rgba<f64>, c2: Rgba<f64>) -> Rgba<f64> {
-    Rgba([
-        bounded_add(c1[0], c2[0]),
-        bounded_add(c1[1], c2[1]),
-        bounded_add(c1[2], c2[2]),
-        bounded_add(c1[3], c2[3]),
-    ])
-}
 
 pub struct RayTracerRenderer;
 
@@ -40,6 +13,48 @@ fn calculate_intersections(ray: &Ray, objects: &[Box<dyn Object>]) -> Vec<Inters
         .filter(Option::is_some)
         .map(Option::unwrap)
         .collect()
+}
+fn bound<T: PartialOrd>(value: T, min: T, max: T) -> T {
+    if value < min {
+        return min;
+    }
+    if value > max {
+        return max;
+    }
+    value
+}
+
+fn calculate_illumination(
+    eye: &Ray,
+    intersection: &Intersection,
+    lights: &[Box<dyn Light>],
+) -> Option<Rgb<f64>> {
+    let position = intersection.position;
+    let normal = intersection.normal;
+    let mut final_color = None;
+    for light in lights {
+        if let Some((direction, color)) = light.hit(&position) {
+            let intensity = normal.dot(&(-direction));
+            if intensity >= 0.0f64 && intensity <= 1.0f64 {
+                final_color = match final_color {
+                    None => Some(Rgb([
+                        color[0] * intensity,
+                        color[1] * intensity,
+                        color[2] * intensity,
+                    ])),
+                    Some(c) => Some(Rgb([
+                        bound(c[0] + intensity * color[0], 0.0f64, 1.0f64),
+                        bound(c[1] + intensity * color[1], 0.0f64, 1.0f64),
+                        bound(c[2] + intensity * color[2], 0.0f64, 1.0f64),
+                    ])),
+                };
+            }
+        }
+    }
+    if final_color.is_none() && -eye.direction.dot(&intersection.normal) >= 0.0f64 {
+        final_color = Some(Rgb([0.0f64, 0.0f64, 0.0f64]));
+    }
+    final_color
 }
 
 impl Renderer for RayTracerRenderer {
@@ -58,21 +73,16 @@ impl Renderer for RayTracerRenderer {
                 scene.background_color[0],
                 scene.background_color[1],
                 scene.background_color[2],
-                1.0f64,
+                0.0f64,
             ]);
-            let intersections = calculate_intersections(&ray, &scene.objects);
+            let mut intersections = calculate_intersections(&ray, &scene.objects);
+            intersections.sort_unstable_by(|a, b| a.distance.partial_cmp(&b.distance).unwrap());
             for intersection in &intersections {
-                let i_position = intersection.position;
-                let i_normal = intersection.normal;
-                for light in &scene.lights {
-                    if let Some((l_direction, l_color)) = light.hit(&i_position) {
-                        let intensity = i_normal.dot(&(-l_direction));
-                        if intensity >= 0.0 && intensity <= 1.0 {
-                            let l_color = Rgba([l_color[0], l_color[1], l_color[2], 1.0f64]);
-                            let new_color = multiply_color_scalar(l_color, intensity);
-                            color = combine_color(color, new_color);
-                        }
-                    }
+                if let Some(illumination) =
+                    calculate_illumination(&ray, intersection, &scene.lights)
+                {
+                    color = Rgba([illumination[0], illumination[1], illumination[2], 1.0f64]);
+                    break;
                 }
             }
             color

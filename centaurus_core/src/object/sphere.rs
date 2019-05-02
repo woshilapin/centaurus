@@ -33,7 +33,11 @@ impl Object for Sphere {
             let root = if root1 >= 0.0f64 { root1 } else { root2 };
             let position = ray.origin + root * ray.direction;
             let normal = (position - self.center) / self.radius;
-            let intersection = Intersection { position, normal };
+            let intersection = Intersection {
+                distance: root,
+                position,
+                normal,
+            };
             Some(intersection)
         }
     }
@@ -58,6 +62,7 @@ mod tests {
         let ray = Ray::new(Point3::new(0.0, 0.0, -1.0), Vector3::new(0.0, 0.0, 1.0));
         let sphere = Sphere::new(Point3::new(0.0, 0.0, 0.0), 1.0);
         let intersection = sphere.intersect(&ray).unwrap();
+        assert_eq!(intersection.distance, 0.0);
         let p = intersection.position;
         assert_eq!(p[0], 0.0);
         assert_eq!(p[1], 0.0);
@@ -73,6 +78,7 @@ mod tests {
         let ray = Ray::new(Point3::new(0.0, 0.0, 0.0), Vector3::new(0.0, 0.0, 1.0));
         let sphere = Sphere::new(Point3::new(0.0, 0.0, 0.0), 1.0);
         let intersection = sphere.intersect(&ray).unwrap();
+        assert_eq!(intersection.distance, 1.0);
         let p = intersection.position;
         assert_eq!(p[0], 0.0);
         assert_eq!(p[1], 0.0);
@@ -85,9 +91,10 @@ mod tests {
 
     #[test]
     fn intersection_with_tangent_of_sphere() {
-        let ray = Ray::new(Point3::new(1.0, 0.0, 0.0), Vector3::new(0.0, 0.0, 1.0));
+        let ray = Ray::new(Point3::new(1.0, 0.0, -1.0), Vector3::new(0.0, 0.0, 1.0));
         let sphere = Sphere::new(Point3::new(0.0, 0.0, 0.0), 1.0);
         let intersection = sphere.intersect(&ray).unwrap();
+        assert_eq!(intersection.distance, 1.0);
         let p = intersection.position;
         assert_eq!(p[0], 1.0);
         assert_eq!(p[1], 0.0);
@@ -103,6 +110,7 @@ mod tests {
         let ray = Ray::new(Point3::new(0.0, 0.0, -5.0), Vector3::new(0.0, 0.0, 1.0));
         let sphere = Sphere::new(Point3::new(0.0, 0.0, 0.0), 3.0);
         let intersection = sphere.intersect(&ray).unwrap();
+        assert_eq!(intersection.distance, 2.0);
         let p = intersection.position;
         assert_eq!(p[0], 0.0);
         assert_eq!(p[1], 0.0);

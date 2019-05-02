@@ -49,6 +49,7 @@ impl Object for Triangle {
                 None => return None,
             };
             let intersection = Intersection {
+                distance: t,
                 position: ray.origin + t * ray.direction,
                 normal,
             };
@@ -128,9 +129,8 @@ mod tests {
                 ),
             ],
         };
-        let intersection_opt = triangle.intersect(&ray);
-        assert_eq!(intersection_opt.is_some(), true);
-        let intersection = intersection_opt.unwrap();
+        let intersection = triangle.intersect(&ray).unwrap();
+        assert_eq!(intersection.distance, 1.0);
         let position = intersection.position;
         assert_eq!(position[0], 0.0);
         assert_eq!(position[1], 0.0);
