@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Color","Define a RGB color"],["Image",""]]});

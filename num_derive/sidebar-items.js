@@ -1,0 +1,1 @@
+initSidebarItems({"derive":[["FromPrimitive","Derives [`num_traits::FromPrimitive`][from] for simple enums."],["ToPrimitive","Derives [`num_traits::ToPrimitive`][to] for simple enums."]]});
